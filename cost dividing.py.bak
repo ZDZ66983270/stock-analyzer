@@ -1,0 +1,56 @@
+import pandas as pd
+import os
+from datetime import datetime
+
+def split_excel_by_department(main_file):
+    # 读取主表
+    df = pd.read_excel(main_file)
+    
+    # 获取所有唯一的公司/部门名称
+    departments = df['部门/公司'].unique()
+    
+    # 为每个部门创建对应的文件
+    for dept in departments:
+        dept_data = df[df['部门/公司'] == dept]
+        
+        # 获取日期范围
+        min_date = dept_data['日期'].min()
+        max_date = dept_data['日期'].max()
+        date_range = f"{min_date.strftime('%Y%m%d')}至{max_date.strftime('%Y%m%d')}"
+        
+        # 创建各类文件
+        file_types = {
+            'split': f"样本-(拆分){dept}-({date_range}).xlsx",
+            'domestic_flight': f"样本-{dept}-国内机票对账单.xlsx",
+            'domestic_hotel': f"样本-{dept}-国内酒店.xlsx",
+            'hotel_statement': f"样本-{dept}-国内酒店对账单.xlsx",
+            'expense_share': f"样本-{dept}-机票、酒店费用分摊表.xlsx",
+            'cost_share': f"样本-费用分摊表.xlsx"
+        }
+        
+        # 根据不同类型筛选数据并保存
+        for file_type, file_name in file_types.items():
+            filtered_data = filter_data(dept_data, file_type)
+            if not filtered_data.empty:
+                filtered_data.to_excel(file_name, index=False)
+
+def filter_data(data, file_type):
+    """根据不同文件类型筛选数据"""
+    if file_type == 'split':
+        return data  # 全部数据
+    elif file_type == 'domestic_flight':
+        return data[data['类型'] == '国内机票']
+    elif file_type == 'domestic_hotel':
+        return data[data['类型'] == '国内酒店']
+    elif file_type == 'hotel_statement':
+        return data[data['类型'].isin(['国内酒店', '对账单'])]
+    elif file_type == 'expense_share':
+        return data[data['类型'].isin(['机票', '酒店', '费用分摊'])]
+    elif file_type == 'cost_share':
+        return data[data['类型'] == '费用分摊']
+    
+    return pd.DataFrame()  # 返回空DataFrame
+
+# 使用示例
+main_file = "样本-主表_副本.xlsx"
+split_excel_by_department(main_file)
