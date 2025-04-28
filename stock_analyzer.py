@@ -36,9 +36,10 @@ class StockAnalyzer:
         # 支持的周期及其对应的历史数据长度
         self.periods = {
             '15m': '7d',    # 拉7天数据，确保MACD/KDJ/RSI能正常计算
-            '30m': '60d',   # 拉60天数据
-            '1h': '180d',   # 拉180天数据
-            '1d': '5y'      # 拉5年数据
+            '30m': '14d',   # 拉14天数据
+            '1h': '30d',    # 拉30天数据
+            '2h': '60d',    # 拉60天数据
+            '1d': '60d'     # 拉60天数据，足够计算技术指标
         }
         # 技术指标的默认参数
         self.indicator_params = {
@@ -472,6 +473,7 @@ class StockAnalyzer:
                 '15m': '15',
                 '30m': '30',
                 '1h': '60',
+                '2h': '120',  # 添加2小时周期
                 '1d': '101',
                 '1w': '102',
                 '1M': '103'
@@ -479,6 +481,15 @@ class StockAnalyzer:
             
             if period not in period_map:
                 raise ValueError(f"不支持的周期: {period}")
+            
+            # 根据周期设置数据条数限制
+            limit_map = {
+                '15m': 7 * 48,     # 7天 * 每天48个15分钟
+                '30m': 14 * 24,    # 14天 * 每天24个30分钟
+                '1h': 30 * 12,     # 30天 * 每天12个小时
+                '2h': 60 * 6,      # 60天 * 每天6个2小时
+                '1d': 60           # 60天
+            }
             
             # 构建请求参数
             params = {
@@ -488,7 +499,7 @@ class StockAnalyzer:
                 'klt': period_map[period],  # 周期
                 'fqt': '1',  # 复权类型：0不复权 1前复权 2后复权
                 'end': '20500101',
-                'lmt': '1000000'  # 数据条数
+                'lmt': str(limit_map.get(period, 1000))  # 数据条数限制
             }
             
             # 发送请求
@@ -533,6 +544,8 @@ class StockAnalyzer:
             if df_data:
                 df = pd.DataFrame(df_data)
                 df.sort_values('datetime', inplace=True)
+                # 只保留最近的数据
+                df = df.tail(limit_map.get(period, len(df)))
                 self.logger.info(f"成功获取{symbol} {period}周期数据，共{len(df)}条记录")
                 return df
             
@@ -564,6 +577,11 @@ class StockAnalyzer:
             results = {}
             for period, df in data.items():
                 self.logger.info(f"计算{period}周期的技术指标...")
+                
+                # 跳过资金流向数据的技术指标计算
+                if period == 'fund_flow':
+                    results[period] = df
+                    continue
                 
                 # 计算各项技术指标
                 try:
@@ -622,15 +640,15 @@ class StockAnalyzer:
             
             # 记录最新状态
             latest = data.iloc[-1]
-            self.logger.info(f"\n{period}周期MACD指标计算完成：")
-            self.logger.info(f"- MACD线：{latest[f'MACD_{period}']:.3f}")
-            self.logger.info(f"- 信号线：{latest[f'MACD_{period}_Signal']:.3f}")
-            self.logger.info(f"- 柱状图：{latest[f'MACD_{period}_Hist']:.3f}")
+            print(f"\n{period}周期MACD指标计算完成：")
+            print(f"- MACD线：{latest[f'MACD_{period}']:.3f}")
+            print(f"- 信号线：{latest[f'MACD_{period}_Signal']:.3f}")
+            print(f"- 柱状图：{latest[f'MACD_{period}_Hist']:.3f}")
             
             return data
             
         except Exception as e:
-            self.logger.error(f"计算MACD指标时发生错误: {str(e)}")
+            print(f"计算MACD指标时发生错误: {str(e)}")
             return data
 
     def calculate_kdj(self, data: pd.DataFrame, period: str = '1d') -> pd.DataFrame:
@@ -646,7 +664,7 @@ class StockAnalyzer:
             required_columns = ['high', 'low', 'close']
             for col in required_columns:
                 if col not in data.columns:
-                    self.logger.error(f"缺少必要的列：{col}")
+                    print(f"缺少必要的列：{col}")
                     return data
                 data[col] = pd.to_numeric(data[col], errors='coerce')
             
@@ -691,15 +709,15 @@ class StockAnalyzer:
             
             # 记录最新状态
             latest = data.iloc[-1]
-            self.logger.info(f"\n{period}周期KDJ指标计算完成：")
-            self.logger.info(f"- K值：{latest[f'KDJ_{period}_K']:.2f}")
-            self.logger.info(f"- D值：{latest[f'KDJ_{period}_D']:.2f}")
-            self.logger.info(f"- J值：{latest[f'KDJ_{period}_J']:.2f}")
+            print(f"\n{period}周期KDJ指标计算完成：")
+            print(f"- K值：{latest[f'KDJ_{period}_K']:.2f}")
+            print(f"- D值：{latest[f'KDJ_{period}_D']:.2f}")
+            print(f"- J值：{latest[f'KDJ_{period}_J']:.2f}")
             
             return data
             
         except Exception as e:
-            self.logger.error(f"计算KDJ指标时发生错误: {str(e)}")
+            print(f"计算KDJ指标时发生错误: {str(e)}")
             return data
 
     def calculate_rsi(self, data: pd.DataFrame, period: str = '1d') -> pd.DataFrame:
@@ -762,14 +780,14 @@ class StockAnalyzer:
             
             # 记录最新状态
             latest = data.iloc[-1]
-            self.logger.info(f"\n{period}周期RSI指标计算完成：")
+            print(f"\n{period}周期RSI指标计算完成：")
             for rsi_period in periods:
-                self.logger.info(f"- RSI_{rsi_period}：{latest[f'RSI_{period}_{rsi_period}']:.2f}")
+                print(f"- RSI_{rsi_period}：{latest[f'RSI_{period}_{rsi_period}']:.2f}")
             
             return data
             
         except Exception as e:
-            self.logger.error(f"计算RSI指标时发生错误: {str(e)}")
+            print(f"计算RSI指标时发生错误: {str(e)}")
             return data
 
     def calculate_ma(self, data: pd.DataFrame, period: str) -> pd.DataFrame:
@@ -786,61 +804,82 @@ class StockAnalyzer:
             ma_periods = self.indicator_params['ma']['periods']
             
             for p in ma_periods:
-                col_name = f'ma{p}_{period}'
+                col_name = f'ma{p}_{period}'  # 使用与其他指标一致的命名方式
                 data[col_name] = data['close'].rolling(window=p).mean().round(3)
             
             # 记录最新状态
             latest = data.iloc[-1]
-            self.logger.info(f"\n{period}周期MA指标计算完成：")
+            print(f"\n{period}周期MA指标计算完成：")
             for p in ma_periods:
-                col_name = f'ma{p}_{period}'
-                self.logger.info(f"- MA{p}：{latest[col_name]:.3f}")
+                print(f"- MA{p}：{latest[f'ma{p}_{period}']:.3f}")
             
             return data
             
         except Exception as e:
-            self.logger.error(f"转换东方财富代码失败: {str(e)}")
-            return ""
+            print(f"计算MA指标时发生错误: {str(e)}")
+            return data
 
-    def save_to_excel(self, symbol: str, data_dict: Dict[str, pd.DataFrame]) -> None:
+    def save_to_excel(self, data_dict: Dict[str, pd.DataFrame], symbol: str) -> None:
         """
         将数据保存到Excel文件
         
         Args:
-            symbol: 股票代码
             data_dict: 包含不同周期数据的字典
+            symbol: 股票代码
         """
         try:
             # 构建输出文件路径
-            filename = f"{symbol.replace('.', '_')}_data.xlsx"
-            filepath = os.path.join(self.output_dir, filename)
+            output_file = f"output/{symbol.replace('.', '_')}_data.xlsx"
             
-            # 创建ExcelWriter对象
-            with pd.ExcelWriter(filepath, engine='xlsxwriter') as writer:
-                # 保存各个周期的数据到不同的sheet
-                for period, df in data_dict.items():
-                    # 将datetime列转换为字符串
-                    df['datetime'] = df['datetime'].astype(str)
-                    
-                    # 写入数据
-                    df.to_excel(writer, sheet_name=period, index=False)
-                    
-                    # 获取workbook和worksheet对象
-                    workbook = writer.book
-                    worksheet = writer.sheets[period]
-                    
-                    # 设置列宽
-                    worksheet.set_column('A:A', 20)  # datetime列
-                    worksheet.set_column('B:Z', 12)  # 其他列
-                
-                # 添加资金流sheet（如果有）
+            # 定义标准列顺序
+            standard_columns = [
+                'datetime', 'open', 'high', 'low', 'close', 'volume', 'amount',
+                'capital_main', 'capital_super', 'capital_big', 'capital_middle', 'capital_small',
+                'MACD_15m', 'MACD_15m_Signal', 'MACD_15m_Hist',
+                'MACD_30m', 'MACD_30m_Signal', 'MACD_30m_Hist',
+                'MACD_1h', 'MACD_1h_Signal', 'MACD_1h_Hist',
+                'MACD_1d', 'MACD_1d_Signal', 'MACD_1d_Hist',
+                'KDJ_15m_K', 'KDJ_15m_D', 'KDJ_15m_J',
+                'KDJ_30m_K', 'KDJ_30m_D', 'KDJ_30m_J',
+                'KDJ_1h_K', 'KDJ_1h_D', 'KDJ_1h_J',
+                'KDJ_1d_K', 'KDJ_1d_D', 'KDJ_1d_J',
+                'RSI_15m_6', 'RSI_15m_12', 'RSI_15m_24',
+                'RSI_30m_6', 'RSI_30m_12', 'RSI_30m_24',
+                'RSI_1h_6', 'RSI_1h_12', 'RSI_1h_24',
+                'RSI_1d_6', 'RSI_1d_12', 'RSI_1d_24',
+                'ma5_15m', 'ma10_15m', 'ma20_15m',
+                'ma5_30m', 'ma10_30m', 'ma20_30m',
+                'ma5_1h', 'ma10_1h', 'ma20_1h',
+                'ma5_1d', 'ma10_1d', 'ma20_1d'
+            ]
+            
+            # 创建Excel写入器
+            with pd.ExcelWriter(output_file, engine='openpyxl') as writer:
+                # 保存资金流向数据
                 if 'fund_flow' in data_dict:
-                    data_dict['fund_flow'].to_excel(writer, sheet_name='fund_flow', index=False)
+                    fund_flow_df = data_dict['fund_flow']
+                    # 确保所有列都存在
+                    for col in ['capital_main', 'capital_super', 'capital_big', 'capital_middle', 'capital_small']:
+                        if col not in fund_flow_df.columns:
+                            fund_flow_df[col] = None
+                    fund_flow_df.to_excel(writer, sheet_name='资金流向', index=False)
+                
+                # 保存各个周期的数据
+                for period in ['1d', '1h', '30m', '15m']:
+                    if period in data_dict:
+                        df = data_dict[period]
+                        # 确保所有列都存在
+                        for col in standard_columns:
+                            if col not in df.columns:
+                                df[col] = None
+                        # 按标准列顺序重新排列
+                        df = df[standard_columns]
+                        df.to_excel(writer, sheet_name=f'{period}数据', index=False)
             
-            self.logger.info(f"数据已保存到: {filepath}")
+            print(f"数据已保存到: {output_file}")
             
         except Exception as e:
-            self.logger.error(f"保存Excel文件失败: {str(e)}")
+            print(f"保存Excel文件失败: {str(e)}")
 
     def _fetch_eastmoney_fund_flow(self, symbol: str) -> Optional[pd.DataFrame]:
         """
@@ -909,11 +948,6 @@ class StockAnalyzer:
             
             if rows:
                 df = pd.DataFrame(rows)
-                
-                # 保存到CSV文件
-                fund_flow_file = os.path.join(self.output_dir, f"{symbol.replace('.', '_')}_fund_flow.csv")
-                df.to_csv(fund_flow_file, index=False, encoding='utf-8-sig')
-                self.logger.info(f"资金流数据已保存到: {fund_flow_file}")
                 
                 # 显示资金流数据
                 self.logger.info("\n资金流数据：")
@@ -998,11 +1032,6 @@ class StockAnalyzer:
             
             df = pd.DataFrame([row])
             
-            # 保存到CSV文件
-            fund_flow_file = os.path.join(self.output_dir, f"{symbol.replace('.', '_')}_fund_flow.csv")
-            df.to_csv(fund_flow_file, index=False, encoding='utf-8-sig')
-            self.logger.info(f"资金流数据已保存到: {fund_flow_file}")
-            
             # 显示资金流数据
             self.logger.info("\n资金流数据：")
             self.logger.info("=" * 100)
@@ -1048,33 +1077,25 @@ class StockAnalyzer:
                 for line in data['data']['klines']:
                     items = line.split(',')
                     fund_flow_data.append({
-                        'date': items[0],
-                        'main_net_inflow': float(items[1]),
-                        'super_large_net_inflow': float(items[2]),
-                        'large_net_inflow': float(items[3]),
-                        'medium_net_inflow': float(items[4]),
-                        'small_net_inflow': float(items[5])
+                        'datetime': pd.to_datetime(items[0]),
+                        'capital_main': float(items[1]),  # 主力净流入
+                        'capital_super': float(items[2]),  # 超大单净流入
+                        'capital_big': float(items[3]),    # 大单净流入
+                        'capital_middle': float(items[4]), # 中单净流入
+                        'capital_small': float(items[5])   # 小单净流入
                     })
                 
                 df = pd.DataFrame(fund_flow_data)
                 
-                # 保存到CSV文件
-                output_dir = 'output'
-                if not os.path.exists(output_dir):
-                    os.makedirs(output_dir)
-                    
-                csv_file = os.path.join(output_dir, f'{symbol.replace(".", "_")}_fund_flow.csv')
-                df.to_csv(csv_file, index=False, encoding='utf-8')
-                
-                # 打印资金流向数据
+                # 显示资金流向数据
                 self.logger.info(f'\n最近5天资金流向数据：')
                 for _, row in df.iterrows():
-                    self.logger.info(f'日期：{row["date"]}')
-                    self.logger.info(f'主力净流入：{row["main_net_inflow"]/10000:.2f}万')
-                    self.logger.info(f'超大单净流入：{row["super_large_net_inflow"]/10000:.2f}万')
-                    self.logger.info(f'大单净流入：{row["large_net_inflow"]/10000:.2f}万')
-                    self.logger.info(f'中单净流入：{row["medium_net_inflow"]/10000:.2f}万')
-                    self.logger.info(f'小单净流入：{row["small_net_inflow"]/10000:.2f}万')
+                    self.logger.info(f'日期：{row["datetime"].strftime("%Y-%m-%d")}')
+                    self.logger.info(f'主力净流入：{row["capital_main"]/10000:.2f}万')
+                    self.logger.info(f'超大单净流入：{row["capital_super"]/10000:.2f}万')
+                    self.logger.info(f'大单净流入：{row["capital_big"]/10000:.2f}万')
+                    self.logger.info(f'中单净流入：{row["capital_middle"]/10000:.2f}万')
+                    self.logger.info(f'小单净流入：{row["capital_small"]/10000:.2f}万')
                     self.logger.info('-' * 50)
                 
                 return df
@@ -1089,41 +1110,72 @@ class StockAnalyzer:
     def process_stock_data(self, symbol: str) -> Dict[str, pd.DataFrame]:
         """
         处理股票数据的完整流程
+        
+        Args:
+            symbol: 股票代码（如：SH.600536）
+            
+        Returns:
+            Dict[str, pd.DataFrame]: 包含不同周期数据的字典
         """
         try:
-            self.logger.info(f"开始处理股票 {symbol} 的数据...")
-            
-            # 获取K线数据
-            kline_data = self.fetch_stock_data(symbol)
-            
-            if not kline_data:
-                raise ValueError(f"无法获取{symbol}的K线数据")
-            
-            # 计算技术指标
-            results = {}
-            for period, df in kline_data.items():
-                try:
-                    df = self.calculate_macd(df, period)
-                    df = self.calculate_kdj(df, period)
-                    df = self.calculate_rsi(df, period)
-                    df = self.calculate_ma(df, period)
-                    results[period] = df
-                except Exception as e:
-                    self.logger.error(f"计算{period}周期技术指标失败: {str(e)}")
+            print(f"\n开始处理股票 {symbol}")
             
             # 获取资金流数据
-            fund_flow_df = self._fetch_tdx_fund_flow(symbol)
+            fund_flow_df = None
+            try:
+                fund_flow_df = self._fetch_tdx_fund_flow(symbol)
+                if fund_flow_df is not None:
+                    print("成功获取资金流数据")
+                else:
+                    print("未能获取资金流数据")
+            except Exception as e:
+                print(f"获取资金流数据失败: {str(e)}")
+            
+            # 获取各个周期的K线数据
+            data_dict = {}
+            periods = ['1d', '1h', '30m', '15m']
+            
+            for period in periods:
+                try:
+                    print(f"获取{period}周期数据...")
+                    df = self._fetch_eastmoney_data(symbol, period)
+                    
+                    if df is not None and not df.empty:
+                        # 计算技术指标
+                        df = self.calculate_macd(df, period)
+                        df = self.calculate_kdj(df, period)
+                        df = self.calculate_rsi(df, period)
+                        df = self.calculate_ma(df, period)
+                        
+                        # 如果有资金流数据，合并到当前周期数据中
+                        if fund_flow_df is not None:
+                            df['date'] = pd.to_datetime(df['datetime']).dt.date
+                            fund_flow_df['date'] = pd.to_datetime(fund_flow_df['datetime']).dt.date
+                            df = pd.merge(df, fund_flow_df[['date', 'capital_main', 'capital_super', 
+                                                          'capital_big', 'capital_middle', 'capital_small']], 
+                                        on='date', how='left')
+                            df = df.drop('date', axis=1)
+                        
+                        data_dict[period] = df
+                        print(f"成功处理{period}周期数据，共{len(df)}条记录")
+                    else:
+                        print(f"未能获取{period}周期数据")
+                        
+                except Exception as e:
+                    print(f"处理{period}周期数据失败: {str(e)}")
+                    continue
+            
+            # 添加资金流向数据到字典
             if fund_flow_df is not None:
-                results['fund_flow'] = fund_flow_df
+                data_dict['fund_flow'] = fund_flow_df
             
-            # 保存到Excel
-            self.save_to_excel(symbol, results)
-            self.logger.info(f"已保存{symbol}的分析结果到Excel文件")
+            # 显示最新的技术指标和资金流向数据
+            self.display_latest_indicators(data_dict)
             
-            return results
+            return data_dict
             
         except Exception as e:
-            self.logger.error(f"处理股票数据失败: {str(e)}")
+            print(f"处理股票数据失败: {str(e)}")
             return {}
 
     def validate_stock_symbols(self, symbols: List[str]) -> bool:
@@ -1189,8 +1241,8 @@ class StockAnalyzer:
             # 解析命令行参数
             parser = argparse.ArgumentParser(description='股票技术分析工具')
             parser.add_argument('symbols', nargs='+', help='股票代码列表，例如：SH.600000 SZ.000001')
-            parser.add_argument('--periods', nargs='+', default=['1d', '1h', '30m', '15m'],
-                            help='时间周期列表，例如：1d 1h 30m 15m')
+            parser.add_argument('--periods', nargs='+', default=['1d', '2h', '1h', '30m', '15m'],
+                            help='时间周期列表，例如：1d 2h 1h 30m 15m')
             parser.add_argument('--debug', action='store_true', help='启用调试模式')
             args = parser.parse_args()
 
@@ -1204,19 +1256,28 @@ class StockAnalyzer:
 
             # 处理每个股票
             for symbol in args.symbols:
-                self.logger.info(f"\n开始分析股票 {symbol}")
+                print(f"\n开始分析股票 {symbol}")
                 
                 try:
                     # 获取股票数据
                     data = self.fetch_stock_data(symbol)
                     if not data:
-                        self.logger.error(f"无法获取{symbol}的数据")
+                        print(f"无法获取{symbol}的数据")
                         continue
+                    
+                    # 显示K线数据获取情况
+                    for period in ['15m', '30m', '1h', '1d']:
+                        if period in data and data[period] is not None:
+                            print(f"{period}周期数据：{len(data[period])}条记录")
                     
                     # 计算技术指标
                     for period, df in data.items():
                         if df is not None and not df.empty:
-                            self.logger.info(f"计算{period}周期的技术指标...")
+                            # 跳过资金流向数据的技术指标计算
+                            if period == 'fund_flow':
+                                continue
+                                
+                            print(f"计算{period}周期的技术指标...")
                             df = self.calculate_macd(df, period)
                             df = self.calculate_kdj(df, period)
                             df = self.calculate_rsi(df, period)
@@ -1224,16 +1285,63 @@ class StockAnalyzer:
                             data[period] = df
                     
                     # 保存到Excel
-                    self.save_to_excel(symbol, data)
-                    self.logger.info(f"已保存{symbol}的分析结果到Excel文件")
+                    self.save_to_excel(data, symbol)
+                    print(f"已保存{symbol}的分析结果到Excel文件")
+                    
+                    # 显示最新的技术指标和资金流向数据
+                    self.display_latest_indicators(data)
                     
                 except Exception as e:
-                    self.logger.error(f"处理{symbol}时发生错误: {str(e)}")
+                    print(f"处理{symbol}时发生错误: {str(e)}")
                     continue
                     
         except Exception as e:
-            self.logger.error(f"程序执行出错: {str(e)}")
+            print(f"程序执行出错: {str(e)}")
             sys.exit(1)
+
+    def display_latest_indicators(self, data_dict: Dict[str, pd.DataFrame]) -> None:
+        """
+        显示最新的技术指标和资金流向数据
+        
+        Args:
+            data_dict: 包含不同周期数据的字典
+        """
+        try:
+            # 显示资金流向数据
+            fund_flow_df = data_dict.get('fund_flow')
+            if isinstance(fund_flow_df, pd.DataFrame) and not fund_flow_df.empty:
+                latest_fund_flow = fund_flow_df.iloc[-1]
+                print("\n资金流向数据：")
+                print("-" * 100)
+                print(f"日期：{latest_fund_flow['datetime'].strftime('%Y-%m-%d')}")
+                print(f"主力净流入：{latest_fund_flow['capital_main']:,.2f}")
+                print(f"超大单净流入：{latest_fund_flow['capital_super']:,.2f}")
+                print(f"大单净流入：{latest_fund_flow['capital_big']:,.2f}")
+                print(f"中单净流入：{latest_fund_flow['capital_middle']:,.2f}")
+                print(f"小单净流入：{latest_fund_flow['capital_small']:,.2f}")
+                print("-" * 100)
+            
+            # 显示各个周期的技术指标，按照从小到大的顺序
+            for period in ['15m', '30m', '1h', '2h', '1d']:
+                df = data_dict.get(period)
+                if isinstance(df, pd.DataFrame) and not df.empty:
+                    # 获取每个交易日最后一条数据
+                    df['date'] = df['datetime'].dt.date
+                    latest_by_date = df.groupby('date').last().reset_index()
+                    latest = latest_by_date.iloc[-1]
+                    
+                    print(f"\n{period}周期技术指标：")
+                    print("-" * 100)
+                    print(f"日期时间：{latest['datetime'].strftime('%Y-%m-%d %H:%M')}")
+                    print(f"MACD: {latest[f'MACD_{period}']:.3f}, 信号线: {latest[f'MACD_{period}_Signal']:.3f}, 柱状图: {latest[f'MACD_{period}_Hist']:.3f}")
+                    print(f"KDJ: K={latest[f'KDJ_{period}_K']:.2f}, D={latest[f'KDJ_{period}_D']:.2f}, J={latest[f'KDJ_{period}_J']:.2f}")
+                    print(f"RSI: RSI6={latest[f'RSI_{period}_6']:.2f}, RSI12={latest[f'RSI_{period}_12']:.2f}, RSI24={latest[f'RSI_{period}_24']:.2f}")
+                    print(f"MA: MA5={latest[f'ma5_{period}']:.3f}, MA10={latest[f'ma10_{period}']:.3f}, MA20={latest[f'ma20_{period}']:.3f}")
+                    print("-" * 100)
+            
+        except Exception as e:
+            print(f"显示最新指标时发生错误: {str(e)}")
+            self.logger.error(f"显示最新指标时发生错误: {str(e)}")
 
 def main():
     """程序入口点"""
