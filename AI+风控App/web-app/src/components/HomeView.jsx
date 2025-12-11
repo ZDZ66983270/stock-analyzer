@@ -210,17 +210,33 @@ const HomeView = ({ onSelectAsset }) => {
                                                 </div>
                                             </div>
 
-                                            {/* Right: Score */}
-                                            <div style={{ textAlign: 'right' }}>
-                                                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginBottom: '0.2rem' }}>
-                                                    上次得分
+                                            {/* Right: Value Assessment & Risk Count */}
+                                            <div style={{ textAlign: 'right', minWidth: '80px' }}>
+                                                {/* Value Assessment Score */}
+                                                <div style={{ marginBottom: '0.5rem' }}>
+                                                    <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginBottom: '0.2rem' }}>
+                                                        价值评估
+                                                    </div>
+                                                    <div style={{
+                                                        fontSize: '1.2rem',
+                                                        fontWeight: 'bold',
+                                                        color: score >= 80 ? '#10b981' : score >= 60 ? '#f59e0b' : '#ef4444'
+                                                    }}>
+                                                        {score}
+                                                    </div>
                                                 </div>
+
+                                                {/* Risk Count */}
                                                 <div style={{
-                                                    fontSize: '1.3rem',
-                                                    fontWeight: 'bold',
-                                                    color: score >= 80 ? '#10b981' : score >= 60 ? '#f59e0b' : '#ef4444'
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'flex-end',
+                                                    gap: '0.3rem',
+                                                    fontSize: '0.75rem',
+                                                    color: 'var(--text-muted)'
                                                 }}>
-                                                    {score}
+                                                    <span style={{ color: '#f59e0b' }}>⚠️</span>
+                                                    <span>{item.risk_count || 2}个风险</span>
                                                 </div>
                                             </div>
                                         </div>
