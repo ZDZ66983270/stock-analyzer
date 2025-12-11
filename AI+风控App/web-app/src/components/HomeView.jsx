@@ -210,10 +210,14 @@ const HomeView = ({ onSelectAsset }) => {
                                                 </div>
                                             </div>
 
-                                            {/* Right: Value Assessment & Risk Count */}
-                                            <div style={{ textAlign: 'right', minWidth: '80px' }}>
+                                            {/* Right: Value Assessment & Risk Count (Side by Side) */}
+                                            <div style={{
+                                                display: 'flex',
+                                                gap: '1rem',
+                                                alignItems: 'center'
+                                            }}>
                                                 {/* Value Assessment Score */}
-                                                <div style={{ marginBottom: '0.5rem' }}>
+                                                <div style={{ textAlign: 'center' }}>
                                                     <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginBottom: '0.2rem' }}>
                                                         价值评估
                                                     </div>
@@ -227,7 +231,7 @@ const HomeView = ({ onSelectAsset }) => {
                                                 </div>
 
                                                 {/* Risk Count */}
-                                                <div>
+                                                <div style={{ textAlign: 'center' }}>
                                                     <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginBottom: '0.2rem' }}>
                                                         风险点
                                                     </div>
