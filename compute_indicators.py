@@ -27,21 +27,47 @@ def add_technical_indicators(df: pd.DataFrame) -> pd.DataFrame:
     """
     try:
         # 确保必要的列存在
-        required_cols = ['open', 'high', 'low', 'close', 'volume']
+        required_cols = ['OPEN', 'HIGH', 'LOW', 'CLOSE', 'VOLUME']
         if not all(col in df.columns for col in required_cols):
             raise ValueError("数据缺少必要的列")
             
         # 计算MA
-        df = calculate_ma(df)
+        for period in [5, 10, 20, 60]:
+            df[f'MA{period}'] = df['CLOSE'].rolling(window=period).mean()
         
         # 计算MACD
-        df = calculate_macd(df)
+        fast_period = 12
+        slow_period = 26
+        signal_period = 9
+        
+        # 计算快速和慢速EMA
+        fast_ema = df['CLOSE'].ewm(span=fast_period, adjust=False).mean()
+        slow_ema = df['CLOSE'].ewm(span=slow_period, adjust=False).mean()
+        
+        # 计算DIF
+        df['DIF'] = fast_ema - slow_ema
+        
+        # 计算DEA
+        df['DEA'] = df['DIF'].ewm(span=signal_period, adjust=False).mean()
+        
+        # 计算MACD柱状图
+        df['MACD'] = 2 * (df['DIF'] - df['DEA'])
         
         # 计算KDJ
-        df = calculate_kdj(df)
+        low_list = df['LOW'].rolling(window=9, min_periods=9).min()
+        high_list = df['HIGH'].rolling(window=9, min_periods=9).max()
+        rsv = (df['CLOSE'] - low_list) / (high_list - low_list) * 100
+        df['K'] = rsv.ewm(com=2).mean()
+        df['D'] = df['K'].ewm(com=2).mean()
+        df['J'] = 3 * df['K'] - 2 * df['D']
         
         # 计算RSI
-        df = calculate_rsi(df)
+        for period in [6, 12, 24]:
+            delta = df['CLOSE'].diff()
+            gain = (delta.where(delta > 0, 0)).rolling(window=period).mean()
+            loss = (-delta.where(delta < 0, 0)).rolling(window=period).mean()
+            rs = gain / loss
+            df[f'RSI{period}'] = 100 - (100 / (1 + rs))
         
         return df
         

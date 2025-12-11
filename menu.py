@@ -37,8 +37,7 @@ def main_menu():
         print("10. 国债目标收益率计算，运行本地的 bond_yield.py")
         print("11. 国债收益率曲线分析，运行本地的 bond_comparison.py")
         print("12. 股票数据分析（K线+指标+资金流+筹码）")
-        print("13. 技术指标分析")
-        print("14. 批量处理")
+        print("13. 定时收集股票数据（自动运行 stock_analyzer.py）")
         print("0. 退出，本程序关闭")
 
         choice = input("请输入选项（0-14）：")
@@ -46,30 +45,39 @@ def main_menu():
         if choice == '1':
             print("正在运行股票新高后回落分析...")
             subprocess.run([sys.executable, "stock_highdrop.py"])
+            break
         elif choice == '2':
             print("正在运行最优方案对比...")
             subprocess.run([sys.executable, "Best_Solution.py"])
+            break
         elif choice == '3':
             print("正在运行股票对比...")
             subprocess.run([sys.executable, "stock_index.py"])
+            break
         elif choice == '4':
             print("正在运行大选年指数分析...")
             subprocess.run([sys.executable, "election_year.py"])
+            break
         elif choice == '5':
             print("正在运行分红和股息率分析...")
             subprocess.run([sys.executable, "dividend_yield.py"])
+            break
         elif choice == '6':
             print("正在运行换手率分析...")
             subprocess.run([sys.executable, "turnover_ratio.py"])
+            break
         elif choice == '7':
             print("正在运行12个月股价排序分析...")
             subprocess.run([sys.executable, "month_comparison.py"])
+            break
         elif choice == '8':
             print("正在对比A股港股价差...")
             subprocess.run([sys.executable, "CN & HK comparison.py"])
+            break
         elif choice == '9':
             print("正在运行股票 vs 期权分析...")
             subprocess.run([sys.executable, "stock_options.py"])
+            break
         elif choice == '10':
             print("=== 运行国债目标收益率计算器（bond_yield.py） ===")
             try:
@@ -79,6 +87,7 @@ def main_menu():
             except FileNotFoundError:
                 print("未找到 bond_yield.py 文件，请确认文件路径是否正确")
             input("\n按回车键继续...")
+            break
         elif choice == '11':
             print("=== 运行国债收益率曲线分析（bond_comparison.py） ===")
             try:
@@ -88,15 +97,14 @@ def main_menu():
             except FileNotFoundError:
                 print("未找到 bond_comparison.py 文件，请确认文件路径是否正确")
             input("\n按回车键继续...")
+            break
         elif choice == '12':
             print("正在运行股票数据分析（K线+指标+资金流+筹码）...")
-            Menu().run()
+            subprocess.run([sys.executable, "stock_analyzer.py"])
+            break
         elif choice == '13':
-            print("正在运行技术指标分析...")
-            Menu().technical_indicators()
-        elif choice == '14':
-            print("正在运行批量处理...")
-            Menu().batch_process()
+            subprocess.run([sys.executable, "schedule_collector.py"])
+            break
         elif choice == '0':
             print("程序结束。")
             break

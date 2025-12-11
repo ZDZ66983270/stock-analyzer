@@ -31,35 +31,35 @@ OUTPUT_FILE_TEMPLATE = "{symbol}_merged_data.csv"
 # 标准化字段名
 COLUMN_NAMES = {
     # K线数据字段
-    "open": "Open",
-    "high": "High",
-    "low": "Low",
-    "close": "Close",
-    "volume": "Volume",
+    "open": "open",
+    "high": "high",
+    "low": "low",
+    "close": "close",
+    "volume": "volume",
     
     # 技术指标字段
-    "ma": "MA{period}",          # 如 MA5, MA10
-    "ema": "EMA{period}",        # 如 EMA12, EMA26
-    "macd": "MACD",
-    "macd_signal": "MACD_SIGNAL",
-    "macd_hist": "MACD_HIST",
-    "kdj_k": "KDJ_K",
-    "kdj_d": "KDJ_D",
-    "kdj_j": "KDJ_J",
-    "rsi": "RSI{period}",        # 如 RSI6, RSI12
-    "boll_upper": "BOLL_UPPER",
-    "boll_middle": "BOLL_MID",
-    "boll_lower": "BOLL_LOWER",
+    "ma": "ma{period}",          # 如 ma5, ma10
+    "ema": "ema{period}",        # 如 ema12, ema26
+    "macd": "macd",
+    "macd_signal": "signal",
+    "macd_hist": "hist",
+    "kdj_k": "k",
+    "kdj_d": "d",
+    "kdj_j": "j",
+    "rsi": "rsi{period}",        # 如 rsi6, rsi12
+    "boll_upper": "boll_upper",
+    "boll_middle": "boll_mid",
+    "boll_lower": "boll_lower",
     
     # 资金流向字段
-    "main_inflow": "MAIN_INFLOW",
-    "main_outflow": "MAIN_OUTFLOW",
-    "main_net_flow": "MAIN_NET_FLOW",
+    "main_inflow": "main_inflow",
+    "main_outflow": "main_outflow",
+    "main_net_flow": "main_net_flow",
     
     # 筹码分布字段
-    "support_price": "SUPPORT_PRICE",
-    "pressure_price": "PRESSURE_PRICE",
-    "avg_cost": "AVG_COST"
+    "support_price": "support_price",
+    "pressure_price": "pressure_price",
+    "avg_cost": "avg_cost"
 }
 
 # 雪球API配置
@@ -115,11 +115,11 @@ def validate_stock_symbols(symbols: List[str]) -> bool:
 
 # 输出CSV文件的列名配置
 CSV_COLUMNS = {
-    'base': ['time', 'open', 'high', 'low', 'close', 'volume'],
-    'ma': ['MA5', 'MA10', 'MA20'],
-    'macd': ['MACD_DIF', 'MACD_DEA', 'MACD_HIST'],
-    'kdj': ['KDJ_K', 'KDJ_D', 'KDJ_J'],
-    'rsi': ['RSI6', 'RSI12', 'RSI24'],
+    'base': ['datetime', 'open', 'high', 'low', 'close', 'volume'],
+    'ma': ['ma5', 'ma10', 'ma20'],
+    'macd': ['macd_dif', 'macd_dea', 'macd_hist'],
+    'kdj': ['kdj_k', 'kdj_d', 'kdj_j'],
+    'rsi': ['rsi6', 'rsi12', 'rsi24'],
     'capital_flow': ['capital_inflow', 'capital_outflow', 'capital_netflow']
 }
 

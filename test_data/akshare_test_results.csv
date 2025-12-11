@@ -1,0 +1,127 @@
+market,code,name,period,range,success,rows,columns,start_date,end_date,error
+A,000001.SZ,平安银行,daily,short,False,0.0,[],,,
+A,000001.SZ,平安银行,daily,medium,False,0.0,[],,,
+A,000001.SZ,平安银行,daily,long,False,0.0,[],,,
+A,000001.SZ,平安银行,weekly,short,False,0.0,[],,,
+A,000001.SZ,平安银行,weekly,medium,False,0.0,[],,,
+A,000001.SZ,平安银行,weekly,long,False,0.0,[],,,
+A,000001.SZ,平安银行,monthly,short,False,0.0,[],,,
+A,000001.SZ,平安银行,monthly,medium,False,0.0,[],,,
+A,000001.SZ,平安银行,monthly,long,False,0.0,[],,,
+A,000001.SZ,平安银行,5min,short,False,,,,,'NoneType' object is not subscriptable
+A,000001.SZ,平安银行,5min,medium,False,,,,,'NoneType' object is not subscriptable
+A,000001.SZ,平安银行,5min,long,False,,,,,'NoneType' object is not subscriptable
+A,000001.SZ,平安银行,15min,short,False,,,,,'NoneType' object is not subscriptable
+A,000001.SZ,平安银行,15min,medium,False,,,,,'NoneType' object is not subscriptable
+A,000001.SZ,平安银行,15min,long,False,,,,,'NoneType' object is not subscriptable
+A,000001.SZ,平安银行,30min,short,False,,,,,'NoneType' object is not subscriptable
+A,000001.SZ,平安银行,30min,medium,False,,,,,'NoneType' object is not subscriptable
+A,000001.SZ,平安银行,30min,long,False,,,,,'NoneType' object is not subscriptable
+A,000001.SZ,平安银行,60min,short,False,,,,,'NoneType' object is not subscriptable
+A,000001.SZ,平安银行,60min,medium,False,,,,,'NoneType' object is not subscriptable
+A,000001.SZ,平安银行,60min,long,False,,,,,'NoneType' object is not subscriptable
+A,600000.SH,浦发银行,daily,short,False,0.0,[],,,
+A,600000.SH,浦发银行,daily,medium,False,0.0,[],,,
+A,600000.SH,浦发银行,daily,long,False,0.0,[],,,
+A,600000.SH,浦发银行,weekly,short,False,0.0,[],,,
+A,600000.SH,浦发银行,weekly,medium,False,0.0,[],,,
+A,600000.SH,浦发银行,weekly,long,False,0.0,[],,,
+A,600000.SH,浦发银行,monthly,short,False,0.0,[],,,
+A,600000.SH,浦发银行,monthly,medium,False,0.0,[],,,
+A,600000.SH,浦发银行,monthly,long,False,0.0,[],,,
+A,600000.SH,浦发银行,5min,short,False,,,,,'NoneType' object is not subscriptable
+A,600000.SH,浦发银行,5min,medium,False,,,,,'NoneType' object is not subscriptable
+A,600000.SH,浦发银行,5min,long,False,,,,,'NoneType' object is not subscriptable
+A,600000.SH,浦发银行,15min,short,False,,,,,'NoneType' object is not subscriptable
+A,600000.SH,浦发银行,15min,medium,False,,,,,'NoneType' object is not subscriptable
+A,600000.SH,浦发银行,15min,long,False,,,,,'NoneType' object is not subscriptable
+A,600000.SH,浦发银行,30min,short,False,,,,,'NoneType' object is not subscriptable
+A,600000.SH,浦发银行,30min,medium,False,,,,,'NoneType' object is not subscriptable
+A,600000.SH,浦发银行,30min,long,False,,,,,'NoneType' object is not subscriptable
+A,600000.SH,浦发银行,60min,short,False,,,,,'NoneType' object is not subscriptable
+A,600000.SH,浦发银行,60min,medium,False,,,,,'NoneType' object is not subscriptable
+A,600000.SH,浦发银行,60min,long,False,,,,,'NoneType' object is not subscriptable
+HK,00700,腾讯控股,daily,short,True,5130.0,"['date', 'open', 'high', 'low', 'close', 'volume']",0.0,5129.0,
+HK,00700,腾讯控股,daily,medium,True,5130.0,"['date', 'open', 'high', 'low', 'close', 'volume']",0.0,5129.0,
+HK,00700,腾讯控股,daily,long,True,5130.0,"['date', 'open', 'high', 'low', 'close', 'volume']",0.0,5129.0,
+HK,00700,腾讯控股,weekly,short,True,5130.0,"['date', 'open', 'high', 'low', 'close', 'volume']",0.0,5129.0,
+HK,00700,腾讯控股,weekly,medium,True,5130.0,"['date', 'open', 'high', 'low', 'close', 'volume']",0.0,5129.0,
+HK,00700,腾讯控股,weekly,long,True,5130.0,"['date', 'open', 'high', 'low', 'close', 'volume']",0.0,5129.0,
+HK,00700,腾讯控股,monthly,short,True,5130.0,"['date', 'open', 'high', 'low', 'close', 'volume']",0.0,5129.0,
+HK,00700,腾讯控股,monthly,medium,True,5130.0,"['date', 'open', 'high', 'low', 'close', 'volume']",0.0,5129.0,
+HK,00700,腾讯控股,monthly,long,True,5130.0,"['date', 'open', 'high', 'low', 'close', 'volume']",0.0,5129.0,
+HK,00700,腾讯控股,5min,short,True,1452.0,"['时间', '开盘', '收盘', '最高', '最低', '涨跌幅', '涨跌额', '成交量', '成交额', '振幅', '换手率']",0.0,1451.0,
+HK,00700,腾讯控股,5min,medium,True,1518.0,"['时间', '开盘', '收盘', '最高', '最低', '涨跌幅', '涨跌额', '成交量', '成交额', '振幅', '换手率']",0.0,1517.0,
+HK,00700,腾讯控股,5min,long,True,1518.0,"['时间', '开盘', '收盘', '最高', '最低', '涨跌幅', '涨跌额', '成交量', '成交额', '振幅', '换手率']",0.0,1517.0,
+HK,00700,腾讯控股,15min,short,True,506.0,"['时间', '开盘', '收盘', '最高', '最低', '涨跌幅', '涨跌额', '成交量', '成交额', '振幅', '换手率']",0.0,505.0,
+HK,00700,腾讯控股,15min,medium,True,484.0,"['时间', '开盘', '收盘', '最高', '最低', '涨跌幅', '涨跌额', '成交量', '成交额', '振幅', '换手率']",0.0,483.0,
+HK,00700,腾讯控股,15min,long,True,506.0,"['时间', '开盘', '收盘', '最高', '最低', '涨跌幅', '涨跌额', '成交量', '成交额', '振幅', '换手率']",0.0,505.0,
+HK,00700,腾讯控股,30min,short,True,253.0,"['时间', '开盘', '收盘', '最高', '最低', '涨跌幅', '涨跌额', '成交量', '成交额', '振幅', '换手率']",0.0,252.0,
+HK,00700,腾讯控股,30min,medium,True,253.0,"['时间', '开盘', '收盘', '最高', '最低', '涨跌幅', '涨跌额', '成交量', '成交额', '振幅', '换手率']",0.0,252.0,
+HK,00700,腾讯控股,30min,long,True,253.0,"['时间', '开盘', '收盘', '最高', '最低', '涨跌幅', '涨跌额', '成交量', '成交额', '振幅', '换手率']",0.0,252.0,
+HK,00700,腾讯控股,60min,short,True,132.0,"['时间', '开盘', '收盘', '最高', '最低', '涨跌幅', '涨跌额', '成交量', '成交额', '振幅', '换手率']",0.0,131.0,
+HK,00700,腾讯控股,60min,medium,True,132.0,"['时间', '开盘', '收盘', '最高', '最低', '涨跌幅', '涨跌额', '成交量', '成交额', '振幅', '换手率']",0.0,131.0,
+HK,00700,腾讯控股,60min,long,True,138.0,"['时间', '开盘', '收盘', '最高', '最低', '涨跌幅', '涨跌额', '成交量', '成交额', '振幅', '换手率']",0.0,137.0,
+HK,00941,中国移动,daily,short,True,6613.0,"['date', 'open', 'high', 'low', 'close', 'volume']",0.0,6612.0,
+HK,00941,中国移动,daily,medium,True,6613.0,"['date', 'open', 'high', 'low', 'close', 'volume']",0.0,6612.0,
+HK,00941,中国移动,daily,long,True,6613.0,"['date', 'open', 'high', 'low', 'close', 'volume']",0.0,6612.0,
+HK,00941,中国移动,weekly,short,True,6613.0,"['date', 'open', 'high', 'low', 'close', 'volume']",0.0,6612.0,
+HK,00941,中国移动,weekly,medium,True,6613.0,"['date', 'open', 'high', 'low', 'close', 'volume']",0.0,6612.0,
+HK,00941,中国移动,weekly,long,True,6613.0,"['date', 'open', 'high', 'low', 'close', 'volume']",0.0,6612.0,
+HK,00941,中国移动,monthly,short,True,6613.0,"['date', 'open', 'high', 'low', 'close', 'volume']",0.0,6612.0,
+HK,00941,中国移动,monthly,medium,True,6613.0,"['date', 'open', 'high', 'low', 'close', 'volume']",0.0,6612.0,
+HK,00941,中国移动,monthly,long,True,6613.0,"['date', 'open', 'high', 'low', 'close', 'volume']",0.0,6612.0,
+HK,00941,中国移动,5min,short,True,1452.0,"['时间', '开盘', '收盘', '最高', '最低', '涨跌幅', '涨跌额', '成交量', '成交额', '振幅', '换手率']",0.0,1451.0,
+HK,00941,中国移动,5min,medium,True,1452.0,"['时间', '开盘', '收盘', '最高', '最低', '涨跌幅', '涨跌额', '成交量', '成交额', '振幅', '换手率']",0.0,1451.0,
+HK,00941,中国移动,5min,long,True,1452.0,"['时间', '开盘', '收盘', '最高', '最低', '涨跌幅', '涨跌额', '成交量', '成交额', '振幅', '换手率']",0.0,1451.0,
+HK,00941,中国移动,15min,short,True,484.0,"['时间', '开盘', '收盘', '最高', '最低', '涨跌幅', '涨跌额', '成交量', '成交额', '振幅', '换手率']",0.0,483.0,
+HK,00941,中国移动,15min,medium,True,484.0,"['时间', '开盘', '收盘', '最高', '最低', '涨跌幅', '涨跌额', '成交量', '成交额', '振幅', '换手率']",0.0,483.0,
+HK,00941,中国移动,15min,long,True,484.0,"['时间', '开盘', '收盘', '最高', '最低', '涨跌幅', '涨跌额', '成交量', '成交额', '振幅', '换手率']",0.0,483.0,
+HK,00941,中国移动,30min,short,True,242.0,"['时间', '开盘', '收盘', '最高', '最低', '涨跌幅', '涨跌额', '成交量', '成交额', '振幅', '换手率']",0.0,241.0,
+HK,00941,中国移动,30min,medium,True,242.0,"['时间', '开盘', '收盘', '最高', '最低', '涨跌幅', '涨跌额', '成交量', '成交额', '振幅', '换手率']",0.0,241.0,
+HK,00941,中国移动,30min,long,True,253.0,"['时间', '开盘', '收盘', '最高', '最低', '涨跌幅', '涨跌额', '成交量', '成交额', '振幅', '换手率']",0.0,252.0,
+HK,00941,中国移动,60min,short,True,132.0,"['时间', '开盘', '收盘', '最高', '最低', '涨跌幅', '涨跌额', '成交量', '成交额', '振幅', '换手率']",0.0,131.0,
+HK,00941,中国移动,60min,medium,True,132.0,"['时间', '开盘', '收盘', '最高', '最低', '涨跌幅', '涨跌额', '成交量', '成交额', '振幅', '换手率']",0.0,131.0,
+HK,00941,中国移动,60min,long,True,132.0,"['时间', '开盘', '收盘', '最高', '最低', '涨跌幅', '涨跌额', '成交量', '成交额', '振幅', '换手率']",0.0,131.0,
+US,AAPL,苹果,daily,short,True,9685.0,"['date', 'open', 'high', 'low', 'close', 'volume']",0.0,9684.0,
+US,AAPL,苹果,daily,medium,True,9685.0,"['date', 'open', 'high', 'low', 'close', 'volume']",0.0,9684.0,
+US,AAPL,苹果,daily,long,True,9685.0,"['date', 'open', 'high', 'low', 'close', 'volume']",0.0,9684.0,
+US,AAPL,苹果,weekly,short,True,9685.0,"['date', 'open', 'high', 'low', 'close', 'volume']",0.0,9684.0,
+US,AAPL,苹果,weekly,medium,True,9685.0,"['date', 'open', 'high', 'low', 'close', 'volume']",0.0,9684.0,
+US,AAPL,苹果,weekly,long,True,9685.0,"['date', 'open', 'high', 'low', 'close', 'volume']",0.0,9684.0,
+US,AAPL,苹果,monthly,short,True,9685.0,"['date', 'open', 'high', 'low', 'close', 'volume']",0.0,9684.0,
+US,AAPL,苹果,monthly,medium,True,9685.0,"['date', 'open', 'high', 'low', 'close', 'volume']",0.0,9684.0,
+US,AAPL,苹果,monthly,long,True,9685.0,"['date', 'open', 'high', 'low', 'close', 'volume']",0.0,9684.0,
+US,AAPL,苹果,5min,short,False,,,,,stock_us_hist_min_em() got an unexpected keyword argument 'period'
+US,AAPL,苹果,5min,medium,False,,,,,stock_us_hist_min_em() got an unexpected keyword argument 'period'
+US,AAPL,苹果,5min,long,False,,,,,stock_us_hist_min_em() got an unexpected keyword argument 'period'
+US,AAPL,苹果,15min,short,False,,,,,stock_us_hist_min_em() got an unexpected keyword argument 'period'
+US,AAPL,苹果,15min,medium,False,,,,,stock_us_hist_min_em() got an unexpected keyword argument 'period'
+US,AAPL,苹果,15min,long,False,,,,,stock_us_hist_min_em() got an unexpected keyword argument 'period'
+US,AAPL,苹果,30min,short,False,,,,,stock_us_hist_min_em() got an unexpected keyword argument 'period'
+US,AAPL,苹果,30min,medium,False,,,,,stock_us_hist_min_em() got an unexpected keyword argument 'period'
+US,AAPL,苹果,30min,long,False,,,,,stock_us_hist_min_em() got an unexpected keyword argument 'period'
+US,AAPL,苹果,60min,short,False,,,,,stock_us_hist_min_em() got an unexpected keyword argument 'period'
+US,AAPL,苹果,60min,medium,False,,,,,stock_us_hist_min_em() got an unexpected keyword argument 'period'
+US,AAPL,苹果,60min,long,False,,,,,stock_us_hist_min_em() got an unexpected keyword argument 'period'
+US,MSFT,微软,daily,short,True,9303.0,"['date', 'open', 'high', 'low', 'close', 'volume']",0.0,9302.0,
+US,MSFT,微软,daily,medium,True,9303.0,"['date', 'open', 'high', 'low', 'close', 'volume']",0.0,9302.0,
+US,MSFT,微软,daily,long,True,9303.0,"['date', 'open', 'high', 'low', 'close', 'volume']",0.0,9302.0,
+US,MSFT,微软,weekly,short,True,9303.0,"['date', 'open', 'high', 'low', 'close', 'volume']",0.0,9302.0,
+US,MSFT,微软,weekly,medium,True,9303.0,"['date', 'open', 'high', 'low', 'close', 'volume']",0.0,9302.0,
+US,MSFT,微软,weekly,long,True,9303.0,"['date', 'open', 'high', 'low', 'close', 'volume']",0.0,9302.0,
+US,MSFT,微软,monthly,short,True,9303.0,"['date', 'open', 'high', 'low', 'close', 'volume']",0.0,9302.0,
+US,MSFT,微软,monthly,medium,True,9303.0,"['date', 'open', 'high', 'low', 'close', 'volume']",0.0,9302.0,
+US,MSFT,微软,monthly,long,True,9303.0,"['date', 'open', 'high', 'low', 'close', 'volume']",0.0,9302.0,
+US,MSFT,微软,5min,short,False,,,,,stock_us_hist_min_em() got an unexpected keyword argument 'period'
+US,MSFT,微软,5min,medium,False,,,,,stock_us_hist_min_em() got an unexpected keyword argument 'period'
+US,MSFT,微软,5min,long,False,,,,,stock_us_hist_min_em() got an unexpected keyword argument 'period'
+US,MSFT,微软,15min,short,False,,,,,stock_us_hist_min_em() got an unexpected keyword argument 'period'
+US,MSFT,微软,15min,medium,False,,,,,stock_us_hist_min_em() got an unexpected keyword argument 'period'
+US,MSFT,微软,15min,long,False,,,,,stock_us_hist_min_em() got an unexpected keyword argument 'period'
+US,MSFT,微软,30min,short,False,,,,,stock_us_hist_min_em() got an unexpected keyword argument 'period'
+US,MSFT,微软,30min,medium,False,,,,,stock_us_hist_min_em() got an unexpected keyword argument 'period'
+US,MSFT,微软,30min,long,False,,,,,stock_us_hist_min_em() got an unexpected keyword argument 'period'
+US,MSFT,微软,60min,short,False,,,,,stock_us_hist_min_em() got an unexpected keyword argument 'period'
+US,MSFT,微软,60min,medium,False,,,,,stock_us_hist_min_em() got an unexpected keyword argument 'period'
+US,MSFT,微软,60min,long,False,,,,,stock_us_hist_min_em() got an unexpected keyword argument 'period'

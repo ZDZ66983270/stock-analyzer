@@ -292,25 +292,25 @@ class DataValidator:
         """
         try:
             # 检查MA指标
-            ma_cols = [col for col in df.columns if col.startswith('ma')]
+            ma_cols = [col for col in df.columns if col.startswith('MA')]
             for col in ma_cols:
                 if not self._validate_ma(df[col]):
                     return False
             
             # 检查MACD指标
-            macd_cols = ['macd_dif', 'macd_dea', 'macd_hist']
+            macd_cols = ['DIF', 'DEA', 'MACD']
             if all(col in df.columns for col in macd_cols):
                 if not self._validate_macd(df[macd_cols]):
                     return False
             
             # 检查KDJ指标
-            kdj_cols = ['kdj_k', 'kdj_d', 'kdj_j']
+            kdj_cols = ['K', 'D', 'J']
             if all(col in df.columns for col in kdj_cols):
                 if not self._validate_kdj(df[kdj_cols]):
                     return False
             
             # 检查RSI指标
-            rsi_cols = [col for col in df.columns if col.startswith('rsi')]
+            rsi_cols = [col for col in df.columns if col.startswith('RSI')]
             for col in rsi_cols:
                 if not self._validate_rsi(df[col]):
                     return False
@@ -343,7 +343,7 @@ class DataValidator:
     def _validate_macd(self, df: pd.DataFrame) -> bool:
         """验证MACD指标的有效性"""
         try:
-            dif, dea, hist = df['macd_dif'], df['macd_dea'], df['macd_hist']
+            dif, dea, hist = df['DIF'], df['DEA'], df['MACD']
             
             # 验证HIST是否等于2*(DIF-DEA)
             calc_hist = 2 * (dif - dea)
@@ -360,7 +360,7 @@ class DataValidator:
     def _validate_kdj(self, df: pd.DataFrame) -> bool:
         """验证KDJ指标的有效性"""
         try:
-            k, d, j = df['kdj_k'], df['kdj_d'], df['kdj_j']
+            k, d, j = df['K'], df['D'], df['J']
             
             # K、D值应该在0-100之间
             if ((k < 0) | (k > 100) | (d < 0) | (d > 100)).any():
@@ -475,9 +475,9 @@ def validate_and_fix_columns(df: pd.DataFrame,
     if standard_columns is None:
         standard_columns = [
             'datetime', 'open', 'high', 'low', 'close', 'volume',
-            'macd', 'signal', 'hist',
-            'k', 'd', 'j',
-            'rsi_6', 'rsi_12', 'rsi_24'
+            'macd_dif', 'macd_dea', 'macd_hist',
+            'kdj_k', 'kdj_d', 'kdj_j',
+            'rsi6', 'rsi12', 'rsi24'
         ]
     
     try:

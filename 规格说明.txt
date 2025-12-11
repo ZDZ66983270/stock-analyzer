@@ -1,0 +1,126 @@
+# 股票分析系统规格说明
+
+## 1. 函数列表
+
+### utils.py
+- read_symbols_from_file: 读取股票代码文件，忽略注释行
+- validate_dataframe: 验证DataFrame的数据格式
+- standardize_columns: 标准化列名
+- save_to_excel: 保存K线数据和资金流数据到Excel
+
+### data_fetcher.py
+- format_symbol: 根据市场类型格式化股票代码
+- fetch_kline: 获取K线数据
+- fetch_all_kline_data: 获取所有周期的K线数据
+- fetch_us_stock_data: 获取美股数据
+
+### technical_indicators.py
+- calculate_ma: 计算移动平均线
+- calculate_indicators: 计算所有技术指标
+- add_technical_indicators: 为DataFrame添加技术指标
+
+### technical_analyzer.py
+- calculate_technical_indicators: 计算技术指标
+
+### min_data_fetcher.py
+- fetch_all_min_data: 获取所有周期的分钟数据
+
+### fund_flow_fetcher.py
+- fetch_hk_fund_flow: 获取港股资金流向数据
+- fetch_fund_flow: 获取A股资金流向数据
+
+## 2. 数据源字段名
+
+### A股数据源
+- 日期
+- 开盘
+- 收盘
+- 最高
+- 最低
+- 成交量
+- 成交额
+- 换手率
+- 振幅
+- 涨跌幅
+- 涨跌额
+
+### 港股数据源
+- 日期
+- 开盘
+- 收盘
+- 最高
+- 最低
+- 成交量
+- 成交额
+- 换手率
+- 振幅
+- 涨跌幅
+- 涨跌额
+
+### 美股数据源
+- Date
+- Open
+- Close
+- High
+- Low
+- Volume
+
+## 3. 所有列名
+
+### 基础列名
+- datetime: 日期时间
+- open: 开盘价
+- high: 最高价
+- low: 最低价
+- close: 收盘价
+- volume: 成交量
+- amount: 成交额
+- turnover: 换手率
+- change_pct: 涨跌幅
+- change: 涨跌额
+- amplitude: 振幅
+
+### 资金流向列名
+- main_net: 主力净流入
+- super_large_net: 超大单净流入
+- large_net: 大单净流入
+- medium_net: 中单净流入
+- small_net: 小单净流入
+- main_net_pct: 主力净流入占比
+- super_large_net_pct: 超大单净流入占比
+- large_net_pct: 大单净流入占比
+- medium_net_pct: 中单净流入占比
+- small_net_pct: 小单净流入占比
+
+## 4. 技术指标列表
+
+### MA指标
+- ma5: 5日均线
+- ma10: 10日均线
+- ma20: 20日均线
+- ma60: 60日均线
+
+### MACD指标
+- macd_dif: MACD快线
+- macd_dea: MACD慢线
+- macd_hist: MACD柱状图
+
+### KDJ指标
+- kdj_k: K值
+- kdj_d: D值
+- kdj_j: J值
+
+### RSI指标
+- rsi6: 6日RSI
+- rsi12: 12日RSI
+- rsi24: 24日RSI
+
+### 布林带指标
+- boll_mid: 中轨
+- boll_upper: 上轨
+- boll_lower: 下轨
+
+### 成交量均线
+- volume_ma5: 5日成交量均线
+- volume_ma10: 10日成交量均线
+- volume_ma20: 20日成交量均线 

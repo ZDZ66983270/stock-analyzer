@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ImageUploadArea from './ImageUploadArea';
+import CollapsibleSection from './CollapsibleSection';
+import StarRating from './StarRating';
 import { analyzeAsset } from '../utils/mockAI';
 import { getMockData } from '../utils/mockData';
 import { getColorConvention, getChangeColor, getPerformanceColor } from '../utils/colorUtils';
@@ -755,15 +757,15 @@ const FundDetailView = ({ asset, onBack }) => {
                 )}
             </div>
 
-            {/* SECTION 7: Analysis Results */}
-            <div id="analysis-result" className="glass-panel" style={{ padding: '1rem', borderRadius: 'var(--radius-md)', background: '#1c1c20' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.8rem', borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '0.5rem' }}>
-                    <h3 style={{ margin: 0, fontSize: '1rem', color: 'var(--text-secondary)' }}>
-                        上次分析结果
+            {/* SECTION 7: 价值评估报告 */}
+            <div id="analysis-result" className="glass-panel" style={{ padding: '1.5rem', borderRadius: 'var(--radius-md)', background: '#1c1c20' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.2rem', borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '0.8rem' }}>
+                    <h3 style={{ margin: 0, fontSize: '1.1rem', color: 'var(--text-secondary)', fontWeight: '600' }}>
+                        💎 价值评估报告
                     </h3>
                     <div
                         style={{ fontSize: '0.85rem', color: 'var(--accent-primary)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
-                        onClick={() => alert("功能开发中:查看历史分析记录")}
+                        onClick={() => alert("功能开发中:查看历史评估记录")}
                     >
                         <span>📑</span> 历史记录
                     </div>
@@ -771,199 +773,337 @@ const FundDetailView = ({ asset, onBack }) => {
 
                 {analysisResult ? (
                     <>
-                        {/* Cycles */}
-                        <div style={{ marginBottom: '1.2rem', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.5rem', textAlign: 'center' }}>
-                            <div style={{ background: 'rgba(255,255,255,0.03)', padding: '0.6rem', borderRadius: 'var(--radius-sm)' }}>
-                                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>个股周期</div>
-                                <div style={{ fontWeight: 'bold' }}>{analysisResult.stockCycle || '震荡'}</div>
+                        {/* 综合评分区 */}
+                        <div style={{
+                            marginBottom: '1.5rem',
+                            background: 'linear-gradient(135deg, rgba(59,130,246,0.1) 0%, rgba(139,92,246,0.1) 100%)',
+                            padding: '1.5rem',
+                            borderRadius: 'var(--radius-md)',
+                            border: '1px solid rgba(59,130,246,0.2)',
+                            textAlign: 'center'
+                        }}>
+                            <div style={{ marginBottom: '1rem' }}>
+                                <StarRating score={analysisResult.weighted_score || analysisResult.total_score || 0} />
                             </div>
-                            <div style={{ background: 'rgba(255,255,255,0.03)', padding: '0.6rem', borderRadius: 'var(--radius-sm)' }}>
-                                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>板块周期</div>
-                                <div style={{ fontWeight: 'bold' }}>{analysisResult.sectorCycle || '复苏'}</div>
+                            <div style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#fff', marginBottom: '0.5rem' }}>
+                                {analysisResult.weighted_score || analysisResult.total_score || '--'} <span style={{ fontSize: '1.2rem', color: 'var(--text-muted)' }}>/ 100</span>
                             </div>
-                            <div style={{ background: 'rgba(255,255,255,0.03)', padding: '0.6rem', borderRadius: 'var(--radius-sm)' }}>
-                                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>宏观周期</div>
-                                <div style={{ fontWeight: 'bold' }}>{analysisResult.macroCycle || '衰退'}</div>
+                            <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '1rem' }}>
+                                综合评分
                             </div>
-                        </div>
-
-                        {/* Scoring Summary & Signal Meter */}
-                        <div style={{ marginBottom: '1.2rem', background: 'rgba(255,255,255,0.02)', padding: '1rem', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(255,255,255,0.05)' }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
-                                <div style={{ textAlign: 'center', flex: 1, borderRight: '1px solid rgba(255,255,255,0.1)' }}>
-                                    <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>综合得分</div>
-                                    <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#fff' }}>{analysisResult.total_score || '--'}</div>
+                            <div style={{
+                                display: 'grid',
+                                gridTemplateColumns: '1fr 1fr',
+                                gap: '0.8rem',
+                                marginTop: '1rem',
+                                paddingTop: '1rem',
+                                borderTop: '1px solid rgba(255,255,255,0.1)'
+                            }}>
+                                <div>
+                                    <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '0.3rem' }}>适合投资者</div>
+                                    <div style={{ fontSize: '0.9rem', color: '#fff', fontWeight: '500' }}>长期价值投资者</div>
                                 </div>
-                                <div style={{ textAlign: 'center', flex: 1 }}>
-                                    <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>加权得分</div>
-                                    <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'var(--accent-primary)' }}>{analysisResult.weighted_score || '--'}</div>
-                                </div>
-                            </div>
-
-                            {/* Signal Meter -3 to +3 */}
-                            <div style={{ marginBottom: '0.5rem' }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '4px' }}>
-                                    <span>看空 (-3)</span>
-                                    <span>中性 (0)</span>
-                                    <span>看多 (+3)</span>
-                                </div>
-                                {/* Bar Container */}
-                                <div style={{ height: '12px', background: 'rgba(255,255,255,0.1)', borderRadius: '6px', position: 'relative', overflow: 'hidden' }}>
-                                    {/* Gradient Background */}
-                                    <div style={{
-                                        position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
-                                        background: 'linear-gradient(to right, #10b981 0%, #10b981 30%, #eab308 45%, #eab308 55%, #ef4444 70%, #ef4444 100%)',
-                                        opacity: 0.3
-                                    }}></div>
-
-                                    {/* Indicator Needle */}
-                                    <div style={{
-                                        position: 'absolute',
-                                        top: 0, bottom: 0, width: '4px',
-                                        background: '#fff',
-                                        boxShadow: '0 0 4px rgba(0,0,0,0.5)',
-                                        left: (() => {
-                                            const val = analysisResult.signal_value || 0;
-                                            const percent = ((val + 3) / 6) * 100;
-                                            return `${Math.max(0, Math.min(100, percent))}%`;
-                                        })(),
-                                        transform: 'translateX(-50%)',
-                                        transition: 'left 0.5s ease-out'
-                                    }}></div>
-                                </div>
-                                <div style={{ textAlign: 'center', marginTop: '6px', fontSize: '0.9rem', fontWeight: 'bold', color: '#fff' }}>
-                                    信号强度: <span style={{ color: (analysisResult.signal_value || 0) > 0 ? '#ef4444' : (analysisResult.signal_value || 0) < 0 ? '#10b981' : '#eab308' }}>
-                                        {(analysisResult.signal_value || 0) > 0 ? '+' : ''}{analysisResult.signal_value}
-                                    </span>
+                                <div>
+                                    <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '0.3rem' }}>建议持有周期</div>
+                                    <div style={{ fontSize: '0.9rem', color: '#fff', fontWeight: '500' }}>3年以上</div>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Conclusion */}
-                        <div style={{ marginBottom: '1.2rem' }}>
-                            <div style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '0.4rem', fontWeight: 'bold' }}>综合结论</div>
-                            <div style={{ lineHeight: '1.6', fontSize: '0.95rem', color: '#e4e4e7', background: 'rgba(255,255,255,0.03)', padding: '0.8rem', borderRadius: 'var(--radius-sm)' }}>
-                                {analysisResult.summary}
+                        {/* 价值分析 */}
+                        <CollapsibleSection title="价值分析" icon="💎" defaultExpanded={true}>
+                            <div style={{ marginBottom: '1rem' }}>
+                                <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>
+                                    估值水平: <span style={{ color: '#f59e0b', fontWeight: '600' }}>合理偏高 ⚠️</span>
+                                </div>
+                                <div style={{
+                                    display: 'grid',
+                                    gridTemplateColumns: '1fr 1fr',
+                                    gap: '0.8rem',
+                                    background: 'rgba(255,255,255,0.03)',
+                                    padding: '1rem',
+                                    borderRadius: 'var(--radius-sm)'
+                                }}>
+                                    <div>
+                                        <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>费用率</div>
+                                        <div style={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#fff' }}>1.5%</div>
+                                        <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>行业均值: 1.8%</div>
+                                    </div>
+                                    <div>
+                                        <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>夏普比率</div>
+                                        <div style={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#fff' }}>1.2</div>
+                                        <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>风险调整后收益</div>
+                                    </div>
+                                </div>
+                                <div style={{
+                                    marginTop: '0.8rem',
+                                    padding: '0.8rem',
+                                    background: 'rgba(59,130,246,0.1)',
+                                    borderRadius: 'var(--radius-sm)',
+                                    borderLeft: '3px solid #3b82f6'
+                                }}>
+                                    <div style={{ fontSize: '0.85rem', color: '#e4e4e7', lineHeight: '1.5' }}>
+                                        该基金费用率低于行业平均水平,长期持有成本优势明显。风险调整后收益表现良好,适合稳健型投资者。
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        </CollapsibleSection>
 
-                        {/* Model Details List */}
-                        {analysisResult.model_details && Array.isArray(analysisResult.model_details) ? (
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
-                                <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', fontWeight: 'bold' }}>各模型评价细则:</div>
-                                {analysisResult.model_details.map((model, idx) => {
-                                    // Determine color based on signal
-                                    let signalColor = 'var(--text-secondary)';
-                                    if (model.signal.includes('看多') || model.signal.includes('Bullish')) signalColor = '#ef4444';
-                                    if (model.signal.includes('看空') || model.signal.includes('Bearish')) signalColor = '#10b981';
-                                    if (model.signal.includes('中性') || model.signal.includes('Neutral')) signalColor = '#eab308';
-
-                                    return (
-                                        <div key={idx} style={{ background: 'rgba(255,255,255,0.03)', padding: '0.8rem', borderRadius: 'var(--radius-sm)', borderLeft: `3px solid ${signalColor}` }}>
-                                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.4rem' }}>
-                                                <span style={{ fontSize: '0.95rem', fontWeight: '600', color: '#fff' }}>{model.name}</span>
-                                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                                    <span style={{
-                                                        fontSize: '0.8rem',
-                                                        padding: '2px 8px',
-                                                        borderRadius: '12px',
-                                                        background: `${signalColor}20`,
-                                                        color: signalColor,
-                                                        border: `1px solid ${signalColor}40`
-                                                    }}>
-                                                        {model.signal}
-                                                    </span>
-                                                    <span style={{ fontSize: '0.9rem', fontWeight: 'bold', color: 'var(--text-primary)' }}>
-                                                        {model.score}分
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.4', marginBottom: model.details ? '0.8rem' : '0' }}>
-                                                {model.description}
-                                            </div>
-
-                                            {/* Technical Indicator Details (if available) */}
-                                            {model.details && (
-                                                <div style={{ background: 'rgba(0,0,0,0.2)', padding: '0.8rem', borderRadius: 'var(--radius-sm)', fontSize: '0.8rem' }}>
-                                                    {/* Time Period Tabs (for Technical Analysis) */}
-                                                    {model.timeframe && (
-                                                        <div style={{ marginBottom: '0.8rem', paddingBottom: '0.8rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                                                            <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginBottom: '0.4rem' }}>周期选择</div>
-                                                            <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
-                                                                {['15分钟', '30分钟', '1小时', '4小时', '日线', '周线', '月线'].map(period => (
-                                                                    <div
-                                                                        key={period}
-                                                                        style={{
-                                                                            padding: '0.3rem 0.6rem',
-                                                                            borderRadius: '4px',
-                                                                            fontSize: '0.75rem',
-                                                                            cursor: 'pointer',
-                                                                            background: period === model.timeframe ? 'var(--accent-primary)' : 'rgba(255,255,255,0.05)',
-                                                                            color: period === model.timeframe ? '#fff' : 'var(--text-secondary)',
-                                                                            border: `1px solid ${period === model.timeframe ? 'var(--accent-primary)' : 'rgba(255,255,255,0.1)'}`,
-                                                                            transition: 'all 0.2s'
-                                                                        }}
-                                                                        onClick={() => alert(`切换到${period}周期（功能开发中）`)}
-                                                                    >
-                                                                        {period}
-                                                                    </div>
-                                                                ))}
-                                                            </div>
-                                                        </div>
-                                                    )}
-
-                                                    {model.details.macd && (
-                                                        <div style={{ marginBottom: '0.6rem', paddingBottom: '0.6rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                                                            <div style={{ color: 'var(--accent-primary)', fontWeight: 'bold', marginBottom: '0.3rem' }}>MACD 指标</div>
-                                                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.5rem', marginBottom: '0.4rem' }}>
-                                                                <div><span style={{ color: 'var(--text-muted)' }}>DIF:</span> <span style={{ color: '#fff' }}>{model.details.macd.dif}</span></div>
-                                                                <div><span style={{ color: '#fff' }}>DEA:</span> <span style={{ color: '#fff' }}>{model.details.macd.dea}</span></div>
-                                                                <div><span style={{ color: '#fff' }}>柱:</span> <span style={{ color: '#fff' }}>{model.details.macd.bar}</span></div>
-                                                            </div>
-                                                            <div style={{ color: '#e4e4e7', fontSize: '0.75rem' }}>→ {model.details.macd.conclusion}</div>
-                                                        </div>
-                                                    )}
-                                                    {model.details.kdj && (
-                                                        <div style={{ marginBottom: '0.6rem', paddingBottom: '0.6rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                                                            <div style={{ color: 'var(--accent-primary)', fontWeight: 'bold', marginBottom: '0.3rem' }}>KDJ 指标</div>
-                                                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.5rem', marginBottom: '0.4rem' }}>
-                                                                <div><span style={{ color: 'var(--text-muted)' }}>K:</span> <span style={{ color: '#fff' }}>{model.details.kdj.k}</span></div>
-                                                                <div><span style={{ color: 'var(--text-muted)' }}>D:</span> <span style={{ color: '#fff' }}>{model.details.kdj.d}</span></div>
-                                                                <div><span style={{ color: 'var(--text-muted)' }}>J:</span> <span style={{ color: '#fff' }}>{model.details.kdj.j}</span></div>
-                                                            </div>
-                                                            <div style={{ color: '#e4e4e7', fontSize: '0.75rem' }}>→ {model.details.kdj.conclusion}</div>
-                                                        </div>
-                                                    )}
-                                                    {model.details.rsi && (
-                                                        <div>
-                                                            <div style={{ color: 'var(--accent-primary)', fontWeight: 'bold', marginBottom: '0.3rem' }}>RSI 指标</div>
-                                                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.5rem', marginBottom: '0.4rem' }}>
-                                                                <div><span style={{ color: 'var(--text-muted)' }}>RSI6:</span> <span style={{ color: '#fff' }}>{model.details.rsi.rsi6}</span></div>
-                                                                <div><span style={{ color: 'var(--text-muted)' }}>RSI12:</span> <span style={{ color: '#fff' }}>{model.details.rsi.rsi12}</span></div>
-                                                                <div><span style={{ color: 'var(--text-muted)' }}>RSI24:</span> <span style={{ color: '#fff' }}>{model.details.rsi.rsi24}</span></div>
-                                                            </div>
-                                                            <div style={{ color: '#e4e4e7', fontSize: '0.75rem' }}>→ {model.details.rsi.conclusion}</div>
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            )}
+                        {/* 机会洞察 */}
+                        <CollapsibleSection title="机会洞察" icon="⚡" defaultExpanded={true}>
+                            <div style={{ marginBottom: '0.5rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+                                发现 <span style={{ color: '#10b981', fontWeight: 'bold' }}>3</span> 个有利因素:
+                            </div>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                                <div style={{
+                                    display: 'flex',
+                                    alignItems: 'flex-start',
+                                    gap: '0.5rem',
+                                    padding: '0.8rem',
+                                    background: 'rgba(16,185,129,0.05)',
+                                    borderRadius: 'var(--radius-sm)',
+                                    borderLeft: '3px solid #10b981'
+                                }}>
+                                    <span style={{ fontSize: '1.2rem' }}>✓</span>
+                                    <div style={{ flex: 1 }}>
+                                        <div style={{ fontSize: '0.9rem', color: '#fff', fontWeight: '500', marginBottom: '0.2rem' }}>
+                                            分散化投资组合
                                         </div>
-                                    );
-                                })}
-                            </div>
-                        ) : (
-                            /* Fallback for legacy text data */
-                            <div style={{ fontSize: '0.85rem', background: 'rgba(0,0,0,0.2)', padding: '0.8rem', borderRadius: 'var(--radius-sm)' }}>
-                                <div style={{ color: 'var(--text-secondary)', marginBottom: '0.5rem', fontWeight: 'bold' }}>各模型分析:</div>
-                                <div style={{ whiteSpace: 'pre-wrap', color: 'var(--text-secondary)' }}>
-                                    {analysisResult.details}
+                                        <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>
+                                            持仓分散,单一股票占比不超过5%,有效降低个股风险
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style={{
+                                    display: 'flex',
+                                    alignItems: 'flex-start',
+                                    gap: '0.5rem',
+                                    padding: '0.8rem',
+                                    background: 'rgba(16,185,129,0.05)',
+                                    borderRadius: 'var(--radius-sm)',
+                                    borderLeft: '3px solid #10b981'
+                                }}>
+                                    <span style={{ fontSize: '1.2rem' }}>✓</span>
+                                    <div style={{ flex: 1 }}>
+                                        <div style={{ fontSize: '0.9rem', color: '#fff', fontWeight: '500', marginBottom: '0.2rem' }}>
+                                            稳定分红记录
+                                        </div>
+                                        <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>
+                                            过去5年连续分红,年化股息率约2.5%
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style={{
+                                    display: 'flex',
+                                    alignItems: 'flex-start',
+                                    gap: '0.5rem',
+                                    padding: '0.8rem',
+                                    background: 'rgba(16,185,129,0.05)',
+                                    borderRadius: 'var(--radius-sm)',
+                                    borderLeft: '3px solid #10b981'
+                                }}>
+                                    <span style={{ fontSize: '1.2rem' }}>✓</span>
+                                    <div style={{ flex: 1 }}>
+                                        <div style={{ fontSize: '0.9rem', color: '#fff', fontWeight: '500', marginBottom: '0.2rem' }}>
+                                            行业复苏趋势
+                                        </div>
+                                        <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>
+                                            所投资行业处于复苏初期,未来增长空间较大
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        )}
+                        </CollapsibleSection>
+
+                        {/* 需要关注的风险点 */}
+                        <CollapsibleSection title="需要关注的风险点" icon="⚠️" defaultExpanded={true}>
+                            <div style={{ marginBottom: '0.5rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+                                识别到 <span style={{ color: '#f59e0b', fontWeight: 'bold' }}>3</span> 个风险点:
+                            </div>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+                                <div style={{
+                                    padding: '1rem',
+                                    background: 'rgba(245,158,11,0.05)',
+                                    borderRadius: 'var(--radius-sm)',
+                                    borderLeft: '3px solid #f59e0b'
+                                }}>
+                                    <div style={{ fontSize: '0.95rem', color: '#fff', fontWeight: '600', marginBottom: '0.5rem' }}>
+                                        估值处于历史高位
+                                    </div>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                                        <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>影响程度:</span>
+                                        <span style={{
+                                            fontSize: '0.75rem',
+                                            padding: '2px 8px',
+                                            borderRadius: '12px',
+                                            background: 'rgba(245,158,11,0.2)',
+                                            color: '#f59e0b'
+                                        }}>中等</span>
+                                    </div>
+                                    <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.5', marginBottom: '0.5rem' }}>
+                                        当前估值水平较历史均值偏高约15%,短期回调风险存在
+                                    </div>
+                                    <div style={{
+                                        fontSize: '0.8rem',
+                                        color: '#10b981',
+                                        padding: '0.5rem',
+                                        background: 'rgba(16,185,129,0.1)',
+                                        borderRadius: 'var(--radius-sm)',
+                                        marginTop: '0.5rem'
+                                    }}>
+                                        💡 建议: 分批建仓,避免一次性重仓
+                                    </div>
+                                </div>
+
+                                <div style={{
+                                    padding: '1rem',
+                                    background: 'rgba(245,158,11,0.05)',
+                                    borderRadius: 'var(--radius-sm)',
+                                    borderLeft: '3px solid #f59e0b'
+                                }}>
+                                    <div style={{ fontSize: '0.95rem', color: '#fff', fontWeight: '600', marginBottom: '0.5rem' }}>
+                                        短期波动性较大
+                                    </div>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                                        <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>影响程度:</span>
+                                        <span style={{
+                                            fontSize: '0.75rem',
+                                            padding: '2px 8px',
+                                            borderRadius: '12px',
+                                            background: 'rgba(34,197,94,0.2)',
+                                            color: '#22c55e'
+                                        }}>低</span>
+                                    </div>
+                                    <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.5', marginBottom: '0.5rem' }}>
+                                        年化波动率约25%,短期价格波动可能较大
+                                    </div>
+                                    <div style={{
+                                        fontSize: '0.8rem',
+                                        color: '#10b981',
+                                        padding: '0.5rem',
+                                        background: 'rgba(16,185,129,0.1)',
+                                        borderRadius: 'var(--radius-sm)',
+                                        marginTop: '0.5rem'
+                                    }}>
+                                        💡 建议: 长期持有,不要被短期波动影响
+                                    </div>
+                                </div>
+
+                                <div style={{
+                                    padding: '1rem',
+                                    background: 'rgba(245,158,11,0.05)',
+                                    borderRadius: 'var(--radius-sm)',
+                                    borderLeft: '3px solid #f59e0b'
+                                }}>
+                                    <div style={{ fontSize: '0.95rem', color: '#fff', fontWeight: '600', marginBottom: '0.5rem' }}>
+                                        宏观经济放缓风险
+                                    </div>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                                        <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>影响程度:</span>
+                                        <span style={{
+                                            fontSize: '0.75rem',
+                                            padding: '2px 8px',
+                                            borderRadius: '12px',
+                                            background: 'rgba(245,158,11,0.2)',
+                                            color: '#f59e0b'
+                                        }}>中等</span>
+                                    </div>
+                                    <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.5', marginBottom: '0.5rem' }}>
+                                        全球经济增速放缓可能影响企业盈利
+                                    </div>
+                                    <div style={{
+                                        fontSize: '0.8rem',
+                                        color: '#10b981',
+                                        padding: '0.5rem',
+                                        background: 'rgba(16,185,129,0.1)',
+                                        borderRadius: 'var(--radius-sm)',
+                                        marginTop: '0.5rem'
+                                    }}>
+                                        💡 建议: 关注宏观经济政策变化
+                                    </div>
+                                </div>
+                            </div>
+                        </CollapsibleSection>
+
+                        {/* 周期与趋势 */}
+                        <CollapsibleSection title="周期与趋势" icon="📈" defaultExpanded={false}>
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.8rem', marginBottom: '1rem' }}>
+                                <div style={{ background: 'rgba(255,255,255,0.03)', padding: '0.8rem', borderRadius: 'var(--radius-sm)', textAlign: 'center' }}>
+                                    <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '0.3rem' }}>个股周期</div>
+                                    <div style={{ fontSize: '1rem', fontWeight: 'bold', color: '#fff' }}>{analysisResult.stockCycle || '震荡'}</div>
+                                </div>
+                                <div style={{ background: 'rgba(255,255,255,0.03)', padding: '0.8rem', borderRadius: 'var(--radius-sm)', textAlign: 'center' }}>
+                                    <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '0.3rem' }}>板块周期</div>
+                                    <div style={{ fontSize: '1rem', fontWeight: 'bold', color: '#fff' }}>{analysisResult.sectorCycle || '复苏'}</div>
+                                </div>
+                                <div style={{ background: 'rgba(255,255,255,0.03)', padding: '0.8rem', borderRadius: 'var(--radius-sm)', textAlign: 'center' }}>
+                                    <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '0.3rem' }}>宏观周期</div>
+                                    <div style={{ fontSize: '1rem', fontWeight: 'bold', color: '#fff' }}>{analysisResult.macroCycle || '衰退'}</div>
+                                </div>
+                            </div>
+                            <div style={{
+                                padding: '1rem',
+                                background: 'rgba(139,92,246,0.1)',
+                                borderRadius: 'var(--radius-sm)',
+                                borderLeft: '3px solid #8b5cf6'
+                            }}>
+                                <div style={{ fontSize: '0.85rem', color: '#e4e4e7', lineHeight: '1.5' }}>
+                                    当前行业处于复苏初期,技术面呈现筑底形态,资金流向显示小幅流入。建议关注行业政策变化和龙头企业动态。
+                                </div>
+                            </div>
+                        </CollapsibleSection>
+
+                        {/* 评估总结 */}
+                        <div style={{
+                            marginTop: '1.5rem',
+                            padding: '1.5rem',
+                            background: 'linear-gradient(135deg, rgba(139,92,246,0.1) 0%, rgba(59,130,246,0.1) 100%)',
+                            borderRadius: 'var(--radius-md)',
+                            border: '1px solid rgba(139,92,246,0.2)'
+                        }}>
+                            <div style={{ fontSize: '1rem', color: 'var(--text-secondary)', fontWeight: '600', marginBottom: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                <span>💡</span> 评估总结
+                            </div>
+                            <div style={{ fontSize: '0.95rem', color: '#e4e4e7', lineHeight: '1.7', marginBottom: '1rem' }}>
+                                {analysisResult.summary || '该标的具有良好的长期投资价值,但当前估值偏高,建议等待更好时机。适合风险承受能力中等及以上的长期投资者。'}
+                            </div>
+                            <div style={{
+                                display: 'grid',
+                                gridTemplateColumns: '1fr 1fr',
+                                gap: '0.8rem',
+                                paddingTop: '1rem',
+                                borderTop: '1px solid rgba(255,255,255,0.1)'
+                            }}>
+                                <div>
+                                    <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '0.3rem' }}>建议仓位比例</div>
+                                    <div style={{ fontSize: '1rem', color: '#fff', fontWeight: '600' }}>≤ 15%</div>
+                                </div>
+                                <div>
+                                    <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '0.3rem' }}>建议持有周期</div>
+                                    <div style={{ fontSize: '1rem', color: '#fff', fontWeight: '600' }}>3年以上</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* 免责声明 */}
+                        <div style={{
+                            marginTop: '1.5rem',
+                            padding: '1rem',
+                            background: 'rgba(245,158,11,0.05)',
+                            borderRadius: 'var(--radius-sm)',
+                            border: '1px solid rgba(245,158,11,0.2)',
+                            textAlign: 'center'
+                        }}>
+                            <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: '1.5' }}>
+                                ⚠️ 本评估仅供参考,不构成投资建议。投资决策由用户自主做出,风险自负。
+                            </div>
+                        </div>
                     </>
                 ) : (
-                    <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-muted)' }}>
-                        暂无详细分析记录,请点击底部按钮开始分析。
+                    <div style={{ padding: '3rem 1rem', textAlign: 'center', color: 'var(--text-muted)' }}>
+                        <div style={{ fontSize: '3rem', marginBottom: '1rem', opacity: 0.3 }}>📊</div>
+                        <div style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>暂无评估记录</div>
+                        <div style={{ fontSize: '0.85rem' }}>请点击底部按钮开始价值评估</div>
                     </div>
                 )}
             </div>

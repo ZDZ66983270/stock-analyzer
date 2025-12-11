@@ -1,116 +1,90 @@
-# 股票数据采集系统
+# 股票数据分析系统
 
-基于免费公开数据源的股票数据采集系统，用于替代付费API。系统支持获取美股的K线数据、技术指标和资金流数据。
+一个用于获取和分析股票数据的Python系统，支持多周期数据获取、技术指标计算和本地数据存储。
 
-## 功能特点
+## 目录结构
 
-- 支持多只股票批量获取（最多9只）
-- 支持多个周期的K线数据（日线、4h、2h、1h、30m、15m、5m、3m）
-- 自动计算常用技术指标：
-  - MA（5、10、20日）
-  - MACD（DIF、DEA、HIST）
-  - KDJ（K、D、J）
-  - RSI（6、12、24日）
-- 获取雪球网资金流数据
-- 数据自动合并并保存为CSV格式
-
-## 安装说明
-
-1. 克隆项目到本地：
-```bash
-git clone <repository_url>
-cd stock-data-collector
+```
+├── main.py          # 主程序入口
+├── config.py        # 配置文件
+├── fetcher.py       # 数据获取模块
+├── indicators.py    # 技术指标计算
+├── output/          # 数据输出目录
+│   └── proceeded/   # 带技术指标的数据
+└── logs/           # 日志文件目录
 ```
 
-2. 创建并激活虚拟环境（推荐）：
-```bash
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
-venv\Scripts\activate     # Windows
-```
+## 主要功能
 
-3. 安装依赖：
-```bash
-pip install -r requirements.txt
-```
+### 1. 数据获取 (fetcher.py)
+- 支持多市场数据获取
+  - 美股数据
+  - 港股数据
+  - A股数据
+- 支持多周期数据
+  - 日线数据
+  - 周线数据
+  - 月线数据
+- 资金流数据（A股特有）
 
-## 使用说明
+### 2. 技术指标计算 (indicators.py)
+- MA (移动平均线)
+- MACD (指数平滑异同平均线)
+- KDJ (随机指标)
+- RSI (相对强弱指标)
 
-1. 直接运行数据采集：
-```bash
-python run_pipeline.py US.AAPL US.MSFT US.GOOGL
-```
+### 3. 数据处理流程 (main.py)
+- 数据获取和处理
+  - 读取股票列表
+  - 获取原始数据
+  - 计算技术指标
+- 数据存储
+  - 原始数据：保存到 output/
+  - 指标数据：保存到 output/proceeded/
+- 日志记录
+  - 运行日志：保存到 logs/
+  - 错误追踪
+  - 执行统计
 
-2. 通过菜单运行：
-```bash
-python menu.py
-```
+## 数据存储说明
 
-### 股票代码格式
+### 1. 文件格式
+- 使用 Excel (.xlsx) 格式
+- 文件命名：股票代码_时间戳.xlsx
+- 指标文件命名：股票代码_时间戳_indicators.xlsx
 
-- 美股代码格式：US.XXXX（例如：US.AAPL, US.MSFT）
-- 一次最多支持9只股票
-- 股票代码之间用空格分隔
+### 2. 目录说明
+- output/：原始行情数据
+- output/proceeded/：带技术指标的数据
+- logs/：程序运行日志
 
-### 输出数据
+## 使用方法
 
-- 所有数据保存在 `output/` 目录下
-- 文件名格式：`{股票代码}.csv`
-- CSV文件包含以下字段：
-  - 时间：time
-  - K线：open, high, low, close, volume
-  - 均线：MA5, MA10, MA20
-  - MACD：MACD_DIF, MACD_DEA, MACD_HIST
-  - KDJ：KDJ_K, KDJ_D, KDJ_J
-  - RSI：RSI6, RSI12, RSI24
-  - 资金流：capital_inflow, capital_outflow, capital_netflow
+1. 配置股票列表
+   - 编辑 config/symbols.txt
+   - 支持多市场代码（例如：AAPL, 00700.HK, 600519.SH）
+
+2. 运行程序
+   ```bash
+   python main.py
+   ```
+
+3. 查看结果
+   - 原始数据：output/ 目录
+   - 指标数据：output/proceeded/ 目录
+   - 运行日志：logs/ 目录
+
+## 环境要求
+
+- Python 3.8+
+- pandas
+- openpyxl
+- akshare（A股/港股数据）
+- yfinance（美股数据）
 
 ## 注意事项
 
-1. yfinance的数据获取限制：
-   - 5分钟数据只能获取最近7天
-   - 15分钟和30分钟数据只能获取最近60天
-   - 小时级数据只能获取最近730天
-   - 日线数据无时间限制
-
-2. 雪球网的访问限制：
-   - 添加了请求延迟和重试机制
-   - 使用随机User-Agent防止被封
-   - 每次请求之间有1秒延迟
-
-3. 数据质量说明：
-   - K线数据来源于Yahoo Finance
-   - 资金流数据来源于雪球网
-   - 技术指标由系统本地计算
-   - 所有数据仅供参考，不构成投资建议
-
-## 开发说明
-
-### 项目结构
-```
-.
-├── config.py                    # 配置文件
-├── fetch_kline_yfinance.py     # K线数据获取
-├── fetch_capital_flow_xueqiu.py # 资金流数据获取
-├── merge_data.py               # 数据合并
-├── run_pipeline.py             # 主程序
-├── menu.py                     # 菜单程序
-├── requirements.txt            # 依赖列表
-├── utils/
-│   ├── indicator_calculator.py # 技术指标计算
-│   └── time_utils.py          # 时间处理工具
-└── output/                     # 输出目录
-    └── *.csv                  # 输出文件
-```
-
-### 开发计划
-
-- [ ] 添加更多技术指标
-- [ ] 支持港股数据获取
-- [ ] 添加数据可视化功能
-- [ ] 优化数据缓存机制
-- [ ] 添加数据质量检查
-
-## 许可证
-
-MIT License 
+- 确保网络连接正常
+- 股票代码格式必须正确
+- 美股数据会自动处理时区
+- 建议定期备份数据文件

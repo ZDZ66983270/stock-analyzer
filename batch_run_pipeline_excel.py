@@ -75,10 +75,10 @@ class StockDataPipeline:
                             # 调整列顺序
                             columns = [
                                 'datetime', 'open', 'high', 'low', 'close', 'volume',
-                                'MA5', 'MA10', 'MA20',
-                                'MACD_DIF', 'MACD_DEA', 'MACD_HIST',
-                                'KDJ_K', 'KDJ_D', 'KDJ_J',
-                                'RSI6', 'RSI12', 'RSI24'
+                                'ma5', 'ma10', 'ma20',
+                                'macd_dif', 'macd_dea', 'macd_hist',
+                                'kdj_k', 'kdj_d', 'kdj_j',
+                                'rsi6', 'rsi12', 'rsi24'
                             ]
                             df = df[columns]
                             

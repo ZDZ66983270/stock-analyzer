@@ -9236,3 +9236,1355 @@ RSI指标:
 2025-04-27 23:15:11,384 - ERROR - 转换东方财富代码失败: 'close'
 2025-04-27 23:15:11,992 - ERROR - 保存Excel文件失败: string indices must be integers, not 'str'
 2025-04-27 23:15:11,992 - INFO - 已保存SH.600519的分析结果到Excel文件
+2025-04-28 16:20:55,215 - ERROR - 股票代码格式错误: TSM，正确格式为: 市场.代码
+2025-04-28 16:21:36,179 - INFO - 从雪球获取US.MSFT的15m周期数据
+2025-04-28 16:21:36,938 - INFO - 成功获取雪球cookie
+2025-04-28 16:21:37,767 - WARNING - 获取到的数据为空: USMSFT
+2025-04-28 16:21:40,519 - INFO - 成功获取雪球cookie
+2025-04-28 16:21:41,261 - WARNING - 获取到的数据为空: USMSFT
+2025-04-28 16:21:43,944 - INFO - 成功获取雪球cookie
+2025-04-28 16:21:44,609 - WARNING - 获取到的数据为空: USMSFT
+2025-04-28 16:21:44,610 - INFO - 从雪球获取US.MSFT的30m周期数据
+2025-04-28 16:21:45,321 - WARNING - 获取到的数据为空: USMSFT
+2025-04-28 16:21:49,201 - INFO - 成功获取雪球cookie
+2025-04-28 16:21:50,172 - WARNING - 获取到的数据为空: USMSFT
+2025-04-28 16:21:52,913 - INFO - 成功获取雪球cookie
+2025-04-28 16:21:53,637 - WARNING - 获取到的数据为空: USMSFT
+2025-04-28 16:21:53,637 - INFO - 从雪球获取US.MSFT的1h周期数据
+2025-04-28 16:21:54,357 - WARNING - 获取到的数据为空: USMSFT
+2025-04-28 16:21:57,097 - INFO - 成功获取雪球cookie
+2025-04-28 16:21:57,827 - WARNING - 获取到的数据为空: USMSFT
+2025-04-28 16:22:00,529 - INFO - 成功获取雪球cookie
+2025-04-28 16:22:01,247 - WARNING - 获取到的数据为空: USMSFT
+2025-04-28 16:22:01,248 - INFO - 从雪球获取US.MSFT的2h周期数据
+2025-04-28 16:22:01,248 - ERROR - 从雪球获取数据失败 (重试 1/3): 不支持的时间周期: 2h
+2025-04-28 16:22:03,253 - ERROR - 从雪球获取数据失败 (重试 2/3): 不支持的时间周期: 2h
+2025-04-28 16:22:05,258 - ERROR - 从雪球获取数据失败 (重试 3/3): 不支持的时间周期: 2h
+2025-04-28 16:22:05,259 - INFO - 从雪球获取US.MSFT的1d周期数据
+2025-04-28 16:22:05,953 - ERROR - 请求失败，状态码: 400，响应内容: {"data":null,"error_code":100002,"error_description":"Required Long parameter 'begin' is not present"}
+2025-04-28 16:22:08,709 - INFO - 成功获取雪球cookie
+2025-04-28 16:22:09,428 - ERROR - 请求失败，状态码: 400，响应内容: {"data":null,"error_code":100002,"error_description":"Required Long parameter 'begin' is not present"}
+2025-04-28 16:22:12,139 - INFO - 成功获取雪球cookie
+2025-04-28 16:22:14,435 - ERROR - 请求失败，状态码: 400，响应内容: {"data":null,"error_code":100002,"error_description":"Required Long parameter 'begin' is not present"}
+2025-04-28 16:22:14,436 - ERROR - 获取股票数据失败: 未能获取到US.MSFT的任何数据
+2025-04-28 16:22:14,436 - INFO - 从雪球获取US.TSM的15m周期数据
+2025-04-28 16:22:15,786 - WARNING - 获取到的数据为空: USTSM
+2025-04-28 16:22:18,871 - INFO - 成功获取雪球cookie
+2025-04-28 16:22:19,579 - WARNING - 获取到的数据为空: USTSM
+2025-04-28 16:22:22,297 - INFO - 成功获取雪球cookie
+2025-04-28 16:22:23,003 - WARNING - 获取到的数据为空: USTSM
+2025-04-28 16:22:23,003 - INFO - 从雪球获取US.TSM的30m周期数据
+2025-04-28 16:22:23,722 - WARNING - 获取到的数据为空: USTSM
+2025-04-28 16:22:26,442 - INFO - 成功获取雪球cookie
+2025-04-28 16:22:27,140 - WARNING - 获取到的数据为空: USTSM
+2025-04-28 16:22:29,861 - INFO - 成功获取雪球cookie
+2025-04-28 16:22:30,596 - WARNING - 获取到的数据为空: USTSM
+2025-04-28 16:22:30,597 - INFO - 从雪球获取US.TSM的1h周期数据
+2025-04-28 16:22:31,317 - WARNING - 获取到的数据为空: USTSM
+2025-04-28 16:22:34,020 - INFO - 成功获取雪球cookie
+2025-04-28 16:22:34,707 - WARNING - 获取到的数据为空: USTSM
+2025-04-28 16:22:37,453 - INFO - 成功获取雪球cookie
+2025-04-28 16:22:38,148 - WARNING - 获取到的数据为空: USTSM
+2025-04-28 16:22:38,148 - INFO - 从雪球获取US.TSM的2h周期数据
+2025-04-28 16:22:38,148 - ERROR - 从雪球获取数据失败 (重试 1/3): 不支持的时间周期: 2h
+2025-04-28 16:22:40,148 - ERROR - 从雪球获取数据失败 (重试 2/3): 不支持的时间周期: 2h
+2025-04-28 16:22:42,154 - ERROR - 从雪球获取数据失败 (重试 3/3): 不支持的时间周期: 2h
+2025-04-28 16:22:42,154 - INFO - 从雪球获取US.TSM的1d周期数据
+2025-04-28 16:22:42,844 - ERROR - 请求失败，状态码: 400，响应内容: {"data":null,"error_code":100002,"error_description":"Required Long parameter 'begin' is not present"}
+2025-04-28 16:22:45,557 - INFO - 成功获取雪球cookie
+2025-04-28 16:22:46,401 - ERROR - 请求失败，状态码: 400，响应内容: {"data":null,"error_code":100002,"error_description":"Required Long parameter 'begin' is not present"}
+2025-04-28 16:22:50,632 - INFO - 成功获取雪球cookie
+2025-04-28 16:22:51,346 - ERROR - 请求失败，状态码: 400，响应内容: {"data":null,"error_code":100002,"error_description":"Required Long parameter 'begin' is not present"}
+2025-04-28 16:22:51,346 - ERROR - 获取股票数据失败: 未能获取到US.TSM的任何数据
+2025-04-28 16:32:28,593 - INFO - 市场类型: US, 原始股票代码: US.MSFT
+2025-04-28 16:32:32,046 - ERROR - Failed to get ticker 'US' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 16:32:32,048 - ERROR - $US: possibly delisted; no timezone found
+2025-04-28 16:32:32,049 - WARNING - 获取到空数据: US, period=1d
+2025-04-28 16:32:32,049 - INFO - 市场类型: US, 原始股票代码: US.MSFT
+2025-04-28 16:32:32,050 - ERROR - Failed to get ticker 'US' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 16:32:32,051 - ERROR - $US: possibly delisted; no timezone found
+2025-04-28 16:32:32,051 - WARNING - 获取到空数据: US, period=4h
+2025-04-28 16:32:32,051 - INFO - 市场类型: US, 原始股票代码: US.MSFT
+2025-04-28 16:32:32,052 - ERROR - Failed to get ticker 'US' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 16:32:32,052 - ERROR - $US: possibly delisted; no timezone found
+2025-04-28 16:32:32,052 - WARNING - 获取到空数据: US, period=2h
+2025-04-28 16:32:32,052 - INFO - 市场类型: US, 原始股票代码: US.MSFT
+2025-04-28 16:32:32,053 - ERROR - Failed to get ticker 'US' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 16:32:32,054 - ERROR - $US: possibly delisted; no timezone found
+2025-04-28 16:32:32,054 - WARNING - 获取到空数据: US, period=1h
+2025-04-28 16:32:32,054 - INFO - 市场类型: US, 原始股票代码: US.MSFT
+2025-04-28 16:32:32,055 - ERROR - Failed to get ticker 'US' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 16:32:32,055 - ERROR - $US: possibly delisted; no timezone found
+2025-04-28 16:32:32,056 - WARNING - 获取到空数据: US, period=30m
+2025-04-28 16:32:32,056 - INFO - 市场类型: US, 原始股票代码: US.MSFT
+2025-04-28 16:32:32,056 - ERROR - Failed to get ticker 'US' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 16:32:32,056 - ERROR - $US: possibly delisted; no timezone found
+2025-04-28 16:32:32,057 - WARNING - 获取到空数据: US, period=15m
+2025-04-28 16:32:32,057 - INFO - 市场类型: US, 原始股票代码: US.MSFT
+2025-04-28 16:32:32,057 - ERROR - Failed to get ticker 'US' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 16:32:32,057 - ERROR - $US: possibly delisted; no timezone found
+2025-04-28 16:32:32,058 - WARNING - 获取到空数据: US, period=5m
+2025-04-28 16:32:32,058 - INFO - 市场类型: US, 原始股票代码: US.MSFT
+2025-04-28 16:32:32,058 - ERROR - Failed to get ticker 'US' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 16:32:32,058 - ERROR - $US: possibly delisted; no timezone found
+2025-04-28 16:32:32,058 - WARNING - 获取到空数据: US, period=3m
+2025-04-28 16:32:32,058 - ERROR - 获取股票数据失败: 未能获取到US.MSFT的任何数据
+2025-04-28 16:35:06,046 - INFO - 开始分析股票 US.MSFT
+2025-04-28 16:35:07,877 - ERROR - 获取股票数据失败: cannot import name 'fetch_kline_data' from 'fetch_kline_yfinance' (/Users/zhangzy/Downloads/5-Pyphon/fetch_kline_yfinance.py)
+2025-04-28 16:35:07,877 - INFO - 开始分析股票 SH.600536
+2025-04-28 16:35:07,877 - INFO - 从东方财富获取SH.600536的1d周期数据
+2025-04-28 16:35:08,509 - INFO - 成功获取SH.600536 1d周期数据，共60条记录
+2025-04-28 16:35:08,510 - INFO - 成功获取60条1d周期数据
+2025-04-28 16:35:08,510 - INFO - 从东方财富获取SH.600536的2h周期数据
+2025-04-28 16:35:09,053 - INFO - 成功获取SH.600536 2h周期数据，共64条记录
+2025-04-28 16:35:09,053 - INFO - 成功获取64条2h周期数据
+2025-04-28 16:35:09,053 - INFO - 从东方财富获取SH.600536的1h周期数据
+2025-04-28 16:35:09,618 - INFO - 成功获取SH.600536 1h周期数据，共128条记录
+2025-04-28 16:35:09,618 - INFO - 成功获取128条1h周期数据
+2025-04-28 16:35:09,618 - INFO - 从东方财富获取SH.600536的30m周期数据
+2025-04-28 16:35:10,196 - INFO - 成功获取SH.600536 30m周期数据，共256条记录
+2025-04-28 16:35:10,197 - INFO - 成功获取256条30m周期数据
+2025-04-28 16:35:10,197 - INFO - 从东方财富获取SH.600536的15m周期数据
+2025-04-28 16:35:10,861 - INFO - 成功获取SH.600536 15m周期数据，共336条记录
+2025-04-28 16:35:10,862 - INFO - 成功获取336条15m周期数据
+2025-04-28 16:35:10,862 - INFO - 从东方财富获取SH.600536的5m周期数据
+2025-04-28 16:35:11,704 - INFO - 成功获取SH.600536 5m周期数据，共1000条记录
+2025-04-28 16:35:11,704 - INFO - 成功获取1000条5m周期数据
+2025-04-28 16:35:12,745 - INFO - 
+资金流数据：
+2025-04-28 16:35:12,745 - INFO - ====================================================================================================
+2025-04-28 16:35:12,745 - INFO - 时间           主力净流入        超大单净流入       大单净流入        中单净流入        小单净流入       
+2025-04-28 16:35:12,745 - INFO - ----------------------------------------------------------------------------------------------------
+2025-04-28 16:35:12,746 - INFO - 2025-04-22   -53,278,006.00 40,102,448.00 13,175,565.00 -23,906,824.00 -29,371,182.00
+2025-04-28 16:35:12,747 - INFO - 2025-04-23   -134,345,780.00 132,296,648.00 2,049,136.00 -94,772,560.00 -39,573,220.00
+2025-04-28 16:35:12,747 - INFO - 2025-04-24   -89,933,207.00 85,727,185.00 4,206,016.00 -54,892,582.00 -35,040,625.00
+2025-04-28 16:35:12,747 - INFO - 2025-04-25   43,960,565.00 -47,387,321.00 3,426,768.00 22,611,084.00 21,349,481.00
+2025-04-28 16:35:12,747 - INFO - 2025-04-28   -19,820,994.00 28,786,870.00 -8,965,876.00 -19,350,004.00  -470,990.00
+2025-04-28 16:35:12,747 - INFO - ====================================================================================================
+2025-04-28 16:35:12,747 - INFO - 成功获取资金流向数据
+2025-04-28 16:35:13,262 - INFO - 开始分析股票 HK.09988
+2025-04-28 16:35:13,262 - INFO - 从东方财富获取HK.09988的1d周期数据
+2025-04-28 16:35:16,934 - INFO - 成功获取HK.09988 1d周期数据，共60条记录
+2025-04-28 16:35:16,934 - INFO - 成功获取60条1d周期数据
+2025-04-28 16:35:16,934 - INFO - 从东方财富获取HK.09988的2h周期数据
+2025-04-28 16:35:18,499 - INFO - 成功获取HK.09988 2h周期数据，共69条记录
+2025-04-28 16:35:18,499 - INFO - 成功获取69条2h周期数据
+2025-04-28 16:35:18,499 - INFO - 从东方财富获取HK.09988的1h周期数据
+2025-04-28 16:35:19,748 - INFO - 成功获取HK.09988 1h周期数据，共138条记录
+2025-04-28 16:35:19,748 - INFO - 成功获取138条1h周期数据
+2025-04-28 16:35:19,748 - INFO - 从东方财富获取HK.09988的30m周期数据
+2025-04-28 16:35:20,354 - INFO - 成功获取HK.09988 30m周期数据，共253条记录
+2025-04-28 16:35:20,354 - INFO - 成功获取253条30m周期数据
+2025-04-28 16:35:20,354 - INFO - 从东方财富获取HK.09988的15m周期数据
+2025-04-28 16:35:20,982 - INFO - 成功获取HK.09988 15m周期数据，共336条记录
+2025-04-28 16:35:20,982 - INFO - 成功获取336条15m周期数据
+2025-04-28 16:35:20,982 - INFO - 从东方财富获取HK.09988的5m周期数据
+2025-04-28 16:35:21,773 - INFO - 成功获取HK.09988 5m周期数据，共1000条记录
+2025-04-28 16:35:21,773 - INFO - 成功获取1000条5m周期数据
+2025-04-28 16:36:27,300 - INFO - 开始分析股票 US.MSFT
+2025-04-28 16:36:28,683 - ERROR - 获取股票数据失败: cannot import name 'fetch_kline_data' from 'fetch_kline_yfinance' (/Users/zhangzy/Downloads/5-Pyphon/fetch_kline_yfinance.py)
+2025-04-28 20:52:29,960 - INFO - 开始处理 US.TSM
+2025-04-28 20:52:33,547 - WARNING - Akshare美股失败，尝试YFinance: TSM 'datetime'
+2025-04-28 20:52:40,094 - ERROR - 
+1 Failed download:
+2025-04-28 20:52:40,095 - ERROR - ['TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 20:52:44,258 - ERROR - Failed to get ticker 'US.TSM' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 20:52:49,263 - ERROR - 
+1 Failed download:
+2025-04-28 20:52:49,263 - ERROR - ['US.TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 20:52:49,267 - ERROR - Failed to get ticker 'US.TSM' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 20:52:54,751 - ERROR - 
+1 Failed download:
+2025-04-28 20:52:54,751 - ERROR - ['US.TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 20:52:54,759 - ERROR - Failed to get ticker 'US.TSM' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 20:52:59,158 - ERROR - 
+1 Failed download:
+2025-04-28 20:52:59,159 - ERROR - ['US.TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 20:52:59,165 - ERROR - Failed to get ticker 'US.TSM' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 20:53:03,396 - ERROR - 
+1 Failed download:
+2025-04-28 20:53:03,396 - ERROR - ['US.TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 20:53:03,400 - ERROR - Failed to get ticker 'US.TSM' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 20:53:07,224 - ERROR - 
+1 Failed download:
+2025-04-28 20:53:07,225 - ERROR - ['US.TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:03:10,308 - INFO - 开始处理 US.TSM
+2025-04-28 21:03:10,308 - INFO - 尝试使用Akshare获取 TSM 日线数据...
+2025-04-28 21:03:14,499 - INFO - Akshare成功获取 TSM 日线数据，共 5560 条记录
+2025-04-28 21:03:14,500 - WARNING - Akshare获取 TSM 日线数据失败: 'datetime'
+2025-04-28 21:03:14,500 - INFO - 尝试使用YFinance获取 TSM 日线数据...
+2025-04-28 21:03:19,791 - ERROR - 
+1 Failed download:
+2025-04-28 21:03:19,791 - ERROR - ['TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:03:19,801 - WARNING - YFinance获取 TSM 日线数据为空
+2025-04-28 21:03:19,801 - INFO - 尝试使用YFinance获取 TSM 2h 数据...
+2025-04-28 21:03:23,721 - ERROR - 
+1 Failed download:
+2025-04-28 21:03:23,723 - ERROR - ['TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:03:23,726 - WARNING - YFinance获取 TSM 2h 数据为空
+2025-04-28 21:03:23,726 - INFO - 尝试使用YFinance获取 TSM 1h 数据...
+2025-04-28 21:03:27,226 - ERROR - 
+1 Failed download:
+2025-04-28 21:03:27,227 - ERROR - ['TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:03:27,229 - WARNING - YFinance获取 TSM 1h 数据为空
+2025-04-28 21:03:27,230 - INFO - 尝试使用YFinance获取 TSM 30m 数据...
+2025-04-28 21:03:30,480 - ERROR - 
+1 Failed download:
+2025-04-28 21:03:30,482 - ERROR - ['TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:03:30,485 - WARNING - YFinance获取 TSM 30m 数据为空
+2025-04-28 21:03:30,485 - INFO - 尝试使用YFinance获取 TSM 15m 数据...
+2025-04-28 21:03:30,499 - ERROR - 
+1 Failed download:
+2025-04-28 21:03:30,499 - ERROR - ['TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:03:30,501 - WARNING - YFinance获取 TSM 15m 数据为空
+2025-04-28 21:03:30,501 - INFO - 尝试使用YFinance获取 TSM 5m 数据...
+2025-04-28 21:03:34,031 - ERROR - 
+1 Failed download:
+2025-04-28 21:03:34,032 - ERROR - ['TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:03:34,035 - WARNING - YFinance获取 TSM 5m 数据为空
+2025-04-28 21:03:34,035 - ERROR - 没有有效数据可保存: US.TSM
+2025-04-28 21:03:34,036 - INFO - 开始处理 US.MSFT
+2025-04-28 21:03:34,036 - INFO - 尝试使用Akshare获取 MSFT 日线数据...
+2025-04-28 21:03:38,084 - INFO - Akshare成功获取 MSFT 日线数据，共 9302 条记录
+2025-04-28 21:03:38,085 - WARNING - Akshare获取 MSFT 日线数据失败: 'datetime'
+2025-04-28 21:03:38,085 - INFO - 尝试使用YFinance获取 MSFT 日线数据...
+2025-04-28 21:03:41,528 - ERROR - 
+1 Failed download:
+2025-04-28 21:03:41,529 - ERROR - ['MSFT']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:03:41,532 - WARNING - YFinance获取 MSFT 日线数据为空
+2025-04-28 21:03:41,532 - INFO - 尝试使用YFinance获取 MSFT 2h 数据...
+2025-04-28 21:03:45,429 - ERROR - 
+1 Failed download:
+2025-04-28 21:03:45,431 - ERROR - ['MSFT']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:03:45,434 - WARNING - YFinance获取 MSFT 2h 数据为空
+2025-04-28 21:03:45,434 - INFO - 尝试使用YFinance获取 MSFT 1h 数据...
+2025-04-28 21:03:50,537 - ERROR - 
+1 Failed download:
+2025-04-28 21:03:50,537 - ERROR - ['MSFT']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:03:50,539 - WARNING - YFinance获取 MSFT 1h 数据为空
+2025-04-28 21:03:50,539 - INFO - 尝试使用YFinance获取 MSFT 30m 数据...
+2025-04-28 21:03:55,966 - ERROR - 
+1 Failed download:
+2025-04-28 21:03:55,967 - ERROR - ['MSFT']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:03:55,970 - WARNING - YFinance获取 MSFT 30m 数据为空
+2025-04-28 21:03:55,970 - INFO - 尝试使用YFinance获取 MSFT 15m 数据...
+2025-04-28 21:03:55,984 - ERROR - 
+1 Failed download:
+2025-04-28 21:03:55,984 - ERROR - ['MSFT']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:03:55,986 - WARNING - YFinance获取 MSFT 15m 数据为空
+2025-04-28 21:03:55,986 - INFO - 尝试使用YFinance获取 MSFT 5m 数据...
+2025-04-28 21:03:59,268 - ERROR - 
+1 Failed download:
+2025-04-28 21:03:59,268 - ERROR - ['MSFT']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:03:59,270 - WARNING - YFinance获取 MSFT 5m 数据为空
+2025-04-28 21:03:59,270 - ERROR - 没有有效数据可保存: US.MSFT
+2025-04-28 21:03:59,271 - INFO - 开始处理 SH.600536
+2025-04-28 21:04:14,340 - WARNING - 指标计算失败: 'close'
+2025-04-28 21:04:14,468 - INFO - 保存成功: output/SH_600536_20250428_2104.xlsx
+2025-04-28 21:04:14,468 - INFO - 开始处理 SH.600309
+2025-04-28 21:04:28,347 - WARNING - 指标计算失败: 'close'
+2025-04-28 21:04:28,472 - INFO - 保存成功: output/SH_600309_20250428_2104.xlsx
+2025-04-28 21:04:28,472 - INFO - 开始处理 SH.601998
+2025-04-28 21:04:42,385 - WARNING - 指标计算失败: 'close'
+2025-04-28 21:04:42,510 - INFO - 保存成功: output/SH_601998_20250428_2104.xlsx
+2025-04-28 21:04:42,510 - INFO - 开始处理 HK.00998
+2025-04-28 21:04:44,213 - ERROR - 拉取A股日线失败 00998: 'datetime'
+2025-04-28 21:04:46,311 - ERROR - 拉取A股分钟线失败 00998-120: 'NoneType' object is not subscriptable
+2025-04-28 21:04:48,073 - ERROR - 拉取A股分钟线失败 00998-60: 'NoneType' object is not subscriptable
+2025-04-28 21:04:49,503 - ERROR - 拉取A股分钟线失败 00998-30: 'NoneType' object is not subscriptable
+2025-04-28 21:04:51,408 - ERROR - 拉取A股分钟线失败 00998-15: 'NoneType' object is not subscriptable
+2025-04-28 21:04:52,869 - ERROR - 拉取A股分钟线失败 00998-5: 'NoneType' object is not subscriptable
+2025-04-28 21:04:54,354 - ERROR - 拉取资金流失败 00998: 'NoneType' object is not subscriptable
+2025-04-28 21:04:54,355 - ERROR - 没有有效数据可保存: HK.00998
+2025-04-28 21:04:54,356 - INFO - 开始处理 HK.09988
+2025-04-28 21:04:55,897 - ERROR - 拉取A股日线失败 09988: 'datetime'
+2025-04-28 21:04:58,507 - ERROR - 拉取A股分钟线失败 09988-120: 'NoneType' object is not subscriptable
+2025-04-28 21:05:00,112 - ERROR - 拉取A股分钟线失败 09988-60: 'NoneType' object is not subscriptable
+2025-04-28 21:05:01,799 - ERROR - 拉取A股分钟线失败 09988-30: 'NoneType' object is not subscriptable
+2025-04-28 21:05:03,502 - ERROR - 拉取A股分钟线失败 09988-15: 'NoneType' object is not subscriptable
+2025-04-28 21:05:04,967 - ERROR - 拉取A股分钟线失败 09988-5: 'NoneType' object is not subscriptable
+2025-04-28 21:05:06,957 - ERROR - 拉取资金流失败 09988: 'NoneType' object is not subscriptable
+2025-04-28 21:05:06,958 - ERROR - 没有有效数据可保存: HK.09988
+2025-04-28 21:05:51,200 - INFO - 开始处理 US.TSM
+2025-04-28 21:05:51,200 - INFO - 尝试使用Akshare获取 TSM 日线数据...
+2025-04-28 21:05:55,104 - INFO - Akshare成功获取 TSM 日线数据，共 5560 条记录
+2025-04-28 21:05:55,104 - WARNING - Akshare获取 TSM 日线数据失败: 'datetime'
+2025-04-28 21:05:55,105 - INFO - 尝试使用YFinance获取 TSM 日线数据...
+2025-04-28 21:06:02,270 - ERROR - 
+1 Failed download:
+2025-04-28 21:06:02,270 - ERROR - ['TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:06:02,275 - WARNING - YFinance获取 TSM 日线数据为空
+2025-04-28 21:06:02,275 - INFO - 尝试使用YFinance获取 TSM 2h 数据...
+2025-04-28 21:06:05,643 - ERROR - 
+1 Failed download:
+2025-04-28 21:06:05,644 - ERROR - ['TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:06:05,647 - WARNING - YFinance获取 TSM 2h 数据为空
+2025-04-28 21:06:05,647 - INFO - 尝试使用YFinance获取 TSM 1h 数据...
+2025-04-28 21:06:10,005 - ERROR - 
+1 Failed download:
+2025-04-28 21:06:10,006 - ERROR - ['TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:06:10,007 - WARNING - YFinance获取 TSM 1h 数据为空
+2025-04-28 21:06:10,007 - INFO - 尝试使用YFinance获取 TSM 30m 数据...
+2025-04-28 21:06:14,151 - ERROR - 
+1 Failed download:
+2025-04-28 21:06:14,151 - ERROR - ['TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:06:14,154 - WARNING - YFinance获取 TSM 30m 数据为空
+2025-04-28 21:06:14,154 - INFO - 尝试使用YFinance获取 TSM 15m 数据...
+2025-04-28 21:06:14,167 - ERROR - 
+1 Failed download:
+2025-04-28 21:06:14,167 - ERROR - ['TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:06:14,169 - WARNING - YFinance获取 TSM 15m 数据为空
+2025-04-28 21:06:14,169 - INFO - 尝试使用YFinance获取 TSM 5m 数据...
+2025-04-28 21:06:18,208 - ERROR - 
+1 Failed download:
+2025-04-28 21:06:18,208 - ERROR - ['TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:06:18,212 - WARNING - YFinance获取 TSM 5m 数据为空
+2025-04-28 21:06:18,212 - ERROR - 没有有效数据可保存: US.TSM
+2025-04-28 21:06:18,212 - INFO - 开始处理 US.MSFT
+2025-04-28 21:06:18,212 - INFO - 尝试使用Akshare获取 MSFT 日线数据...
+2025-04-28 21:06:20,273 - INFO - Akshare成功获取 MSFT 日线数据，共 9302 条记录
+2025-04-28 21:06:20,273 - WARNING - Akshare获取 MSFT 日线数据失败: 'datetime'
+2025-04-28 21:06:20,274 - INFO - 尝试使用YFinance获取 MSFT 日线数据...
+2025-04-28 21:06:25,294 - ERROR - 
+1 Failed download:
+2025-04-28 21:06:25,295 - ERROR - ['MSFT']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:06:25,296 - WARNING - YFinance获取 MSFT 日线数据为空
+2025-04-28 21:06:25,296 - INFO - 尝试使用YFinance获取 MSFT 2h 数据...
+2025-04-28 21:06:30,440 - ERROR - 
+1 Failed download:
+2025-04-28 21:06:30,440 - ERROR - ['MSFT']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:06:30,441 - WARNING - YFinance获取 MSFT 2h 数据为空
+2025-04-28 21:06:30,441 - INFO - 尝试使用YFinance获取 MSFT 1h 数据...
+2025-04-28 21:06:34,055 - ERROR - 
+1 Failed download:
+2025-04-28 21:06:34,055 - ERROR - ['MSFT']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:06:34,058 - WARNING - YFinance获取 MSFT 1h 数据为空
+2025-04-28 21:06:34,058 - INFO - 尝试使用YFinance获取 MSFT 30m 数据...
+2025-04-28 21:06:38,058 - ERROR - 
+1 Failed download:
+2025-04-28 21:06:38,059 - ERROR - ['MSFT']: ProxyError(MaxRetryError("HTTPSConnectionPool(host='www.yahoo.com', port=443): Max retries exceeded with url: /?guccounter=1 (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 503 Service Unavailable')))"))
+2025-04-28 21:06:38,060 - WARNING - YFinance获取 MSFT 30m 数据为空
+2025-04-28 21:06:38,060 - INFO - 尝试使用YFinance获取 MSFT 15m 数据...
+2025-04-28 21:06:43,918 - ERROR - 
+1 Failed download:
+2025-04-28 21:06:43,921 - ERROR - ['MSFT']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:06:43,924 - WARNING - YFinance获取 MSFT 15m 数据为空
+2025-04-28 21:06:43,924 - INFO - 尝试使用YFinance获取 MSFT 5m 数据...
+2025-04-28 21:06:48,261 - ERROR - 
+1 Failed download:
+2025-04-28 21:06:48,261 - ERROR - ['MSFT']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:06:48,263 - WARNING - YFinance获取 MSFT 5m 数据为空
+2025-04-28 21:06:48,264 - ERROR - 没有有效数据可保存: US.MSFT
+2025-04-28 21:06:48,264 - INFO - 开始处理 SH.600536
+2025-04-28 21:07:02,896 - WARNING - 指标计算失败: 'close'
+2025-04-28 21:07:03,097 - INFO - 保存成功: output/SH_600536_20250428_2107.xlsx
+2025-04-28 21:07:03,097 - INFO - 开始处理 SH.600309
+2025-04-28 21:07:19,252 - WARNING - 指标计算失败: 'close'
+2025-04-28 21:07:19,473 - INFO - 保存成功: output/SH_600309_20250428_2107.xlsx
+2025-04-28 21:07:19,473 - INFO - 开始处理 SH.601998
+2025-04-28 21:07:36,118 - WARNING - 指标计算失败: 'close'
+2025-04-28 21:07:36,318 - INFO - 保存成功: output/SH_601998_20250428_2107.xlsx
+2025-04-28 21:07:36,318 - INFO - 开始处理 HK.00998
+2025-04-28 21:07:39,056 - ERROR - 拉取A股日线失败 00998: 'datetime'
+2025-04-28 21:07:40,535 - ERROR - 拉取A股分钟线失败 00998-120: 'NoneType' object is not subscriptable
+2025-04-28 21:07:42,040 - ERROR - 拉取A股分钟线失败 00998-60: 'NoneType' object is not subscriptable
+2025-04-28 21:07:43,546 - ERROR - 拉取A股分钟线失败 00998-30: 'NoneType' object is not subscriptable
+2025-04-28 21:07:45,684 - ERROR - 拉取A股分钟线失败 00998-15: 'NoneType' object is not subscriptable
+2025-04-28 21:07:47,627 - ERROR - 拉取A股分钟线失败 00998-5: 'NoneType' object is not subscriptable
+2025-04-28 21:07:49,531 - ERROR - 拉取资金流失败 00998: 'NoneType' object is not subscriptable
+2025-04-28 21:07:49,532 - ERROR - 没有有效数据可保存: HK.00998
+2025-04-28 21:07:49,532 - INFO - 开始处理 HK.09988
+2025-04-28 21:07:51,016 - ERROR - 拉取A股日线失败 09988: 'datetime'
+2025-04-28 21:07:52,495 - ERROR - 拉取A股分钟线失败 09988-120: 'NoneType' object is not subscriptable
+2025-04-28 21:07:54,295 - ERROR - 拉取A股分钟线失败 09988-60: 'NoneType' object is not subscriptable
+2025-04-28 21:07:55,977 - ERROR - 拉取A股分钟线失败 09988-30: 'NoneType' object is not subscriptable
+2025-04-28 21:07:57,619 - ERROR - 拉取A股分钟线失败 09988-15: 'NoneType' object is not subscriptable
+2025-04-28 21:07:59,283 - ERROR - 拉取A股分钟线失败 09988-5: 'NoneType' object is not subscriptable
+2025-04-28 21:08:00,810 - ERROR - 拉取资金流失败 09988: 'NoneType' object is not subscriptable
+2025-04-28 21:08:00,812 - ERROR - 没有有效数据可保存: HK.09988
+2025-04-28 21:11:12,023 - INFO - 开始处理 US.TSM
+2025-04-28 21:11:12,023 - INFO - 尝试使用Akshare获取 TSM 日线数据...
+2025-04-28 21:11:14,436 - INFO - Akshare成功获取 TSM 日线数据，共 5560 条记录
+2025-04-28 21:11:14,437 - WARNING - Akshare获取 TSM 日线数据失败: 'datetime'
+2025-04-28 21:11:14,437 - INFO - 尝试使用YFinance获取 TSM 日线数据...
+2025-04-28 21:11:22,316 - ERROR - 
+1 Failed download:
+2025-04-28 21:11:22,317 - ERROR - ['TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:11:22,324 - WARNING - YFinance获取 TSM 日线数据为空
+2025-04-28 21:11:22,324 - INFO - 尝试使用YFinance获取 TSM 2h 数据...
+2025-04-28 21:11:27,644 - ERROR - 
+1 Failed download:
+2025-04-28 21:11:27,645 - ERROR - ['TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:11:27,648 - WARNING - YFinance获取 TSM 2h 数据为空
+2025-04-28 21:11:27,649 - INFO - 尝试使用YFinance获取 TSM 1h 数据...
+2025-04-28 21:11:32,442 - ERROR - 
+1 Failed download:
+2025-04-28 21:11:32,442 - ERROR - ['TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:11:32,445 - WARNING - YFinance获取 TSM 1h 数据为空
+2025-04-28 21:11:32,445 - INFO - 尝试使用YFinance获取 TSM 30m 数据...
+2025-04-28 21:11:36,634 - ERROR - 
+1 Failed download:
+2025-04-28 21:11:36,634 - ERROR - ['TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:11:36,636 - WARNING - YFinance获取 TSM 30m 数据为空
+2025-04-28 21:11:36,636 - INFO - 尝试使用YFinance获取 TSM 15m 数据...
+2025-04-28 21:11:36,649 - ERROR - 
+1 Failed download:
+2025-04-28 21:11:36,650 - ERROR - ['TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:11:36,651 - WARNING - YFinance获取 TSM 15m 数据为空
+2025-04-28 21:11:36,651 - INFO - 尝试使用YFinance获取 TSM 5m 数据...
+2025-04-28 21:11:40,580 - ERROR - 
+1 Failed download:
+2025-04-28 21:11:40,581 - ERROR - ['TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:11:40,586 - WARNING - YFinance获取 TSM 5m 数据为空
+2025-04-28 21:11:40,586 - ERROR - 没有有效数据可保存: US.TSM
+2025-04-28 21:11:40,586 - INFO - 开始处理 US.MSFT
+2025-04-28 21:11:40,587 - INFO - 尝试使用Akshare获取 MSFT 日线数据...
+2025-04-28 21:11:43,491 - INFO - Akshare成功获取 MSFT 日线数据，共 9302 条记录
+2025-04-28 21:11:43,492 - WARNING - Akshare获取 MSFT 日线数据失败: 'datetime'
+2025-04-28 21:11:43,492 - INFO - 尝试使用YFinance获取 MSFT 日线数据...
+2025-04-28 21:11:50,142 - ERROR - 
+1 Failed download:
+2025-04-28 21:11:50,142 - ERROR - ['MSFT']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:11:50,146 - WARNING - YFinance获取 MSFT 日线数据为空
+2025-04-28 21:11:50,146 - INFO - 尝试使用YFinance获取 MSFT 2h 数据...
+2025-04-28 21:11:54,469 - ERROR - 
+1 Failed download:
+2025-04-28 21:11:54,469 - ERROR - ['MSFT']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:11:54,472 - WARNING - YFinance获取 MSFT 2h 数据为空
+2025-04-28 21:11:54,472 - INFO - 尝试使用YFinance获取 MSFT 1h 数据...
+2025-04-28 21:11:58,420 - ERROR - 
+1 Failed download:
+2025-04-28 21:11:58,420 - ERROR - ['MSFT']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:11:58,421 - WARNING - YFinance获取 MSFT 1h 数据为空
+2025-04-28 21:11:58,421 - INFO - 尝试使用YFinance获取 MSFT 30m 数据...
+2025-04-28 21:12:02,910 - ERROR - 
+1 Failed download:
+2025-04-28 21:12:02,911 - ERROR - ['MSFT']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:12:02,914 - WARNING - YFinance获取 MSFT 30m 数据为空
+2025-04-28 21:12:02,914 - INFO - 尝试使用YFinance获取 MSFT 15m 数据...
+2025-04-28 21:12:02,928 - ERROR - 
+1 Failed download:
+2025-04-28 21:12:02,928 - ERROR - ['MSFT']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:12:02,930 - WARNING - YFinance获取 MSFT 15m 数据为空
+2025-04-28 21:12:02,930 - INFO - 尝试使用YFinance获取 MSFT 5m 数据...
+2025-04-28 21:12:07,634 - ERROR - 
+1 Failed download:
+2025-04-28 21:12:07,634 - ERROR - ['MSFT']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:12:07,638 - WARNING - YFinance获取 MSFT 5m 数据为空
+2025-04-28 21:12:07,638 - ERROR - 没有有效数据可保存: US.MSFT
+2025-04-28 21:12:07,638 - INFO - 开始处理 US.# 600536
+2025-04-28 21:12:07,638 - INFO - 尝试使用Akshare获取 # 600536 日线数据...
+2025-04-28 21:12:08,654 - WARNING - Akshare获取 # 600536 日线数据失败: 'date'
+2025-04-28 21:12:08,655 - INFO - 尝试使用YFinance获取 # 600536 日线数据...
+2025-04-28 21:12:13,143 - ERROR - Failed to get ticker '600536' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:13,159 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:13,168 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:12:13,169 - ERROR - ['600536', '#']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:12:13,171 - WARNING - YFinance获取 # 600536 日线数据为空
+2025-04-28 21:12:13,171 - INFO - 尝试使用YFinance获取 # 600536 2h 数据...
+2025-04-28 21:12:13,173 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:13,174 - ERROR - Failed to get ticker '600536' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:13,185 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:12:13,185 - ERROR - ['#', '600536']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:12:13,187 - WARNING - YFinance获取 # 600536 2h 数据为空
+2025-04-28 21:12:13,187 - INFO - 尝试使用YFinance获取 # 600536 1h 数据...
+2025-04-28 21:12:13,188 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:13,190 - ERROR - Failed to get ticker '600536' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:13,200 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:12:13,200 - ERROR - ['#', '600536']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:12:13,202 - WARNING - YFinance获取 # 600536 1h 数据为空
+2025-04-28 21:12:13,202 - INFO - 尝试使用YFinance获取 # 600536 30m 数据...
+2025-04-28 21:12:13,203 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:13,204 - ERROR - Failed to get ticker '600536' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:13,215 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:12:13,215 - ERROR - ['#', '600536']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:12:13,217 - WARNING - YFinance获取 # 600536 30m 数据为空
+2025-04-28 21:12:13,217 - INFO - 尝试使用YFinance获取 # 600536 15m 数据...
+2025-04-28 21:12:13,218 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:13,219 - ERROR - Failed to get ticker '600536' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:13,228 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:12:13,228 - ERROR - ['#', '600536']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:12:13,230 - WARNING - YFinance获取 # 600536 15m 数据为空
+2025-04-28 21:12:13,230 - INFO - 尝试使用YFinance获取 # 600536 5m 数据...
+2025-04-28 21:12:13,230 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:13,232 - ERROR - Failed to get ticker '600536' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:13,243 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:12:13,243 - ERROR - ['#', '600536']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:12:13,244 - WARNING - YFinance获取 # 600536 5m 数据为空
+2025-04-28 21:12:13,244 - ERROR - 没有有效数据可保存: US.# 600536
+2025-04-28 21:12:13,244 - INFO - 开始处理 US.# 600309
+2025-04-28 21:12:13,244 - INFO - 尝试使用Akshare获取 # 600309 日线数据...
+2025-04-28 21:12:14,220 - WARNING - Akshare获取 # 600309 日线数据失败: 'date'
+2025-04-28 21:12:14,220 - INFO - 尝试使用YFinance获取 # 600309 日线数据...
+2025-04-28 21:12:14,223 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:18,632 - ERROR - Failed to get ticker '600309' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:18,635 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:12:18,635 - ERROR - ['#', '600309']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:12:18,644 - WARNING - YFinance获取 # 600309 日线数据为空
+2025-04-28 21:12:18,645 - INFO - 尝试使用YFinance获取 # 600309 2h 数据...
+2025-04-28 21:12:18,647 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:18,648 - ERROR - Failed to get ticker '600309' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:18,658 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:12:18,658 - ERROR - ['#', '600309']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:12:18,660 - WARNING - YFinance获取 # 600309 2h 数据为空
+2025-04-28 21:12:18,660 - INFO - 尝试使用YFinance获取 # 600309 1h 数据...
+2025-04-28 21:12:18,661 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:18,662 - ERROR - Failed to get ticker '600309' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:18,671 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:12:18,672 - ERROR - ['#', '600309']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:12:18,673 - WARNING - YFinance获取 # 600309 1h 数据为空
+2025-04-28 21:12:18,673 - INFO - 尝试使用YFinance获取 # 600309 30m 数据...
+2025-04-28 21:12:18,674 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:18,675 - ERROR - Failed to get ticker '600309' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:18,684 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:12:18,684 - ERROR - ['#', '600309']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:12:18,686 - WARNING - YFinance获取 # 600309 30m 数据为空
+2025-04-28 21:12:18,686 - INFO - 尝试使用YFinance获取 # 600309 15m 数据...
+2025-04-28 21:12:18,687 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:18,688 - ERROR - Failed to get ticker '600309' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:18,697 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:12:18,697 - ERROR - ['#', '600309']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:12:18,698 - WARNING - YFinance获取 # 600309 15m 数据为空
+2025-04-28 21:12:18,698 - INFO - 尝试使用YFinance获取 # 600309 5m 数据...
+2025-04-28 21:12:18,699 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:18,700 - ERROR - Failed to get ticker '600309' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:18,712 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:12:18,712 - ERROR - ['#', '600309']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:12:18,713 - WARNING - YFinance获取 # 600309 5m 数据为空
+2025-04-28 21:12:18,713 - ERROR - 没有有效数据可保存: US.# 600309
+2025-04-28 21:12:18,713 - INFO - 开始处理 US.# 601998
+2025-04-28 21:12:18,713 - INFO - 尝试使用Akshare获取 # 601998 日线数据...
+2025-04-28 21:12:21,459 - WARNING - Akshare获取 # 601998 日线数据失败: 'date'
+2025-04-28 21:12:21,460 - INFO - 尝试使用YFinance获取 # 601998 日线数据...
+2025-04-28 21:12:21,461 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:26,886 - ERROR - Failed to get ticker '601998' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:26,893 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:12:26,893 - ERROR - ['#', '601998']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:12:26,898 - WARNING - YFinance获取 # 601998 日线数据为空
+2025-04-28 21:12:26,898 - INFO - 尝试使用YFinance获取 # 601998 2h 数据...
+2025-04-28 21:12:26,901 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:26,903 - ERROR - Failed to get ticker '601998' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:26,912 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:12:26,913 - ERROR - ['#', '601998']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:12:26,914 - WARNING - YFinance获取 # 601998 2h 数据为空
+2025-04-28 21:12:26,914 - INFO - 尝试使用YFinance获取 # 601998 1h 数据...
+2025-04-28 21:12:26,916 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:26,917 - ERROR - Failed to get ticker '601998' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:26,926 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:12:26,926 - ERROR - ['#', '601998']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:12:26,928 - WARNING - YFinance获取 # 601998 1h 数据为空
+2025-04-28 21:12:26,928 - INFO - 尝试使用YFinance获取 # 601998 30m 数据...
+2025-04-28 21:12:26,928 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:26,930 - ERROR - Failed to get ticker '601998' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:26,941 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:12:26,941 - ERROR - ['#', '601998']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:12:26,942 - WARNING - YFinance获取 # 601998 30m 数据为空
+2025-04-28 21:12:26,942 - INFO - 尝试使用YFinance获取 # 601998 15m 数据...
+2025-04-28 21:12:26,943 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:26,944 - ERROR - Failed to get ticker '601998' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:26,955 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:12:26,955 - ERROR - ['#', '601998']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:12:26,956 - WARNING - YFinance获取 # 601998 15m 数据为空
+2025-04-28 21:12:26,956 - INFO - 尝试使用YFinance获取 # 601998 5m 数据...
+2025-04-28 21:12:26,957 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:26,958 - ERROR - Failed to get ticker '601998' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:26,969 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:12:26,969 - ERROR - ['#', '601998']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:12:26,970 - WARNING - YFinance获取 # 601998 5m 数据为空
+2025-04-28 21:12:26,970 - ERROR - 没有有效数据可保存: US.# 601998
+2025-04-28 21:12:26,970 - INFO - 开始处理 US.# 00998
+2025-04-28 21:12:26,970 - INFO - 尝试使用Akshare获取 # 00998 日线数据...
+2025-04-28 21:12:28,163 - WARNING - Akshare获取 # 00998 日线数据失败: 'date'
+2025-04-28 21:12:28,163 - INFO - 尝试使用YFinance获取 # 00998 日线数据...
+2025-04-28 21:12:28,165 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:36,618 - ERROR - Failed to get ticker '00998' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:12:39,207 - INFO - 开始处理 US.TSM
+2025-04-28 21:12:39,207 - INFO - 尝试使用Akshare获取 TSM 日线数据...
+2025-04-28 21:12:41,215 - INFO - Akshare成功获取 TSM 日线数据，共 5560 条记录
+2025-04-28 21:12:41,215 - WARNING - Akshare获取 TSM 日线数据失败: 'datetime'
+2025-04-28 21:12:41,215 - INFO - 尝试使用YFinance获取 TSM 日线数据...
+2025-04-28 21:12:49,555 - ERROR - 
+1 Failed download:
+2025-04-28 21:12:49,555 - ERROR - ['TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:12:49,558 - WARNING - YFinance获取 TSM 日线数据为空
+2025-04-28 21:12:49,558 - INFO - 尝试使用YFinance获取 TSM 2h 数据...
+2025-04-28 21:12:53,121 - ERROR - 
+1 Failed download:
+2025-04-28 21:12:53,121 - ERROR - ['TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:12:53,127 - WARNING - YFinance获取 TSM 2h 数据为空
+2025-04-28 21:12:53,127 - INFO - 尝试使用YFinance获取 TSM 1h 数据...
+2025-04-28 21:12:57,256 - ERROR - 
+1 Failed download:
+2025-04-28 21:12:57,256 - ERROR - ['TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:12:57,259 - WARNING - YFinance获取 TSM 1h 数据为空
+2025-04-28 21:12:57,260 - INFO - 尝试使用YFinance获取 TSM 30m 数据...
+2025-04-28 21:13:01,266 - ERROR - 
+1 Failed download:
+2025-04-28 21:13:01,266 - ERROR - ['TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:13:01,269 - WARNING - YFinance获取 TSM 30m 数据为空
+2025-04-28 21:13:01,270 - INFO - 尝试使用YFinance获取 TSM 15m 数据...
+2025-04-28 21:13:01,283 - ERROR - 
+1 Failed download:
+2025-04-28 21:13:01,283 - ERROR - ['TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:13:01,285 - WARNING - YFinance获取 TSM 15m 数据为空
+2025-04-28 21:13:01,285 - INFO - 尝试使用YFinance获取 TSM 5m 数据...
+2025-04-28 21:13:05,782 - ERROR - 
+1 Failed download:
+2025-04-28 21:13:05,782 - ERROR - ['TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:13:05,784 - WARNING - YFinance获取 TSM 5m 数据为空
+2025-04-28 21:13:05,784 - ERROR - 没有有效数据可保存: US.TSM
+2025-04-28 21:13:05,784 - INFO - 开始处理 US.MSFT
+2025-04-28 21:13:05,784 - INFO - 尝试使用Akshare获取 MSFT 日线数据...
+2025-04-28 21:13:08,641 - INFO - Akshare成功获取 MSFT 日线数据，共 9302 条记录
+2025-04-28 21:13:08,642 - WARNING - Akshare获取 MSFT 日线数据失败: 'datetime'
+2025-04-28 21:13:08,642 - INFO - 尝试使用YFinance获取 MSFT 日线数据...
+2025-04-28 21:13:12,336 - ERROR - 
+1 Failed download:
+2025-04-28 21:13:12,336 - ERROR - ['MSFT']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:13:12,340 - WARNING - YFinance获取 MSFT 日线数据为空
+2025-04-28 21:13:12,340 - INFO - 尝试使用YFinance获取 MSFT 2h 数据...
+2025-04-28 21:13:15,630 - ERROR - 
+1 Failed download:
+2025-04-28 21:13:15,630 - ERROR - ['MSFT']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:13:15,632 - WARNING - YFinance获取 MSFT 2h 数据为空
+2025-04-28 21:13:15,632 - INFO - 尝试使用YFinance获取 MSFT 1h 数据...
+2025-04-28 21:13:19,197 - ERROR - 
+1 Failed download:
+2025-04-28 21:13:19,198 - ERROR - ['MSFT']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:13:19,199 - WARNING - YFinance获取 MSFT 1h 数据为空
+2025-04-28 21:13:19,200 - INFO - 尝试使用YFinance获取 MSFT 30m 数据...
+2025-04-28 21:13:23,103 - ERROR - 
+1 Failed download:
+2025-04-28 21:13:23,103 - ERROR - ['MSFT']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:13:23,105 - WARNING - YFinance获取 MSFT 30m 数据为空
+2025-04-28 21:13:23,105 - INFO - 尝试使用YFinance获取 MSFT 15m 数据...
+2025-04-28 21:13:23,116 - ERROR - 
+1 Failed download:
+2025-04-28 21:13:23,116 - ERROR - ['MSFT']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:13:23,118 - WARNING - YFinance获取 MSFT 15m 数据为空
+2025-04-28 21:13:23,118 - INFO - 尝试使用YFinance获取 MSFT 5m 数据...
+2025-04-28 21:13:26,801 - ERROR - 
+1 Failed download:
+2025-04-28 21:13:26,801 - ERROR - ['MSFT']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:13:26,804 - WARNING - YFinance获取 MSFT 5m 数据为空
+2025-04-28 21:13:26,804 - ERROR - 没有有效数据可保存: US.MSFT
+2025-04-28 21:13:26,804 - INFO - 开始处理 US.# 600536
+2025-04-28 21:13:26,804 - INFO - 尝试使用Akshare获取 # 600536 日线数据...
+2025-04-28 21:13:29,032 - WARNING - Akshare获取 # 600536 日线数据失败: 'date'
+2025-04-28 21:13:29,033 - INFO - 尝试使用YFinance获取 # 600536 日线数据...
+2025-04-28 21:13:33,996 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:33,999 - ERROR - Failed to get ticker '600536' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:34,007 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:13:34,008 - ERROR - ['#', '600536']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:13:34,010 - WARNING - YFinance获取 # 600536 日线数据为空
+2025-04-28 21:13:34,010 - INFO - 尝试使用YFinance获取 # 600536 2h 数据...
+2025-04-28 21:13:34,012 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:34,014 - ERROR - Failed to get ticker '600536' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:34,023 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:13:34,024 - ERROR - ['#', '600536']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:13:34,026 - WARNING - YFinance获取 # 600536 2h 数据为空
+2025-04-28 21:13:34,026 - INFO - 尝试使用YFinance获取 # 600536 1h 数据...
+2025-04-28 21:13:34,027 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:34,028 - ERROR - Failed to get ticker '600536' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:34,039 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:13:34,039 - ERROR - ['#', '600536']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:13:34,041 - WARNING - YFinance获取 # 600536 1h 数据为空
+2025-04-28 21:13:34,041 - INFO - 尝试使用YFinance获取 # 600536 30m 数据...
+2025-04-28 21:13:34,042 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:34,043 - ERROR - Failed to get ticker '600536' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:34,054 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:13:34,054 - ERROR - ['#', '600536']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:13:34,056 - WARNING - YFinance获取 # 600536 30m 数据为空
+2025-04-28 21:13:34,056 - INFO - 尝试使用YFinance获取 # 600536 15m 数据...
+2025-04-28 21:13:34,057 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:34,058 - ERROR - Failed to get ticker '600536' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:34,069 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:13:34,069 - ERROR - ['#', '600536']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:13:34,070 - WARNING - YFinance获取 # 600536 15m 数据为空
+2025-04-28 21:13:34,070 - INFO - 尝试使用YFinance获取 # 600536 5m 数据...
+2025-04-28 21:13:34,071 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:34,072 - ERROR - Failed to get ticker '600536' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:34,083 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:13:34,083 - ERROR - ['#', '600536']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:13:34,084 - WARNING - YFinance获取 # 600536 5m 数据为空
+2025-04-28 21:13:34,084 - ERROR - 没有有效数据可保存: US.# 600536
+2025-04-28 21:13:34,084 - INFO - 开始处理 US.# 600309
+2025-04-28 21:13:34,084 - INFO - 尝试使用Akshare获取 # 600309 日线数据...
+2025-04-28 21:13:35,460 - WARNING - Akshare获取 # 600309 日线数据失败: 'date'
+2025-04-28 21:13:35,461 - INFO - 尝试使用YFinance获取 # 600309 日线数据...
+2025-04-28 21:13:35,462 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:40,776 - ERROR - Failed to get ticker '600309' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:40,779 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:13:40,779 - ERROR - ['#', '600309']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:13:40,786 - WARNING - YFinance获取 # 600309 日线数据为空
+2025-04-28 21:13:40,786 - INFO - 尝试使用YFinance获取 # 600309 2h 数据...
+2025-04-28 21:13:40,788 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:40,790 - ERROR - Failed to get ticker '600309' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:40,799 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:13:40,799 - ERROR - ['#', '600309']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:13:40,801 - WARNING - YFinance获取 # 600309 2h 数据为空
+2025-04-28 21:13:40,801 - INFO - 尝试使用YFinance获取 # 600309 1h 数据...
+2025-04-28 21:13:40,802 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:40,803 - ERROR - Failed to get ticker '600309' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:40,812 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:13:40,812 - ERROR - ['#', '600309']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:13:40,813 - WARNING - YFinance获取 # 600309 1h 数据为空
+2025-04-28 21:13:40,813 - INFO - 尝试使用YFinance获取 # 600309 30m 数据...
+2025-04-28 21:13:40,814 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:40,815 - ERROR - Failed to get ticker '600309' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:40,824 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:13:40,824 - ERROR - ['#', '600309']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:13:40,826 - WARNING - YFinance获取 # 600309 30m 数据为空
+2025-04-28 21:13:40,826 - INFO - 尝试使用YFinance获取 # 600309 15m 数据...
+2025-04-28 21:13:40,827 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:40,828 - ERROR - Failed to get ticker '600309' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:40,839 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:13:40,839 - ERROR - ['#', '600309']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:13:40,841 - WARNING - YFinance获取 # 600309 15m 数据为空
+2025-04-28 21:13:40,841 - INFO - 尝试使用YFinance获取 # 600309 5m 数据...
+2025-04-28 21:13:40,842 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:40,843 - ERROR - Failed to get ticker '600309' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:40,852 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:13:40,852 - ERROR - ['#', '600309']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:13:40,853 - WARNING - YFinance获取 # 600309 5m 数据为空
+2025-04-28 21:13:40,854 - ERROR - 没有有效数据可保存: US.# 600309
+2025-04-28 21:13:40,854 - INFO - 开始处理 US.# 601998
+2025-04-28 21:13:40,854 - INFO - 尝试使用Akshare获取 # 601998 日线数据...
+2025-04-28 21:13:41,778 - WARNING - Akshare获取 # 601998 日线数据失败: 'date'
+2025-04-28 21:13:41,779 - INFO - 尝试使用YFinance获取 # 601998 日线数据...
+2025-04-28 21:13:41,782 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:45,463 - ERROR - Failed to get ticker '601998' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:45,474 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:13:45,475 - ERROR - ['#', '601998']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:13:45,479 - WARNING - YFinance获取 # 601998 日线数据为空
+2025-04-28 21:13:45,479 - INFO - 尝试使用YFinance获取 # 601998 2h 数据...
+2025-04-28 21:13:45,481 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:45,482 - ERROR - Failed to get ticker '601998' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:45,493 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:13:45,493 - ERROR - ['#', '601998']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:13:45,495 - WARNING - YFinance获取 # 601998 2h 数据为空
+2025-04-28 21:13:45,495 - INFO - 尝试使用YFinance获取 # 601998 1h 数据...
+2025-04-28 21:13:45,496 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:45,497 - ERROR - Failed to get ticker '601998' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:45,508 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:13:45,508 - ERROR - ['#', '601998']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:13:45,510 - WARNING - YFinance获取 # 601998 1h 数据为空
+2025-04-28 21:13:45,510 - INFO - 尝试使用YFinance获取 # 601998 30m 数据...
+2025-04-28 21:13:45,511 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:45,512 - ERROR - Failed to get ticker '601998' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:45,521 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:13:45,521 - ERROR - ['#', '601998']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:13:45,523 - WARNING - YFinance获取 # 601998 30m 数据为空
+2025-04-28 21:13:45,523 - INFO - 尝试使用YFinance获取 # 601998 15m 数据...
+2025-04-28 21:13:45,524 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:45,525 - ERROR - Failed to get ticker '601998' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:45,534 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:13:45,534 - ERROR - ['#', '601998']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:13:45,535 - WARNING - YFinance获取 # 601998 15m 数据为空
+2025-04-28 21:13:45,535 - INFO - 尝试使用YFinance获取 # 601998 5m 数据...
+2025-04-28 21:13:45,536 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:45,537 - ERROR - Failed to get ticker '601998' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:45,549 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:13:45,549 - ERROR - ['#', '601998']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:13:45,550 - WARNING - YFinance获取 # 601998 5m 数据为空
+2025-04-28 21:13:45,550 - ERROR - 没有有效数据可保存: US.# 601998
+2025-04-28 21:13:45,550 - INFO - 开始处理 US.# 00998
+2025-04-28 21:13:45,550 - INFO - 尝试使用Akshare获取 # 00998 日线数据...
+2025-04-28 21:13:46,464 - WARNING - Akshare获取 # 00998 日线数据失败: 'date'
+2025-04-28 21:13:46,465 - INFO - 尝试使用YFinance获取 # 00998 日线数据...
+2025-04-28 21:13:46,468 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:52,410 - ERROR - Failed to get ticker '00998' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:52,415 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:13:52,415 - ERROR - ['#', '00998']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:13:52,417 - WARNING - YFinance获取 # 00998 日线数据为空
+2025-04-28 21:13:52,417 - INFO - 尝试使用YFinance获取 # 00998 2h 数据...
+2025-04-28 21:13:52,419 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:52,421 - ERROR - Failed to get ticker '00998' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:52,431 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:13:52,431 - ERROR - ['#', '00998']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:13:52,432 - WARNING - YFinance获取 # 00998 2h 数据为空
+2025-04-28 21:13:52,432 - INFO - 尝试使用YFinance获取 # 00998 1h 数据...
+2025-04-28 21:13:52,433 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:52,434 - ERROR - Failed to get ticker '00998' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:52,445 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:13:52,445 - ERROR - ['#', '00998']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:13:52,446 - WARNING - YFinance获取 # 00998 1h 数据为空
+2025-04-28 21:13:52,446 - INFO - 尝试使用YFinance获取 # 00998 30m 数据...
+2025-04-28 21:13:52,447 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:52,449 - ERROR - Failed to get ticker '00998' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:52,458 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:13:52,458 - ERROR - ['#', '00998']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:13:52,458 - WARNING - YFinance获取 # 00998 30m 数据为空
+2025-04-28 21:13:52,458 - INFO - 尝试使用YFinance获取 # 00998 15m 数据...
+2025-04-28 21:13:52,459 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:52,460 - ERROR - Failed to get ticker '00998' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:52,472 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:13:52,472 - ERROR - ['#', '00998']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:13:52,473 - WARNING - YFinance获取 # 00998 15m 数据为空
+2025-04-28 21:13:52,473 - INFO - 尝试使用YFinance获取 # 00998 5m 数据...
+2025-04-28 21:13:52,474 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:52,475 - ERROR - Failed to get ticker '00998' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:52,486 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:13:52,486 - ERROR - ['#', '00998']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:13:52,487 - WARNING - YFinance获取 # 00998 5m 数据为空
+2025-04-28 21:13:52,488 - ERROR - 没有有效数据可保存: US.# 00998
+2025-04-28 21:13:52,488 - INFO - 开始处理 US.# 09988
+2025-04-28 21:13:52,488 - INFO - 尝试使用Akshare获取 # 09988 日线数据...
+2025-04-28 21:13:53,389 - WARNING - Akshare获取 # 09988 日线数据失败: 'date'
+2025-04-28 21:13:53,390 - INFO - 尝试使用YFinance获取 # 09988 日线数据...
+2025-04-28 21:13:53,392 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:57,758 - ERROR - Failed to get ticker '09988' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:57,765 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:13:57,765 - ERROR - ['#', '09988']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:13:57,769 - WARNING - YFinance获取 # 09988 日线数据为空
+2025-04-28 21:13:57,769 - INFO - 尝试使用YFinance获取 # 09988 2h 数据...
+2025-04-28 21:13:57,773 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:57,775 - ERROR - Failed to get ticker '09988' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:57,785 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:13:57,785 - ERROR - ['#', '09988']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:13:57,787 - WARNING - YFinance获取 # 09988 2h 数据为空
+2025-04-28 21:13:57,787 - INFO - 尝试使用YFinance获取 # 09988 1h 数据...
+2025-04-28 21:13:57,789 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:57,790 - ERROR - Failed to get ticker '09988' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:57,798 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:13:57,799 - ERROR - ['#', '09988']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:13:57,801 - WARNING - YFinance获取 # 09988 1h 数据为空
+2025-04-28 21:13:57,801 - INFO - 尝试使用YFinance获取 # 09988 30m 数据...
+2025-04-28 21:13:57,802 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:57,804 - ERROR - Failed to get ticker '09988' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:57,814 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:13:57,814 - ERROR - ['#', '09988']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:13:57,816 - WARNING - YFinance获取 # 09988 30m 数据为空
+2025-04-28 21:13:57,817 - INFO - 尝试使用YFinance获取 # 09988 15m 数据...
+2025-04-28 21:13:57,818 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:57,819 - ERROR - Failed to get ticker '09988' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:57,828 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:13:57,828 - ERROR - ['#', '09988']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:13:57,829 - WARNING - YFinance获取 # 09988 15m 数据为空
+2025-04-28 21:13:57,829 - INFO - 尝试使用YFinance获取 # 09988 5m 数据...
+2025-04-28 21:13:57,830 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:57,832 - ERROR - Failed to get ticker '09988' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 21:13:57,841 - ERROR - 
+2 Failed downloads:
+2025-04-28 21:13:57,841 - ERROR - ['#', '09988']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 21:13:57,842 - WARNING - YFinance获取 # 09988 5m 数据为空
+2025-04-28 21:13:57,842 - ERROR - 没有有效数据可保存: US.# 09988
+2025-04-28 21:14:05,739 - INFO - 开始处理 US.TSM
+2025-04-28 21:14:05,739 - INFO - 尝试使用Akshare获取 TSM 日线数据...
+2025-04-28 21:14:08,076 - INFO - Akshare成功获取 TSM 日线数据，共 5560 条记录
+2025-04-28 21:14:08,076 - WARNING - Akshare获取 TSM 日线数据失败: 'datetime'
+2025-04-28 21:14:08,076 - INFO - 尝试使用YFinance获取 TSM 日线数据...
+2025-04-28 21:14:14,016 - ERROR - 
+1 Failed download:
+2025-04-28 21:14:14,017 - ERROR - ['TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:14:14,021 - WARNING - YFinance获取 TSM 日线数据为空
+2025-04-28 21:14:14,021 - INFO - 尝试使用YFinance获取 TSM 2h 数据...
+2025-04-28 21:14:17,356 - ERROR - 
+1 Failed download:
+2025-04-28 21:14:17,356 - ERROR - ['TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 21:14:17,359 - WARNING - YFinance获取 TSM 2h 数据为空
+2025-04-28 21:14:17,360 - INFO - 尝试使用YFinance获取 TSM 1h 数据...
+2025-04-28 21:15:21,179 - INFO - 开始处理 US.TSM
+2025-04-28 21:15:21,179 - INFO - 尝试使用Akshare获取 TSM 日线数据...
+2025-04-28 21:15:23,360 - INFO - Akshare成功获取 TSM 日线数据，共 5560 条记录
+2025-04-28 21:15:23,361 - WARNING - Akshare获取 TSM 日线数据失败: 'datetime'
+2025-04-28 21:15:23,361 - INFO - 尝试使用YFinance获取 TSM 日线数据...
+2025-04-28 22:26:44,277 - INFO - 开始处理 US.TSM
+2025-04-28 22:26:44,277 - INFO - 尝试使用Akshare获取 TSM 日线数据...
+2025-04-28 22:26:46,854 - INFO - Akshare成功获取 TSM 日线数据，共 5560 条记录
+2025-04-28 22:26:46,854 - WARNING - Akshare获取 TSM 日线数据失败: 'datetime'
+2025-04-28 22:26:46,854 - INFO - 尝试使用YFinance获取 TSM 日线数据...
+2025-04-28 22:26:51,871 - ERROR - 
+1 Failed download:
+2025-04-28 22:26:51,872 - ERROR - ['TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 22:26:51,876 - WARNING - YFinance获取 TSM 日线数据为空
+2025-04-28 22:26:51,877 - INFO - 尝试使用YFinance获取 TSM 2h 数据...
+2025-04-28 22:26:55,953 - ERROR - 
+1 Failed download:
+2025-04-28 22:26:55,953 - ERROR - ['TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 22:26:55,954 - WARNING - YFinance获取 TSM 2h 数据为空
+2025-04-28 22:26:55,954 - INFO - 尝试使用YFinance获取 TSM 1h 数据...
+2025-04-28 22:26:59,685 - ERROR - 
+1 Failed download:
+2025-04-28 22:26:59,686 - ERROR - ['TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 22:26:59,688 - WARNING - YFinance获取 TSM 1h 数据为空
+2025-04-28 22:26:59,688 - INFO - 尝试使用YFinance获取 TSM 30m 数据...
+2025-04-28 22:27:03,886 - ERROR - 
+1 Failed download:
+2025-04-28 22:27:03,887 - ERROR - ['TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 22:27:03,890 - WARNING - YFinance获取 TSM 30m 数据为空
+2025-04-28 22:27:03,890 - INFO - 尝试使用YFinance获取 TSM 15m 数据...
+2025-04-28 22:27:03,903 - ERROR - 
+1 Failed download:
+2025-04-28 22:27:03,903 - ERROR - ['TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 22:27:03,904 - WARNING - YFinance获取 TSM 15m 数据为空
+2025-04-28 22:27:03,904 - INFO - 尝试使用YFinance获取 TSM 5m 数据...
+2025-04-28 22:27:09,074 - ERROR - 
+1 Failed download:
+2025-04-28 22:27:09,075 - ERROR - ['TSM']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 22:27:09,076 - WARNING - YFinance获取 TSM 5m 数据为空
+2025-04-28 22:27:09,076 - ERROR - 没有有效数据可保存: US.TSM
+2025-04-28 22:27:09,076 - INFO - 开始处理 US.MSFT
+2025-04-28 22:27:09,076 - INFO - 尝试使用Akshare获取 MSFT 日线数据...
+2025-04-28 22:27:11,505 - INFO - Akshare成功获取 MSFT 日线数据，共 9302 条记录
+2025-04-28 22:27:11,506 - WARNING - Akshare获取 MSFT 日线数据失败: 'datetime'
+2025-04-28 22:27:11,506 - INFO - 尝试使用YFinance获取 MSFT 日线数据...
+2025-04-28 22:27:18,586 - ERROR - 
+1 Failed download:
+2025-04-28 22:27:18,586 - ERROR - ['MSFT']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 22:27:18,589 - WARNING - YFinance获取 MSFT 日线数据为空
+2025-04-28 22:27:18,589 - INFO - 尝试使用YFinance获取 MSFT 2h 数据...
+2025-04-28 22:27:23,671 - ERROR - 
+1 Failed download:
+2025-04-28 22:27:23,672 - ERROR - ['MSFT']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 22:27:23,677 - WARNING - YFinance获取 MSFT 2h 数据为空
+2025-04-28 22:27:23,678 - INFO - 尝试使用YFinance获取 MSFT 1h 数据...
+2025-04-28 22:27:28,321 - ERROR - 
+1 Failed download:
+2025-04-28 22:27:28,322 - ERROR - ['MSFT']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 22:27:28,325 - WARNING - YFinance获取 MSFT 1h 数据为空
+2025-04-28 22:27:28,325 - INFO - 尝试使用YFinance获取 MSFT 30m 数据...
+2025-04-28 22:27:32,959 - ERROR - 
+1 Failed download:
+2025-04-28 22:27:32,960 - ERROR - ['MSFT']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 22:27:32,962 - WARNING - YFinance获取 MSFT 30m 数据为空
+2025-04-28 22:27:32,962 - INFO - 尝试使用YFinance获取 MSFT 15m 数据...
+2025-04-28 22:27:32,975 - ERROR - 
+1 Failed download:
+2025-04-28 22:27:32,976 - ERROR - ['MSFT']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 22:27:32,978 - WARNING - YFinance获取 MSFT 15m 数据为空
+2025-04-28 22:27:32,978 - INFO - 尝试使用YFinance获取 MSFT 5m 数据...
+2025-04-28 22:27:37,548 - ERROR - 
+1 Failed download:
+2025-04-28 22:27:37,548 - ERROR - ['MSFT']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 22:27:37,552 - WARNING - YFinance获取 MSFT 5m 数据为空
+2025-04-28 22:27:37,552 - ERROR - 没有有效数据可保存: US.MSFT
+2025-04-28 22:27:37,552 - INFO - 开始处理 US.# 600536
+2025-04-28 22:27:37,553 - INFO - 尝试使用Akshare获取 # 600536 日线数据...
+2025-04-28 22:27:39,647 - WARNING - Akshare获取 # 600536 日线数据失败: 'date'
+2025-04-28 22:27:39,648 - INFO - 尝试使用YFinance获取 # 600536 日线数据...
+2025-04-28 22:27:43,954 - ERROR - Failed to get ticker '600536' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:27:44,789 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:27:44,800 - ERROR - 
+2 Failed downloads:
+2025-04-28 22:27:44,800 - ERROR - ['600536', '#']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:27:44,801 - WARNING - YFinance获取 # 600536 日线数据为空
+2025-04-28 22:27:44,802 - INFO - 尝试使用YFinance获取 # 600536 2h 数据...
+2025-04-28 22:27:44,802 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:27:44,803 - ERROR - Failed to get ticker '600536' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:27:44,815 - ERROR - 
+2 Failed downloads:
+2025-04-28 22:27:44,815 - ERROR - ['#', '600536']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:27:44,815 - WARNING - YFinance获取 # 600536 2h 数据为空
+2025-04-28 22:27:44,815 - INFO - 尝试使用YFinance获取 # 600536 1h 数据...
+2025-04-28 22:27:44,816 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:27:44,817 - ERROR - Failed to get ticker '600536' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:27:44,828 - ERROR - 
+2 Failed downloads:
+2025-04-28 22:27:44,828 - ERROR - ['#', '600536']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:27:44,829 - WARNING - YFinance获取 # 600536 1h 数据为空
+2025-04-28 22:27:44,829 - INFO - 尝试使用YFinance获取 # 600536 30m 数据...
+2025-04-28 22:27:44,830 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:27:44,830 - ERROR - Failed to get ticker '600536' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:27:44,842 - ERROR - 
+2 Failed downloads:
+2025-04-28 22:27:44,842 - ERROR - ['#', '600536']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:27:44,843 - WARNING - YFinance获取 # 600536 30m 数据为空
+2025-04-28 22:27:44,843 - INFO - 尝试使用YFinance获取 # 600536 15m 数据...
+2025-04-28 22:27:44,843 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:27:44,844 - ERROR - Failed to get ticker '600536' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:27:44,856 - ERROR - 
+2 Failed downloads:
+2025-04-28 22:27:44,856 - ERROR - ['#', '600536']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:27:44,857 - WARNING - YFinance获取 # 600536 15m 数据为空
+2025-04-28 22:27:44,857 - INFO - 尝试使用YFinance获取 # 600536 5m 数据...
+2025-04-28 22:27:44,857 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:27:44,858 - ERROR - Failed to get ticker '600536' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:27:44,869 - ERROR - 
+2 Failed downloads:
+2025-04-28 22:27:44,870 - ERROR - ['#', '600536']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:27:44,870 - WARNING - YFinance获取 # 600536 5m 数据为空
+2025-04-28 22:27:44,870 - ERROR - 没有有效数据可保存: US.# 600536
+2025-04-28 22:27:44,870 - INFO - 开始处理 US.# 600309
+2025-04-28 22:27:44,870 - INFO - 尝试使用Akshare获取 # 600309 日线数据...
+2025-04-28 22:27:45,757 - WARNING - Akshare获取 # 600309 日线数据失败: 'date'
+2025-04-28 22:27:45,757 - INFO - 尝试使用YFinance获取 # 600309 日线数据...
+2025-04-28 22:27:45,759 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:27:49,955 - ERROR - Failed to get ticker '600309' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:27:49,960 - ERROR - 
+2 Failed downloads:
+2025-04-28 22:27:49,961 - ERROR - ['#', '600309']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:27:49,962 - WARNING - YFinance获取 # 600309 日线数据为空
+2025-04-28 22:27:49,962 - INFO - 尝试使用YFinance获取 # 600309 2h 数据...
+2025-04-28 22:27:49,963 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:27:49,963 - ERROR - Failed to get ticker '600309' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:27:49,975 - ERROR - 
+2 Failed downloads:
+2025-04-28 22:27:49,975 - ERROR - ['#', '600309']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:27:49,976 - WARNING - YFinance获取 # 600309 2h 数据为空
+2025-04-28 22:27:49,976 - INFO - 尝试使用YFinance获取 # 600309 1h 数据...
+2025-04-28 22:27:49,977 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:27:49,978 - ERROR - Failed to get ticker '600309' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:27:49,989 - ERROR - 
+2 Failed downloads:
+2025-04-28 22:27:49,989 - ERROR - ['#', '600309']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:27:49,990 - WARNING - YFinance获取 # 600309 1h 数据为空
+2025-04-28 22:27:49,990 - INFO - 尝试使用YFinance获取 # 600309 30m 数据...
+2025-04-28 22:27:49,991 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:27:49,992 - ERROR - Failed to get ticker '600309' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:27:50,003 - ERROR - 
+2 Failed downloads:
+2025-04-28 22:27:50,003 - ERROR - ['#', '600309']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:27:50,005 - WARNING - YFinance获取 # 600309 30m 数据为空
+2025-04-28 22:27:50,005 - INFO - 尝试使用YFinance获取 # 600309 15m 数据...
+2025-04-28 22:27:50,005 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:27:50,006 - ERROR - Failed to get ticker '600309' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:27:50,018 - ERROR - 
+2 Failed downloads:
+2025-04-28 22:27:50,018 - ERROR - ['#', '600309']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:27:50,019 - WARNING - YFinance获取 # 600309 15m 数据为空
+2025-04-28 22:27:50,019 - INFO - 尝试使用YFinance获取 # 600309 5m 数据...
+2025-04-28 22:27:50,019 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:27:50,020 - ERROR - Failed to get ticker '600309' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:27:50,029 - ERROR - 
+2 Failed downloads:
+2025-04-28 22:27:50,030 - ERROR - ['#', '600309']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:27:50,032 - WARNING - YFinance获取 # 600309 5m 数据为空
+2025-04-28 22:27:50,032 - ERROR - 没有有效数据可保存: US.# 600309
+2025-04-28 22:27:50,032 - INFO - 开始处理 US.# 601998
+2025-04-28 22:27:50,032 - INFO - 尝试使用Akshare获取 # 601998 日线数据...
+2025-04-28 22:27:50,733 - WARNING - Akshare获取 # 601998 日线数据失败: 'date'
+2025-04-28 22:27:50,734 - INFO - 尝试使用YFinance获取 # 601998 日线数据...
+2025-04-28 22:27:50,737 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:27:55,898 - ERROR - Failed to get ticker '601998' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:27:55,910 - ERROR - 
+2 Failed downloads:
+2025-04-28 22:27:55,910 - ERROR - ['#', '601998']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:27:55,913 - WARNING - YFinance获取 # 601998 日线数据为空
+2025-04-28 22:27:55,914 - INFO - 尝试使用YFinance获取 # 601998 2h 数据...
+2025-04-28 22:27:55,915 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:27:55,916 - ERROR - Failed to get ticker '601998' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:27:55,927 - ERROR - 
+2 Failed downloads:
+2025-04-28 22:27:55,927 - ERROR - ['#', '601998']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:27:55,929 - WARNING - YFinance获取 # 601998 2h 数据为空
+2025-04-28 22:27:55,930 - INFO - 尝试使用YFinance获取 # 601998 1h 数据...
+2025-04-28 22:27:55,931 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:27:55,932 - ERROR - Failed to get ticker '601998' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:27:55,943 - ERROR - 
+2 Failed downloads:
+2025-04-28 22:27:55,943 - ERROR - ['#', '601998']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:27:55,945 - WARNING - YFinance获取 # 601998 1h 数据为空
+2025-04-28 22:27:55,945 - INFO - 尝试使用YFinance获取 # 601998 30m 数据...
+2025-04-28 22:27:55,947 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:27:55,948 - ERROR - Failed to get ticker '601998' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:27:55,959 - ERROR - 
+2 Failed downloads:
+2025-04-28 22:27:55,959 - ERROR - ['#', '601998']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:27:55,960 - WARNING - YFinance获取 # 601998 30m 数据为空
+2025-04-28 22:27:55,960 - INFO - 尝试使用YFinance获取 # 601998 15m 数据...
+2025-04-28 22:27:55,962 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:27:55,963 - ERROR - Failed to get ticker '601998' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:27:55,974 - ERROR - 
+2 Failed downloads:
+2025-04-28 22:27:55,974 - ERROR - ['#', '601998']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:27:55,976 - WARNING - YFinance获取 # 601998 15m 数据为空
+2025-04-28 22:27:55,976 - INFO - 尝试使用YFinance获取 # 601998 5m 数据...
+2025-04-28 22:27:55,977 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:27:55,978 - ERROR - Failed to get ticker '601998' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:27:55,989 - ERROR - 
+2 Failed downloads:
+2025-04-28 22:27:55,989 - ERROR - ['#', '601998']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:27:55,990 - WARNING - YFinance获取 # 601998 5m 数据为空
+2025-04-28 22:27:55,991 - ERROR - 没有有效数据可保存: US.# 601998
+2025-04-28 22:27:55,991 - INFO - 开始处理 US.# 00998
+2025-04-28 22:27:55,991 - INFO - 尝试使用Akshare获取 # 00998 日线数据...
+2025-04-28 22:27:57,140 - WARNING - Akshare获取 # 00998 日线数据失败: 'date'
+2025-04-28 22:27:57,141 - INFO - 尝试使用YFinance获取 # 00998 日线数据...
+2025-04-28 22:27:57,144 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:28:01,146 - ERROR - Failed to get ticker '00998' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:28:01,151 - ERROR - 
+2 Failed downloads:
+2025-04-28 22:28:01,151 - ERROR - ['#', '00998']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:28:01,155 - WARNING - YFinance获取 # 00998 日线数据为空
+2025-04-28 22:28:01,155 - INFO - 尝试使用YFinance获取 # 00998 2h 数据...
+2025-04-28 22:28:01,157 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:28:01,160 - ERROR - Failed to get ticker '00998' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:28:01,169 - ERROR - 
+2 Failed downloads:
+2025-04-28 22:28:01,169 - ERROR - ['#', '00998']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:28:01,171 - WARNING - YFinance获取 # 00998 2h 数据为空
+2025-04-28 22:28:01,172 - INFO - 尝试使用YFinance获取 # 00998 1h 数据...
+2025-04-28 22:28:01,173 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:28:01,175 - ERROR - Failed to get ticker '00998' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:28:01,185 - ERROR - 
+2 Failed downloads:
+2025-04-28 22:28:01,185 - ERROR - ['#', '00998']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:28:01,187 - WARNING - YFinance获取 # 00998 1h 数据为空
+2025-04-28 22:28:01,187 - INFO - 尝试使用YFinance获取 # 00998 30m 数据...
+2025-04-28 22:28:01,188 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:28:01,190 - ERROR - Failed to get ticker '00998' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:28:01,200 - ERROR - 
+2 Failed downloads:
+2025-04-28 22:28:01,200 - ERROR - ['#', '00998']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:28:01,202 - WARNING - YFinance获取 # 00998 30m 数据为空
+2025-04-28 22:28:01,202 - INFO - 尝试使用YFinance获取 # 00998 15m 数据...
+2025-04-28 22:28:01,204 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:28:01,205 - ERROR - Failed to get ticker '00998' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:28:01,216 - ERROR - 
+2 Failed downloads:
+2025-04-28 22:28:01,216 - ERROR - ['#', '00998']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:28:01,217 - WARNING - YFinance获取 # 00998 15m 数据为空
+2025-04-28 22:28:01,217 - INFO - 尝试使用YFinance获取 # 00998 5m 数据...
+2025-04-28 22:28:01,219 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:28:01,220 - ERROR - Failed to get ticker '00998' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:28:01,231 - ERROR - 
+2 Failed downloads:
+2025-04-28 22:28:01,231 - ERROR - ['#', '00998']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:28:01,232 - WARNING - YFinance获取 # 00998 5m 数据为空
+2025-04-28 22:28:01,232 - ERROR - 没有有效数据可保存: US.# 00998
+2025-04-28 22:28:01,232 - INFO - 开始处理 US.# 09988
+2025-04-28 22:28:01,232 - INFO - 尝试使用Akshare获取 # 09988 日线数据...
+2025-04-28 22:28:02,552 - WARNING - Akshare获取 # 09988 日线数据失败: 'date'
+2025-04-28 22:28:02,552 - INFO - 尝试使用YFinance获取 # 09988 日线数据...
+2025-04-28 22:28:02,555 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:28:06,764 - ERROR - Failed to get ticker '09988' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:28:06,769 - ERROR - 
+2 Failed downloads:
+2025-04-28 22:28:06,769 - ERROR - ['#', '09988']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:28:06,772 - WARNING - YFinance获取 # 09988 日线数据为空
+2025-04-28 22:28:06,772 - INFO - 尝试使用YFinance获取 # 09988 2h 数据...
+2025-04-28 22:28:06,774 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:28:06,776 - ERROR - Failed to get ticker '09988' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:28:06,786 - ERROR - 
+2 Failed downloads:
+2025-04-28 22:28:06,786 - ERROR - ['#', '09988']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:28:06,788 - WARNING - YFinance获取 # 09988 2h 数据为空
+2025-04-28 22:28:06,788 - INFO - 尝试使用YFinance获取 # 09988 1h 数据...
+2025-04-28 22:28:06,789 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:28:06,790 - ERROR - Failed to get ticker '09988' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:28:06,801 - ERROR - 
+2 Failed downloads:
+2025-04-28 22:28:06,801 - ERROR - ['#', '09988']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:28:06,803 - WARNING - YFinance获取 # 09988 1h 数据为空
+2025-04-28 22:28:06,803 - INFO - 尝试使用YFinance获取 # 09988 30m 数据...
+2025-04-28 22:28:06,804 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:28:06,805 - ERROR - Failed to get ticker '09988' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:28:06,816 - ERROR - 
+2 Failed downloads:
+2025-04-28 22:28:06,816 - ERROR - ['#', '09988']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:28:06,818 - WARNING - YFinance获取 # 09988 30m 数据为空
+2025-04-28 22:28:06,819 - INFO - 尝试使用YFinance获取 # 09988 15m 数据...
+2025-04-28 22:28:06,820 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:28:06,821 - ERROR - Failed to get ticker '09988' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:28:06,832 - ERROR - 
+2 Failed downloads:
+2025-04-28 22:28:06,832 - ERROR - ['#', '09988']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:28:06,834 - WARNING - YFinance获取 # 09988 15m 数据为空
+2025-04-28 22:28:06,834 - INFO - 尝试使用YFinance获取 # 09988 5m 数据...
+2025-04-28 22:28:06,835 - ERROR - Failed to get ticker '#' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:28:06,836 - ERROR - Failed to get ticker '09988' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:28:06,846 - ERROR - 
+2 Failed downloads:
+2025-04-28 22:28:06,847 - ERROR - ['#', '09988']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:28:06,848 - WARNING - YFinance获取 # 09988 5m 数据为空
+2025-04-28 22:28:06,848 - ERROR - 没有有效数据可保存: US.# 09988
+2025-04-28 22:28:06,848 - INFO - 开始处理 US.AAPL
+2025-04-28 22:28:06,848 - INFO - 尝试使用Akshare获取 AAPL 日线数据...
+2025-04-28 22:28:11,303 - INFO - Akshare成功获取 AAPL 日线数据，共 9684 条记录
+2025-04-28 22:28:11,303 - WARNING - Akshare获取 AAPL 日线数据失败: 'datetime'
+2025-04-28 22:28:11,303 - INFO - 尝试使用YFinance获取 AAPL 日线数据...
+2025-04-28 22:28:16,493 - ERROR - 
+1 Failed download:
+2025-04-28 22:28:16,494 - ERROR - ['AAPL']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 22:28:16,498 - WARNING - YFinance获取 AAPL 日线数据为空
+2025-04-28 22:28:16,498 - INFO - 尝试使用YFinance获取 AAPL 2h 数据...
+2025-04-28 22:28:22,795 - ERROR - 
+1 Failed download:
+2025-04-28 22:28:22,795 - ERROR - ['AAPL']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 22:28:22,797 - WARNING - YFinance获取 AAPL 2h 数据为空
+2025-04-28 22:28:22,797 - INFO - 尝试使用YFinance获取 AAPL 1h 数据...
+2025-04-28 22:28:27,022 - ERROR - 
+1 Failed download:
+2025-04-28 22:28:27,022 - ERROR - ['AAPL']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 22:28:27,026 - WARNING - YFinance获取 AAPL 1h 数据为空
+2025-04-28 22:28:27,026 - INFO - 尝试使用YFinance获取 AAPL 30m 数据...
+2025-04-28 22:28:30,403 - ERROR - 
+1 Failed download:
+2025-04-28 22:28:30,403 - ERROR - ['AAPL']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 22:28:30,405 - WARNING - YFinance获取 AAPL 30m 数据为空
+2025-04-28 22:28:30,406 - INFO - 尝试使用YFinance获取 AAPL 15m 数据...
+2025-04-28 22:28:30,418 - ERROR - 
+1 Failed download:
+2025-04-28 22:28:30,418 - ERROR - ['AAPL']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 22:28:30,421 - WARNING - YFinance获取 AAPL 15m 数据为空
+2025-04-28 22:28:30,421 - INFO - 尝试使用YFinance获取 AAPL 5m 数据...
+2025-04-28 22:28:35,745 - ERROR - 
+1 Failed download:
+2025-04-28 22:28:35,745 - ERROR - ['AAPL']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 22:28:35,748 - WARNING - YFinance获取 AAPL 5m 数据为空
+2025-04-28 22:28:35,748 - ERROR - 没有有效数据可保存: US.AAPL
+2025-04-28 22:28:35,748 - INFO - 开始处理 US.GOOGL
+2025-04-28 22:28:35,748 - INFO - 尝试使用Akshare获取 GOOGL 日线数据...
+2025-04-28 22:28:37,869 - INFO - Akshare成功获取 GOOGL 日线数据，共 4556 条记录
+2025-04-28 22:28:37,870 - WARNING - Akshare获取 GOOGL 日线数据失败: 'datetime'
+2025-04-28 22:28:37,870 - INFO - 尝试使用YFinance获取 GOOGL 日线数据...
+2025-04-28 22:28:42,187 - ERROR - Failed to get ticker 'GOOGL' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:28:42,194 - ERROR - 
+1 Failed download:
+2025-04-28 22:28:42,194 - ERROR - ['GOOGL']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:28:42,198 - WARNING - YFinance获取 GOOGL 日线数据为空
+2025-04-28 22:28:42,198 - INFO - 尝试使用YFinance获取 GOOGL 2h 数据...
+2025-04-28 22:28:42,200 - ERROR - Failed to get ticker 'GOOGL' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:28:42,211 - ERROR - 
+1 Failed download:
+2025-04-28 22:28:42,211 - ERROR - ['GOOGL']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:28:42,214 - WARNING - YFinance获取 GOOGL 2h 数据为空
+2025-04-28 22:28:42,214 - INFO - 尝试使用YFinance获取 GOOGL 1h 数据...
+2025-04-28 22:28:42,216 - ERROR - Failed to get ticker 'GOOGL' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:28:42,226 - ERROR - 
+1 Failed download:
+2025-04-28 22:28:42,226 - ERROR - ['GOOGL']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:28:42,229 - WARNING - YFinance获取 GOOGL 1h 数据为空
+2025-04-28 22:28:42,229 - INFO - 尝试使用YFinance获取 GOOGL 30m 数据...
+2025-04-28 22:28:42,230 - ERROR - Failed to get ticker 'GOOGL' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:28:42,242 - ERROR - 
+1 Failed download:
+2025-04-28 22:28:42,242 - ERROR - ['GOOGL']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:28:42,243 - WARNING - YFinance获取 GOOGL 30m 数据为空
+2025-04-28 22:28:42,244 - INFO - 尝试使用YFinance获取 GOOGL 15m 数据...
+2025-04-28 22:28:42,244 - ERROR - Failed to get ticker 'GOOGL' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:28:42,257 - ERROR - 
+1 Failed download:
+2025-04-28 22:28:42,257 - ERROR - ['GOOGL']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:28:42,259 - WARNING - YFinance获取 GOOGL 15m 数据为空
+2025-04-28 22:28:42,259 - INFO - 尝试使用YFinance获取 GOOGL 5m 数据...
+2025-04-28 22:28:42,260 - ERROR - Failed to get ticker 'GOOGL' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:28:42,272 - ERROR - 
+1 Failed download:
+2025-04-28 22:28:42,272 - ERROR - ['GOOGL']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:28:42,274 - WARNING - YFinance获取 GOOGL 5m 数据为空
+2025-04-28 22:28:42,274 - ERROR - 没有有效数据可保存: US.GOOGL
+2025-04-28 22:28:42,274 - INFO - 开始处理 US.AMZN
+2025-04-28 22:28:42,274 - INFO - 尝试使用Akshare获取 AMZN 日线数据...
+2025-04-28 22:28:45,085 - INFO - Akshare成功获取 AMZN 日线数据，共 6468 条记录
+2025-04-28 22:28:45,085 - WARNING - Akshare获取 AMZN 日线数据失败: 'datetime'
+2025-04-28 22:28:45,085 - INFO - 尝试使用YFinance获取 AMZN 日线数据...
+2025-04-28 22:28:48,233 - ERROR - Failed to get ticker 'AMZN' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:28:48,239 - ERROR - 
+1 Failed download:
+2025-04-28 22:28:48,239 - ERROR - ['AMZN']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:28:48,242 - WARNING - YFinance获取 AMZN 日线数据为空
+2025-04-28 22:28:48,242 - INFO - 尝试使用YFinance获取 AMZN 2h 数据...
+2025-04-28 22:28:48,244 - ERROR - Failed to get ticker 'AMZN' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:28:48,255 - ERROR - 
+1 Failed download:
+2025-04-28 22:28:48,256 - ERROR - ['AMZN']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:28:48,258 - WARNING - YFinance获取 AMZN 2h 数据为空
+2025-04-28 22:28:48,258 - INFO - 尝试使用YFinance获取 AMZN 1h 数据...
+2025-04-28 22:28:48,259 - ERROR - Failed to get ticker 'AMZN' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:28:48,271 - ERROR - 
+1 Failed download:
+2025-04-28 22:28:48,272 - ERROR - ['AMZN']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:28:48,274 - WARNING - YFinance获取 AMZN 1h 数据为空
+2025-04-28 22:28:48,274 - INFO - 尝试使用YFinance获取 AMZN 30m 数据...
+2025-04-28 22:28:48,275 - ERROR - Failed to get ticker 'AMZN' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:28:48,286 - ERROR - 
+1 Failed download:
+2025-04-28 22:28:48,286 - ERROR - ['AMZN']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:28:48,287 - WARNING - YFinance获取 AMZN 30m 数据为空
+2025-04-28 22:28:48,287 - INFO - 尝试使用YFinance获取 AMZN 15m 数据...
+2025-04-28 22:28:48,288 - ERROR - Failed to get ticker 'AMZN' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:28:48,300 - ERROR - 
+1 Failed download:
+2025-04-28 22:28:48,300 - ERROR - ['AMZN']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:28:48,301 - WARNING - YFinance获取 AMZN 15m 数据为空
+2025-04-28 22:28:48,301 - INFO - 尝试使用YFinance获取 AMZN 5m 数据...
+2025-04-28 22:28:48,301 - ERROR - Failed to get ticker 'AMZN' reason: Expecting value: line 1 column 1 (char 0)
+2025-04-28 22:28:48,314 - ERROR - 
+1 Failed download:
+2025-04-28 22:28:48,314 - ERROR - ['AMZN']: YFTzMissingError('$%ticker%: possibly delisted; no timezone found')
+2025-04-28 22:28:48,317 - WARNING - YFinance获取 AMZN 5m 数据为空
+2025-04-28 22:28:48,317 - ERROR - 没有有效数据可保存: US.AMZN
+2025-04-28 22:28:48,317 - INFO - 开始处理 US.META
+2025-04-28 22:28:48,317 - INFO - 尝试使用Akshare获取 META 日线数据...
+2025-04-28 22:28:50,358 - INFO - Akshare成功获取 META 日线数据，共 722 条记录
+2025-04-28 22:28:50,358 - WARNING - Akshare获取 META 日线数据失败: 'datetime'
+2025-04-28 22:28:50,358 - INFO - 尝试使用YFinance获取 META 日线数据...
+2025-04-28 22:28:53,037 - ERROR - 
+1 Failed download:
+2025-04-28 22:28:53,037 - ERROR - ['META']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 22:28:53,041 - WARNING - YFinance获取 META 日线数据为空
+2025-04-28 22:28:53,041 - INFO - 尝试使用YFinance获取 META 2h 数据...
+2025-04-28 22:28:56,053 - ERROR - 
+1 Failed download:
+2025-04-28 22:28:56,054 - ERROR - ['META']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 22:28:56,059 - WARNING - YFinance获取 META 2h 数据为空
+2025-04-28 22:28:56,059 - INFO - 尝试使用YFinance获取 META 1h 数据...
+2025-04-28 22:29:01,383 - ERROR - 
+1 Failed download:
+2025-04-28 22:29:01,383 - ERROR - ['META']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 22:29:01,386 - WARNING - YFinance获取 META 1h 数据为空
+2025-04-28 22:29:01,387 - INFO - 尝试使用YFinance获取 META 30m 数据...
+2025-04-28 22:29:04,454 - ERROR - 
+1 Failed download:
+2025-04-28 22:29:04,454 - ERROR - ['META']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 22:29:04,457 - WARNING - YFinance获取 META 30m 数据为空
+2025-04-28 22:29:04,458 - INFO - 尝试使用YFinance获取 META 15m 数据...
+2025-04-28 22:29:04,469 - ERROR - 
+1 Failed download:
+2025-04-28 22:29:04,470 - ERROR - ['META']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 22:29:04,472 - WARNING - YFinance获取 META 15m 数据为空
+2025-04-28 22:29:04,472 - INFO - 尝试使用YFinance获取 META 5m 数据...
+2025-04-28 22:29:08,404 - ERROR - 
+1 Failed download:
+2025-04-28 22:29:08,404 - ERROR - ['META']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-04-28 22:29:08,410 - WARNING - YFinance获取 META 5m 数据为空
+2025-04-28 22:29:08,410 - ERROR - 没有有效数据可保存: US.META
