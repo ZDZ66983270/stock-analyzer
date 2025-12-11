@@ -170,6 +170,12 @@ const HomeView = ({ onSelectAsset }) => {
                             const changeColor = isPositive ? '#ef4444' : '#10b981';
                             // Extract score from analysis_summary if available
                             const score = item.last_score || '--';
+                            const prevScore = item.prev_score || score; // Mock: previous score
+                            const prevRiskCount = item.prev_risk_count || (item.risk_count || 2); // Mock: previous risk count
+
+                            // Calculate trends
+                            const scoreTrend = score > prevScore ? 1 : score < prevScore ? -1 : 0;
+                            const riskTrend = (item.risk_count || 2) > prevRiskCount ? 1 : (item.risk_count || 2) < prevRiskCount ? -1 : 0;
 
                             return (
                                 <SwipeableItem
@@ -214,9 +220,21 @@ const HomeView = ({ onSelectAsset }) => {
                                                     <div style={{
                                                         fontSize: '1.4rem',
                                                         fontWeight: 'bold',
-                                                        color: score >= 80 ? '#10b981' : score >= 60 ? '#f59e0b' : '#ef4444'
+                                                        color: score >= 80 ? '#ef4444' : score >= 60 ? '#f59e0b' : '#10b981',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        gap: '0.2rem',
+                                                        justifyContent: 'center'
                                                     }}>
                                                         {score}
+                                                        {scoreTrend !== 0 && (
+                                                            <span style={{
+                                                                fontSize: '0.9rem',
+                                                                color: scoreTrend > 0 ? '#ef4444' : '#10b981'
+                                                            }}>
+                                                                {scoreTrend > 0 ? '↑' : '↓'}
+                                                            </span>
+                                                        )}
                                                     </div>
                                                 </div>
 
@@ -228,17 +246,42 @@ const HomeView = ({ onSelectAsset }) => {
                                                     <div style={{
                                                         fontSize: '1.4rem',
                                                         fontWeight: 'bold',
-                                                        color: '#f59e0b'
+                                                        color: '#f59e0b',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        gap: '0.2rem',
+                                                        justifyContent: 'center'
                                                     }}>
                                                         {item.risk_count || 2}
+                                                        {riskTrend !== 0 && (
+                                                            <span style={{
+                                                                fontSize: '0.9rem',
+                                                                color: riskTrend > 0 ? '#10b981' : '#ef4444'
+                                                            }}>
+                                                                {riskTrend > 0 ? '↑' : '↓'}
+                                                            </span>
+                                                        )}
                                                     </div>
                                                 </div>
                                             </div>
 
                                             {/* Right: Price - Fixed width */}
                                             <div style={{ flex: '1 1 auto', textAlign: 'right', minWidth: '90px' }}>
-                                                <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: changeColor }}>
+                                                <div style={{
+                                                    fontSize: '1.2rem',
+                                                    fontWeight: 'bold',
+                                                    color: changeColor,
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    gap: '0.3rem',
+                                                    justifyContent: 'flex-end'
+                                                }}>
                                                     {item.price ? item.price.toFixed(2) : '--'}
+                                                    {item.pct_change !== null && item.pct_change !== undefined && item.pct_change !== 0 && (
+                                                        <span style={{ fontSize: '0.9rem', color: changeColor }}>
+                                                            {isPositive ? '↑' : '↓'}
+                                                        </span>
+                                                    )}
                                                 </div>
                                                 <div style={{ fontSize: '0.75rem', color: changeColor, fontWeight: '600' }}>
                                                     {item.pct_change !== null && item.pct_change !== undefined
