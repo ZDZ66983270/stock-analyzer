@@ -276,45 +276,63 @@ const StockDetailView = ({ asset, onBack }) => {
                         </div>
                     </div>
 
-                    {/* PE Ratio Trend Chart */}
+                    {/* Stock Price & PE Ratio Trend Chart */}
                     <div style={{ paddingTop: '1rem', borderTop: '1px solid rgba(255,255,255,0.05)', marginBottom: '1.5rem' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '0.5rem' }}>
-                            <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>近一年市盈率走势</div>
-                            <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: 'var(--accent-primary)' }}>8.5x</div>
+                            <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>近一年股价与市盈率走势</div>
+                            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                                <span style={{ color: '#ef4444' }}>━</span> 股价
+                                <span style={{ marginLeft: '0.5rem', color: 'var(--accent-primary)' }}>━</span> 市盈率
+                            </div>
                         </div>
 
-                        {/* Simple SVG Line Chart */}
-                        <div style={{ height: '80px', width: '100%', position: 'relative' }}>
+                        {/* Dual-axis SVG Line Chart */}
+                        <div style={{ height: '100px', width: '100%', position: 'relative' }}>
                             {/* Mock Data: 12 months */}
-                            <svg width="100%" height="100%" viewBox="0 0 300 80" preserveAspectRatio="none">
+                            <svg width="100%" height="100%" viewBox="0 0 300 100" preserveAspectRatio="none">
                                 {/* Gradient Defs */}
                                 <defs>
+                                    <linearGradient id="priceGradient" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stopColor="#ef4444" stopOpacity="0.2" />
+                                        <stop offset="100%" stopColor="#ef4444" stopOpacity="0" />
+                                    </linearGradient>
                                     <linearGradient id="peGradient" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stopColor="var(--accent-primary)" stopOpacity="0.3" />
+                                        <stop offset="0%" stopColor="var(--accent-primary)" stopOpacity="0.15" />
                                         <stop offset="100%" stopColor="var(--accent-primary)" stopOpacity="0" />
                                     </linearGradient>
                                 </defs>
 
-                                {/* Path: Mocking a declining then stabilizing PE trend */}
-                                {/* Points: 0,30 -> 30,25 -> 60,35 -> 90,40 -> 120,30 -> 150,20 -> 180,25 -> 210,35 -> 240,45 -> 270,50 -> 300,55 (inverted Y for SVG) */}
-                                {/* Let's assume range 5x to 15x. 8.5 is roughly mid-low. */}
-                                {/* Values: 12, 11.5, 11, 10.5, 9, 8.2, 8.5, 9.0, 8.8, 8.4, 8.3, 8.5 */}
-                                {/* Map to Y (0-80px): Higher Val = Lower Y */}
+                                {/* Stock Price Line (Red) - Values: 1500-1800 mapped to Y:20-60 */}
                                 <path
-                                    d="M0,20 L27,25 L54,30 L81,35 L109,50 L136,60 L163,55 L190,50 L218,52 L245,56 L272,57 L300,55"
+                                    d="M0,50 L27,45 L54,40 L81,35 L109,42 L136,48 L163,45 L190,40 L218,38 L245,35 L272,32 L300,30"
+                                    fill="none"
+                                    stroke="#ef4444"
+                                    strokeWidth="2.5"
+                                />
+                                <path
+                                    d="M0,50 L27,45 L54,40 L81,35 L109,42 L136,48 L163,45 L190,40 L218,38 L245,35 L272,32 L300,30 V100 H0 Z"
+                                    fill="url(#priceGradient)"
+                                    stroke="none"
+                                />
+
+                                {/* PE Ratio Line (Blue) - Values: 8-12 mapped to Y:50-80 */}
+                                <path
+                                    d="M0,70 L27,72 L54,75 L81,78 L109,82 L136,85 L163,83 L190,80 L218,81 L245,82 L272,83 L300,82"
                                     fill="none"
                                     stroke="var(--accent-primary)"
                                     strokeWidth="2"
                                 />
                                 <path
-                                    d="M0,20 L27,25 L54,30 L81,35 L109,50 L136,60 L163,55 L190,50 L218,52 L245,56 L272,57 L300,55 V80 H0 Z"
+                                    d="M0,70 L27,72 L54,75 L81,78 L109,82 L136,85 L163,83 L190,80 L218,81 L245,82 L272,83 L300,82 V100 H0 Z"
                                     fill="url(#peGradient)"
                                     stroke="none"
                                 />
                             </svg>
                             {/* Labels */}
-                            <div style={{ position: 'absolute', top: '20px', left: '0', fontSize: '0.7rem', color: 'var(--text-muted)' }}>Max: 12x</div>
-                            <div style={{ position: 'absolute', bottom: '25px', left: '136px', fontSize: '0.7rem', color: 'var(--text-muted)' }}>Min: 8.2x</div>
+                            <div style={{ position: 'absolute', top: '5px', left: '0', fontSize: '0.7rem', color: '#ef4444' }}>股价: ¥1800</div>
+                            <div style={{ position: 'absolute', top: '5px', right: '0', fontSize: '0.7rem', color: 'var(--accent-primary)' }}>PE: 8.5x</div>
+                            <div style={{ position: 'absolute', bottom: '5px', left: '0', fontSize: '0.65rem', color: 'var(--text-muted)' }}>12个月前</div>
+                            <div style={{ position: 'absolute', bottom: '5px', right: '0', fontSize: '0.65rem', color: 'var(--text-muted)' }}>当前</div>
                         </div>
                     </div>
 
