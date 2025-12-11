@@ -47,8 +47,7 @@ const App = () => {
 
     return (
         <div style={{
-            maxWidth: '1200px',
-            margin: '0 auto',
+            width: '100%',
             minHeight: '100vh',
             paddingBottom: currentView === 'home' ? '60px' : '0' // Space for bottom tab
         }}>
@@ -72,15 +71,7 @@ const App = () => {
                     display: 'flex',
                     justifyContent: 'space-around',
                     alignItems: 'center',
-                    zIndex: 1000,
-                    // Constrain width for desktop
-                    maxWidth: '1200px', // Match app max-width if centered, but usually fixed works relative to viewport. 
-                    // To handle max-width centering correctly for fixed element:
-                    // We can wrap content or just let it span full width which is standard for mobile apps.
-                    // But if app is constrained to 480px on desktop (via index.css), we should respect that.
-                    // index.css handles mobile constraint. global .root or .app container usually.
-                    // If #root has max-width, Fixed position breaks out of it unless strict.
-                    // Let's assume standard mobile behavior (full width fixed).
+                    zIndex: 1000
                 }}>
                     <div
                         onClick={() => setActiveTab('watchlist')}
