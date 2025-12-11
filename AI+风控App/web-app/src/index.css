@@ -1,0 +1,86 @@
+:root {
+    /* Premium Dark Theme Palette */
+    --bg-primary: #0f172a;
+    /* Slate 900 */
+    --bg-secondary: #1e293b;
+    /* Slate 800 */
+    --bg-tertiary: #334155;
+    /* Slate 700 */
+
+    --accent-primary: #3b82f6;
+    /* Trustworthy Blue */
+    --accent-glow: rgba(59, 130, 246, 0.4);
+    /* Stronger glow for dark mode */
+
+    --text-primary: #f8fafc;
+    /* Slate 50 */
+    --text-secondary: #94a3b8;
+    /* Slate 400 */
+    --text-muted: #64748b;
+    /* Slate 500 */
+
+    --border-color: #334155;
+    /* Slate 700 */
+
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Mobile Container Constraint */
+body {
+    font-family: var(--font-sans);
+    background-color: #000;
+    /* Black background around the app */
+    color: var(--text-primary);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+#root {
+    max-width: 480px;
+    /* Mobile width constraint */
+    min-height: 100vh;
+    margin: 0 auto;
+    background-color: var(--bg-primary);
+    /* App background */
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Scrollbar Hide for Clean Mobile Look */
+::-webkit-scrollbar {
+    width: 4px;
+    /* Thinner */
+}
+
+/* Touch Optimizations */
+button,
+input,
+select {
+    font-size: 16px;
+    /* Prevent iOS zoom */
+}
+
+/* Glass Panel Adjustment */
+.glass-panel {
+    background: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+}

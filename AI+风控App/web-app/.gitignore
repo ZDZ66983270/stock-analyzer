@@ -1,0 +1,120 @@
+# 依赖包
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# 环境变量
+.env
+.env.local
+.env.production
+.env.development
+.env.test
+
+# 数据库文件
+*.db
+*.sqlite
+*.sqlite3
+database.db
+backend/database.db
+
+# 日志文件
+logs/
+*.log
+logs_V4/
+backend/logs_V4/
+stock_analyzer.log
+run_log.txt
+
+# 输出文件
+output/
+output_V4/
+backend/output_V4/
+dist/
+build/
+
+# IDE配置
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# 临时文件
+*.tmp
+*.temp
+*.bak
+*.swp
+
+# Electron
+out/
+electron-builder.yml
+
+# iOS
+ios/App/Pods/
+ios/App/App.xcworkspace/xcuserdata/
+ios/App/App.xcodeproj/xcuserdata/
+*.xcuserstate
+*.xcworkspacedata
+ios/App/build/
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Android
+android/.gradle/
+android/build/
+android/app/build/
+android/captures/
+*.apk
+*.aab
+
+# Capacitor
+.capacitor/
+
+# Python虚拟环境
+venv/
+env/
+ENV/
+.venv
+
+# 测试覆盖率
+coverage/
+.nyc_output/
+*.coverage
+htmlcov/
+
+# 敏感信息
+secrets/
+*.key
+*.pem
+*.p12
+*.mobileprovision
+
+# 数据文件
+*.xlsx
+*.xls
+*.csv
+backend/*.xlsx
+backend/*.csv
+
+# 其他
+*.pdf
+test_data/
+test/

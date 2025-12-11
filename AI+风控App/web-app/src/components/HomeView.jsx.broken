@@ -1,0 +1,270 @@
+```javascript
+import React, { useState, useEffect } from 'react';
+import SearchBar from './SearchBar';
+    const handleTouchStart = (e) => {
+        setStartX(e.targetTouches[0].clientX);
+        setIsSwiping(false);
+    };
+
+    const handleTouchMove = (e) => {
+        const touchX = e.targetTouches[0].clientX;
+        const diff = startX - touchX;
+
+        // Only allow swiping left (positive diff)
+        if (diff > 5) setIsSwiping(true);
+
+        if (diff >= 0 && diff <= maxSwipe + 20) {
+            setCurrentX(-diff);
+        }
+    };
+
+    const handleTouchEnd = (e) => {
+        if (currentX < -(maxSwipe / 2)) {
+            // Snap to open
+            setCurrentX(-maxSwipe);
+        } else {
+            // Snap back
+            setCurrentX(0);
+        }
+    };
+
+    // Handle click logic: only fire if not swiped
+    const handleClick = () => {
+        if (!isSwiping && currentX === 0) {
+            onClick();
+        }
+    };
+
+    // Auto close only when user interacts with other rows? 
+    // For simplicity, we don't manage global open state here yet.
+
+    return (
+        <div style={{ position: 'relative', overflow: 'hidden', borderRadius: 'var(--radius-md)' }}>
+            {/* Delete Background */}
+            <div
+                style={{
+                    position: 'absolute',
+                    top: 0,
+                    bottom: 0,
+                    right: 0,
+                    width: `${ maxSwipe } px`,
+                    background: '#ef4444',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#fff',
+                    fontWeight: 'bold',
+                    zIndex: 0
+                }}
+                onClick={(e) => {
+                    e.stopPropagation();
+                    onDelete();
+                    setCurrentX(0); // Reset after delete
+                }}
+            >
+                删除
+            </div>
+
+            {/* Content Foreground */}
+            <div
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+                onClick={handleClick}
+                style={{
+                    position: 'relative',
+                    zIndex: 1,
+                    background: 'rgba(30, 41, 59, 1)', // Need opaque bg to hide delete button
+                    transform: `translateX(${ currentX }px)`,
+                    transition: isSwiping ? 'none' : 'transform 0.2s ease-out',
+                    border: '1px solid rgba(255,255,255,0.05)',
+                    borderRadius: 'var(--radius-md)',
+                    padding: '1rem',
+                    cursor: 'pointer'
+                }}
+            >
+                {children}
+            </div>
+        </div>
+    );
+};
+
+const HomeView = ({ onSelectAsset }) => {
+    const [searchValue, setSearchValue] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [watchlist, setWatchlist] = useState([]);
+    const [isSearchOpen, setIsSearchOpen] = useState(false); // Toggle for search bar
+
+    // Initial Load
+    useEffect(() => {
+        fetchWatchlist();
+    }, []);
+
+    const fetchWatchlist = async () => {
+        try {
+            const res = await fetch(`${ API_BASE_URL } /api/watchlist`);
+            const data = await res.json();
+            if (Array.isArray(data)) {
+                setWatchlist(data);
+            }
+        } catch (e) {
+            console.error("Failed to fetch watchlist", e);
+        }
+    };
+
+    const handleSearchSubmit = async () => {
+        if (!searchValue) return;
+        setLoading(true);
+        try {
+            // Call Auto-Add Endpoint
+            const res = await fetch(`${ API_BASE_URL } /api/fetch - stock`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ symbol: searchValue })
+            });
+            const resData = await res.json();
+
+            if (resData.status === 'success') {
+                // Refresh watchlist to show new item
+                await fetchWatchlist();
+                setSearchValue(''); // Clear input
+                setIsSearchOpen(false); // Close search after add
+            } else {
+                alert('添加失败: ' + resData.message);
+            }
+        } catch (e) {
+            console.error("Add stock failed", e);
+            alert('请求失败');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleDelete = async (symbol) => {
+        if (!confirm(`确定要移除 ${ symbol } 吗 ? `)) return;
+        try {
+            const res = await fetch(`${ API_BASE_URL } /api/watchlist / ${ symbol } `, { method: 'DELETE' });
+if (res.ok) {
+    setWatchlist(prev => prev.filter(item => item.symbol !== symbol));
+}
+        } catch (e) {
+    console.error(e);
+}
+    };
+
+return (
+    <div style={{ padding: '1rem', paddingTop: 'max(1rem, env(safe-area-inset-top))', paddingBottom: '3rem' }}>
+        {/* Header / Search Area */}
+        <div style={{ marginBottom: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: 'bold' }}>自选</h2>
+            <button
+                onClick={() => setIsSearchOpen(!isSearchOpen)}
+                style={{ background: 'none', border: 'none', color: '#fff', fontSize: '1.5rem', cursor: 'pointer', padding: '0.5rem' }}
+            >
+                {isSearchOpen ? '✕' : '🔍'}
+            </button>
+        </div>
+
+        {/* Collapsible Search Bar */}
+        {isSearchOpen && (
+            <div style={{ marginBottom: '1.5rem', background: 'rgba(255,255,255,0.05)', padding: '1rem', borderRadius: 'var(--radius-md)', animation: 'fadeIn 0.2s ease-out' }}>
+                <SearchBar
+                    value={searchValue}
+                    onChange={setSearchValue}
+                    placeholder="输入名称或代码 (如 600536)..."
+                />
+                <button
+                    onClick={handleSearchSubmit}
+                    disabled={loading || !searchValue}
+                    style={{
+                        marginTop: '0.8rem',
+                        width: '100%',
+                        padding: '0.8rem',
+                        background: loading ? 'var(--text-muted)' : 'var(--accent-primary)',
+                        color: '#fff',
+                        border: 'none',
+                        borderRadius: 'var(--radius-sm)',
+                        cursor: loading ? 'not-allowed' : 'pointer',
+                        fontSize: '0.95rem',
+                        fontWeight: '600'
+                    }}
+                >
+                    {loading ? '添加 / 更新...' : '加入关注列表'}
+                </button>
+            </div>
+        )}
+
+        {/* Watchlist Section */}
+        <div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                {watchlist.length === 0 ? (
+                    <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-muted)', background: 'rgba(255,255,255,0.02)', borderRadius: 'var(--radius-lg)' }}>
+                        暂无关注标的，点击右上角搜索添加
+                    </div>
+                ) : (
+                    watchlist.map(item => {
+                        // Determine recommendation color
+                        const isPositive = item.recommendation && (item.recommendation.includes('买入') || item.recommendation.includes('持有') || item.recommendation.includes('增持'));
+
+                        return (
+                            <SwipeableItem
+                                key={item.id}
+                                onDelete={() => handleDelete(item.symbol)}
+                                onClick={() => onSelectAsset(item)}
+                            >
+                                {/* Top Row: Name, Symbol, Price */}
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
+                                    <div>
+                                        <div style={{ fontWeight: '600', fontSize: '1.2rem', marginBottom: '2px' }}>
+                                            {item.name || item.symbol}
+                                        </div>
+                                        <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
+                                            {item.symbol}
+                                        </div>
+                                    </div>
+                                    <div style={{ textAlign: 'right' }}>
+                                        <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#fff' }}>
+                                            {item.price ? item.price.toFixed(2) : '--.--'}
+                                        </div>
+                                        <div style={{ fontSize: '0.8rem', color: item.pct_change >= 0 ? '#ef4444' : '#10b981' }}>
+                                            {item.pct_change ? `${ item.pct_change > 0 ? '+' : '' }${ item.pct_change.toFixed(2) }% ` : '--'}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Bottom Row: Analysis Summary */}
+                                <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '0.5rem', marginTop: '0.5rem' }}>
+                                    {item.analysis_summary ? (
+                                        <div style={{ fontSize: '0.9rem', color: '#e4e4e7', lineHeight: '1.4' }}>
+                                            {/* If recommendation exists, show it prominently */}
+                                            {item.recommendation && (
+                                                <span style={{
+                                                    color: isPositive ? '#ef4444' : 'var(--text-secondary)',
+                                                    fontWeight: 'bold',
+                                                    marginRight: '0.5rem',
+                                                    fontSize: '0.95rem'
+                                                }}>
+                                                    [{item.recommendation}]
+                                                </span>
+                                            )}
+                                            <span style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
+                                                {item.analysis_summary.length > 40 ? item.analysis_summary.substring(0, 40) + '...' : item.analysis_summary}
+                                            </span>
+                                        </div>
+                                    ) : (
+                                        <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontStyle: 'italic' }}>
+                                            暂无分析记录，点击开始分析...
+                                        </div>
+                                    )}
+                                </div>
+                            </SwipeableItem>
+                        )
+                    })
+                )}
+            </div>
+        </div>
+    </div>
+);
+};
+
+export default HomeView;
