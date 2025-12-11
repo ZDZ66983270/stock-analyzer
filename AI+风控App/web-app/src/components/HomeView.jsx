@@ -227,16 +227,17 @@ const HomeView = ({ onSelectAsset }) => {
                                                 </div>
 
                                                 {/* Risk Count */}
-                                                <div style={{
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    justifyContent: 'flex-end',
-                                                    gap: '0.3rem',
-                                                    fontSize: '0.75rem',
-                                                    color: 'var(--text-muted)'
-                                                }}>
-                                                    <span style={{ color: '#f59e0b' }}>⚠️</span>
-                                                    <span>{item.risk_count || 2}个风险</span>
+                                                <div>
+                                                    <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginBottom: '0.2rem' }}>
+                                                        风险点
+                                                    </div>
+                                                    <div style={{
+                                                        fontSize: '1.2rem',
+                                                        fontWeight: 'bold',
+                                                        color: '#f59e0b'
+                                                    }}>
+                                                        {item.risk_count || 2}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
