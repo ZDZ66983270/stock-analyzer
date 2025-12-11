@@ -56,7 +56,7 @@ const SettingsView = () => {
     };
 
     return (
-        <div style={{ padding: '1rem', paddingTop: 'max(1rem, env(safe-area-inset-top))', paddingBottom: '6rem' }}>
+        <div style={{ paddingLeft: '0', paddingRight: '0', paddingTop: 'max(1rem, env(safe-area-inset-top))', paddingBottom: '6rem' }}>
             <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1.5rem' }}>设置</h2>
 
             {/* Tabs */}

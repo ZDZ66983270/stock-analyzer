@@ -112,7 +112,7 @@ const HomeView = ({ onSelectAsset }) => {
     };
 
     return (
-        <div style={{ padding: '1rem', paddingTop: 'max(1rem, env(safe-area-inset-top))', paddingBottom: '3rem' }}>
+        <div style={{ paddingLeft: '0', paddingRight: '0', paddingTop: 'max(1rem, env(safe-area-inset-top))', paddingBottom: '3rem' }}>
             {/* Header / Search Area */}
             <div style={{ marginBottom: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: 'bold' }}>自选</h2>

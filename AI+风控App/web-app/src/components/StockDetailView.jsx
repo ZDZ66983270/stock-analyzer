@@ -153,7 +153,7 @@ const StockDetailView = ({ asset, onBack }) => {
     console.log('Asset is valid, rendering DetailView for:', asset.symbol);
 
     return (
-        <div style={{ padding: '1rem', paddingTop: 'max(1rem, env(safe-area-inset-top))', paddingBottom: '6rem' }}>
+        <div style={{ paddingLeft: '0', paddingRight: '0', paddingTop: 'max(1rem, env(safe-area-inset-top))', paddingBottom: '6rem' }}>
             {/* Header / Nav */}
             <div style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
                 <button
