@@ -676,125 +676,125 @@ const StockDetailView = ({ asset, onBack }) => {
                         </>
                     ) : (
                         <div style={{ padding: '3rem 1rem', textAlign: 'center', color: 'var(--text-muted)' }}>
-                            <div style={{ fontSize: '3rem', marginBottom: '1rem', opacity: 0.3' }}>📊</div>
+                            <div style={{ fontSize: '3rem', marginBottom: '1rem', opacity: 0.3 }}>📊</div>
                             <div style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>暂无评估记录</div>
                             <div style={{ fontSize: '0.85rem' }}>请点击底部按钮开始价值评估</div>
                         </div>
                     )}
-            </div>
-
-            {/* 3. Upload & Config */}
-            <div className="glass-panel" style={{ padding: '1rem', borderRadius: 'var(--radius-md)', background: '#1c1c20' }}>
-                {/* Analysis Models - MOVED TO TOP */}
-                <div style={{ marginBottom: '1.5rem' }}>
-                    <div style={{ marginBottom: '0.8rem', fontSize: '0.9rem', color: 'var(--text-secondary)', fontWeight: 'bold' }}>启用分析模型:</div>
-                    {[
-                        { id: 'dagnino', name: '乔治·达格尼诺周期模型' },
-                        { id: 'technical', name: '技术分析模型 (MACD/KDJ)' },
-                        { id: 'fundamental', name: '基本面分析模型' },
-                        { id: 'sentiment', name: '舆情分析 (Sentiment)' }
-                    ].map(model => (
-                        <div key={model.id} style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            padding: '0.8rem 0',
-                            borderBottom: '1px solid rgba(255,255,255,0.03)'
-                        }}>
-                            <span style={{ fontSize: '0.95rem', color: '#e4e4e7' }}>{model.name}</span>
-                            <label className="switch" style={{ position: 'relative', display: 'inline-block', width: '40px', height: '24px' }}>
-                                <input
-                                    type="checkbox"
-                                    defaultChecked={true}
-                                    style={{ opacity: 0, width: 0, height: 0 }}
-                                    onChange={(e) => {
-                                        // Future: Update state. For UI demo we just let it toggle visually via CSS if we had it,
-                                        // but since we need inline styles or state:
-                                        e.target.parentNode.querySelector('.slider').style.backgroundColor = e.target.checked ? 'var(--accent-primary)' : '#ccc';
-                                        e.target.parentNode.querySelector('.slider').style.transform = e.target.checked ? 'translateX(0)' : 'translateX(0)'; // visual only
-                                        // Actually best to use State. But for quick replacement without full refactor of component state:
-                                    }}
-                                />
-                                {/* Simplest Toggle UI using State is better. Let's assume we use state in next step or use a localized component approach here if possible. 
-                                        Actually, let's use a cleaner button toggle or just standard checkbox styled.
-                                    */}
-                                <div
-                                    className="slider"
-                                    style={{
-                                        position: 'absolute',
-                                        cursor: 'pointer',
-                                        top: 0, left: 0, right: 0, bottom: 0,
-                                        backgroundColor: 'var(--accent-primary)',
-                                        transition: '.4s',
-                                        borderRadius: '34px'
-                                    }}
-                                    onClick={(e) => {
-                                        const bg = e.currentTarget.style.backgroundColor;
-                                        // Simple visual toggle for prototype
-                                        e.currentTarget.style.backgroundColor = bg === 'var(--accent-primary)' ? '#52525b' : 'var(--accent-primary)';
-                                        const dot = e.currentTarget.querySelector('.dot');
-                                        dot.style.transform = bg === 'var(--accent-primary)' ? 'translateX(0px)' : 'translateX(16px)';
-                                    }}
-                                >
-                                    <div
-                                        className="dot"
-                                        style={{
-                                            position: 'absolute',
-                                            content: '""',
-                                            height: '16px',
-                                            width: '16px',
-                                            left: '4px',
-                                            bottom: '4px',
-                                            backgroundColor: 'white',
-                                            transition: '.4s',
-                                            borderRadius: '50%',
-                                            transform: 'translateX(16px)' // Default checked
-                                        }}
-                                    />
-                                </div>
-                            </label>
-                        </div>
-                    ))}
                 </div>
 
-                {/* Intelligence Completion - MOVED TO BOTTOM */}
-                <h4 style={{ marginTop: 0, marginBottom: '0.8rem', fontSize: '1rem', color: 'var(--text-secondary)' }}>情报补全</h4>
-                <ImageUploadArea />
-            </div>
-        </div>
+                {/* 3. Upload & Config */}
+                <div className="glass-panel" style={{ padding: '1rem', borderRadius: 'var(--radius-md)', background: '#1c1c20' }}>
+                    {/* Analysis Models - MOVED TO TOP */}
+                    <div style={{ marginBottom: '1.5rem' }}>
+                        <div style={{ marginBottom: '0.8rem', fontSize: '0.9rem', color: 'var(--text-secondary)', fontWeight: 'bold' }}>启用分析模型:</div>
+                        {[
+                            { id: 'dagnino', name: '乔治·达格尼诺周期模型' },
+                            { id: 'technical', name: '技术分析模型 (MACD/KDJ)' },
+                            { id: 'fundamental', name: '基本面分析模型' },
+                            { id: 'sentiment', name: '舆情分析 (Sentiment)' }
+                        ].map(model => (
+                            <div key={model.id} style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                padding: '0.8rem 0',
+                                borderBottom: '1px solid rgba(255,255,255,0.03)'
+                            }}>
+                                <span style={{ fontSize: '0.95rem', color: '#e4e4e7' }}>{model.name}</span>
+                                <label className="switch" style={{ position: 'relative', display: 'inline-block', width: '40px', height: '24px' }}>
+                                    <input
+                                        type="checkbox"
+                                        defaultChecked={true}
+                                        style={{ opacity: 0, width: 0, height: 0 }}
+                                        onChange={(e) => {
+                                            // Future: Update state. For UI demo we just let it toggle visually via CSS if we had it,
+                                            // but since we need inline styles or state:
+                                            e.target.parentNode.querySelector('.slider').style.backgroundColor = e.target.checked ? 'var(--accent-primary)' : '#ccc';
+                                            e.target.parentNode.querySelector('.slider').style.transform = e.target.checked ? 'translateX(0)' : 'translateX(0)'; // visual only
+                                            // Actually best to use State. But for quick replacement without full refactor of component state:
+                                        }}
+                                    />
+                                    {/* Simplest Toggle UI using State is better. Let's assume we use state in next step or use a localized component approach here if possible. 
+                                        Actually, let's use a cleaner button toggle or just standard checkbox styled.
+                                    */}
+                                    <div
+                                        className="slider"
+                                        style={{
+                                            position: 'absolute',
+                                            cursor: 'pointer',
+                                            top: 0, left: 0, right: 0, bottom: 0,
+                                            backgroundColor: 'var(--accent-primary)',
+                                            transition: '.4s',
+                                            borderRadius: '34px'
+                                        }}
+                                        onClick={(e) => {
+                                            const bg = e.currentTarget.style.backgroundColor;
+                                            // Simple visual toggle for prototype
+                                            e.currentTarget.style.backgroundColor = bg === 'var(--accent-primary)' ? '#52525b' : 'var(--accent-primary)';
+                                            const dot = e.currentTarget.querySelector('.dot');
+                                            dot.style.transform = bg === 'var(--accent-primary)' ? 'translateX(0px)' : 'translateX(16px)';
+                                        }}
+                                    >
+                                        <div
+                                            className="dot"
+                                            style={{
+                                                position: 'absolute',
+                                                content: '""',
+                                                height: '16px',
+                                                width: '16px',
+                                                left: '4px',
+                                                bottom: '4px',
+                                                backgroundColor: 'white',
+                                                transition: '.4s',
+                                                borderRadius: '50%',
+                                                transform: 'translateX(16px)' // Default checked
+                                            }}
+                                        />
+                                    </div>
+                                </label>
+                            </div>
+                        ))}
+                    </div>
 
-            {/* Sticky Bottom Action Button */ }
-    <div style={{
-        position: 'fixed',
-        bottom: '1.5rem',
-        left: '50%',
-        transform: 'translateX(-50%)',
-        width: '100%',
-        maxWidth: '440px', // slightly less than 480px container
-        padding: '0 1rem',
-        zIndex: 100
-    }}>
-        <button
-            onClick={handleAnalyze}
-            disabled={analyzing}
-            style={{
+                    {/* Intelligence Completion - MOVED TO BOTTOM */}
+                    <h4 style={{ marginTop: 0, marginBottom: '0.8rem', fontSize: '1rem', color: 'var(--text-secondary)' }}>情报补全</h4>
+                    <ImageUploadArea />
+                </div>
+            </div>
+
+            {/* Sticky Bottom Action Button */}
+            <div style={{
+                position: 'fixed',
+                bottom: '1.5rem',
+                left: '50%',
+                transform: 'translateX(-50%)',
                 width: '100%',
-                padding: '1rem',
-                background: analyzing ? 'var(--text-muted)' : 'linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))',
-                color: '#fff',
-                border: 'none',
-                borderRadius: 'var(--radius-lg)',
-                fontSize: '1.1rem',
-                fontWeight: 'bold',
-                cursor: analyzing ? 'not-allowed' : 'pointer',
-                boxShadow: '0 8px 20px rgba(0,0,0,0.3)',
-                transition: 'all 0.3s ease',
-                backdropFilter: 'blur(10px)'
-            }}
-        >
-            {analyzing ? 'AI 思考中...' : '✨ 开始 AI 分析'}
-        </button>
-    </div>
+                maxWidth: '440px', // slightly less than 480px container
+                padding: '0 1rem',
+                zIndex: 100
+            }}>
+                <button
+                    onClick={handleAnalyze}
+                    disabled={analyzing}
+                    style={{
+                        width: '100%',
+                        padding: '1rem',
+                        background: analyzing ? 'var(--text-muted)' : 'linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))',
+                        color: '#fff',
+                        border: 'none',
+                        borderRadius: 'var(--radius-lg)',
+                        fontSize: '1.1rem',
+                        fontWeight: 'bold',
+                        cursor: analyzing ? 'not-allowed' : 'pointer',
+                        boxShadow: '0 8px 20px rgba(0,0,0,0.3)',
+                        transition: 'all 0.3s ease',
+                        backdropFilter: 'blur(10px)'
+                    }}
+                >
+                    {analyzing ? 'AI 思考中...' : '✨ 开始 AI 分析'}
+                </button>
+            </div>
         </div >
     );
 };
