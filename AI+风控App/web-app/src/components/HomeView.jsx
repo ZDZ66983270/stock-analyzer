@@ -189,8 +189,8 @@ const HomeView = ({ onSelectAsset }) => {
                                     >
                                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                             {/* Left: Name and Code */}
-                                            <div style={{ flex: 1 }}>
-                                                <div style={{ fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '0.3rem', color: '#fff' }}>
+                                            <div style={{ flex: 1, minWidth: '0' }}>
+                                                <div style={{ fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '0.3rem', color: '#fff', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                                                     {item.name || item.symbol}
                                                 </div>
                                                 <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
@@ -198,23 +198,12 @@ const HomeView = ({ onSelectAsset }) => {
                                                 </div>
                                             </div>
 
-                                            {/* Middle: Price */}
-                                            <div style={{ textAlign: 'center', marginRight: '1rem' }}>
-                                                <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: changeColor }}>
-                                                    {item.price ? item.price.toFixed(2) : '--'}
-                                                </div>
-                                                <div style={{ fontSize: '0.75rem', color: changeColor, fontWeight: '600' }}>
-                                                    {item.pct_change !== null && item.pct_change !== undefined
-                                                        ? `${isPositive ? '+' : ''}${item.pct_change.toFixed(2)}%`
-                                                        : '--'}
-                                                </div>
-                                            </div>
-
-                                            {/* Right: Value Assessment & Risk Count (Side by Side) */}
+                                            {/* Middle: Value Assessment & Risk Count (Emphasized) */}
                                             <div style={{
                                                 display: 'flex',
-                                                gap: '1rem',
-                                                alignItems: 'center'
+                                                gap: '1.2rem',
+                                                alignItems: 'center',
+                                                marginRight: '1rem'
                                             }}>
                                                 {/* Value Assessment Score */}
                                                 <div style={{ textAlign: 'center' }}>
@@ -222,7 +211,7 @@ const HomeView = ({ onSelectAsset }) => {
                                                         价值评估
                                                     </div>
                                                     <div style={{
-                                                        fontSize: '1.2rem',
+                                                        fontSize: '1.4rem',
                                                         fontWeight: 'bold',
                                                         color: score >= 80 ? '#10b981' : score >= 60 ? '#f59e0b' : '#ef4444'
                                                     }}>
@@ -236,12 +225,24 @@ const HomeView = ({ onSelectAsset }) => {
                                                         风险点
                                                     </div>
                                                     <div style={{
-                                                        fontSize: '1.2rem',
+                                                        fontSize: '1.4rem',
                                                         fontWeight: 'bold',
                                                         color: '#f59e0b'
                                                     }}>
                                                         {item.risk_count || 2}
                                                     </div>
+                                                </div>
+                                            </div>
+
+                                            {/* Right: Price (Secondary) */}
+                                            <div style={{ textAlign: 'right' }}>
+                                                <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: changeColor }}>
+                                                    {item.price ? item.price.toFixed(2) : '--'}
+                                                </div>
+                                                <div style={{ fontSize: '0.75rem', color: changeColor, fontWeight: '600' }}>
+                                                    {item.pct_change !== null && item.pct_change !== undefined
+                                                        ? `${isPositive ? '+' : ''}${item.pct_change.toFixed(2)}%`
+                                                        : '--'}
                                                 </div>
                                             </div>
                                         </div>
