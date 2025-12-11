@@ -159,8 +159,8 @@ const FundDetailView = ({ asset, onBack }) => {
                             </div>
                         </div>
 
-                        {/* Right: NAV Date & Asset Size Stacked */}
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', alignItems: 'flex-end' }}>
+                        {/* Right: NAV Date, Asset Size & Purchase Volume Ratio (Side by Side) */}
+                        <div style={{ display: 'flex', gap: '1.2rem', alignItems: 'flex-start' }}>
                             {/* NAV Date */}
                             <div style={{ textAlign: 'right' }}>
                                 <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginBottom: '0.2rem' }}>净值日期</div>
@@ -174,6 +174,17 @@ const FundDetailView = ({ asset, onBack }) => {
                                 <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginBottom: '0.2rem' }}>基金规模</div>
                                 <div style={{ fontSize: '1rem', color: '#fff', fontWeight: '500' }}>
                                     {data.assetSize || '--'}亿
+                                </div>
+                            </div>
+
+                            {/* Purchase Volume Ratio vs 5-day Average */}
+                            <div style={{ textAlign: 'right' }}>
+                                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginBottom: '0.2rem' }}>申购量比</div>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', justifyContent: 'flex-end' }}>
+                                    <span style={{ fontSize: '1rem', color: '#10b981', fontWeight: '500' }}>
+                                        0.85
+                                    </span>
+                                    <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>vs 5日均</span>
                                 </div>
                             </div>
                         </div>

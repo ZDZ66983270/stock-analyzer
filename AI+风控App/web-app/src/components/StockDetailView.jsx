@@ -210,8 +210,8 @@ const StockDetailView = ({ asset, onBack }) => {
                             </div>
                         </div>
 
-                        {/* Right: Volume & Turnover Stacked */}
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', alignItems: 'flex-end' }}>
+                        {/* Right: Volume, Turnover & Volume Ratio (Side by Side) */}
+                        <div style={{ display: 'flex', gap: '1.2rem', alignItems: 'flex-start' }}>
                             {/* Volume */}
                             <div style={{ textAlign: 'right' }}>
                                 <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginBottom: '0.2rem' }}>成交量</div>
@@ -231,6 +231,17 @@ const StockDetailView = ({ asset, onBack }) => {
                                         {mockLatestData ? (mockLatestData.close * mockLatestData.volume / 100000000).toFixed(2) : '--'}亿
                                     </span>
                                     <span style={{ fontSize: '0.9rem', color: '#ef4444' }}>↓</span>
+                                </div>
+                            </div>
+
+                            {/* Volume Ratio vs 5-day Average */}
+                            <div style={{ textAlign: 'right' }}>
+                                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginBottom: '0.2rem' }}>量比</div>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', justifyContent: 'flex-end' }}>
+                                    <span style={{ fontSize: '1rem', color: '#10b981', fontWeight: '500' }}>
+                                        1.35
+                                    </span>
+                                    <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>vs 5日均</span>
                                 </div>
                             </div>
                         </div>

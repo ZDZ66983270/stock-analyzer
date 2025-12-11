@@ -187,9 +187,9 @@ const HomeView = ({ onSelectAsset }) => {
                                             border: '1px solid rgba(255,255,255,0.1)'
                                         }}
                                     >
-                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                            {/* Left: Name and Code */}
-                                            <div style={{ flex: 1, minWidth: '0' }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                            {/* Left: Name and Code - Fixed width */}
+                                            <div style={{ flex: '0 0 120px', minWidth: '0' }}>
                                                 <div style={{ fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '0.3rem', color: '#fff', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                                                     {item.name || item.symbol}
                                                 </div>
@@ -198,15 +198,16 @@ const HomeView = ({ onSelectAsset }) => {
                                                 </div>
                                             </div>
 
-                                            {/* Middle: Value Assessment & Risk Count (Emphasized) */}
+                                            {/* Middle: Value Assessment & Risk Count - Fixed width */}
                                             <div style={{
+                                                flex: '0 0 140px',
                                                 display: 'flex',
-                                                gap: '1.2rem',
+                                                gap: '1rem',
                                                 alignItems: 'center',
-                                                marginRight: '1rem'
+                                                justifyContent: 'center'
                                             }}>
                                                 {/* Value Assessment Score */}
-                                                <div style={{ textAlign: 'center' }}>
+                                                <div style={{ textAlign: 'center', flex: '0 0 60px' }}>
                                                     <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginBottom: '0.2rem' }}>
                                                         价值评估
                                                     </div>
@@ -220,7 +221,7 @@ const HomeView = ({ onSelectAsset }) => {
                                                 </div>
 
                                                 {/* Risk Count */}
-                                                <div style={{ textAlign: 'center' }}>
+                                                <div style={{ textAlign: 'center', flex: '0 0 60px' }}>
                                                     <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginBottom: '0.2rem' }}>
                                                         风险点
                                                     </div>
@@ -234,8 +235,8 @@ const HomeView = ({ onSelectAsset }) => {
                                                 </div>
                                             </div>
 
-                                            {/* Right: Price (Secondary) */}
-                                            <div style={{ textAlign: 'right' }}>
+                                            {/* Right: Price - Fixed width */}
+                                            <div style={{ flex: '1 1 auto', textAlign: 'right', minWidth: '90px' }}>
                                                 <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: changeColor }}>
                                                     {item.price ? item.price.toFixed(2) : '--'}
                                                 </div>
