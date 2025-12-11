@@ -111,6 +111,7 @@ npm run dev
 ## 📚 开发文档
 
 - **产品定位**: [PRODUCT_POSITIONING.md](./PRODUCT_POSITIONING.md) - 应用定位、评估体系和表达规范
+- **业务流程与页面布局**: [UX_DESIGN.md](./UX_DESIGN.md) - 用户旅程、页面结构和交互设计
 - **系统架构设计**: [ARCHITECTURE.md](./ARCHITECTURE.md) - 完整的系统架构、部署方案和发布路线图
 - **后台开发路线图**: [BACKEND_ROADMAP.md](./BACKEND_ROADMAP.md) - 详细的后台开发计划和实施步骤
 - **后台开发计划**: [backend/DEVELOPMENT_PLAN.md](./backend/DEVELOPMENT_PLAN.md) - 后台开发任务清单
