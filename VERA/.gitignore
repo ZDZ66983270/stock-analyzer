@@ -1,0 +1,36 @@
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Python cache
+__pycache__/
+*.pyc
+
+# System files
+.DS_Store
+
+# Streamlit config (if strictly local)
+.streamlit/secrets.toml
+
+# Temp/Output files (based on git status output seen earlier)
+output_V4/
+proceeded/
+
+# Large Backups and Data
+*.bak*
+*.backup*
+*.tar.gz
+outputs/
+imports/market_daily.csv*
+
+# Exclude all data files
+*.csv
+*.xlsx
+*.xls
+*.json
+*.txt
+*.log
+
+# Allow specific config files if needed (but user said only py)
+# For now, let's keep it strict as requested: only code.
