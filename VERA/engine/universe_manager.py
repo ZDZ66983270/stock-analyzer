@@ -43,13 +43,13 @@ def get_universe_assets_v2(conn=None) -> List[Dict]:
             ) ac ON u.asset_id = ac.asset_id
             LEFT JOIN (
                 SELECT 
-                    m.canonical_id,
+                    COALESCE(m.canonical_id, p.symbol) as effective_id,
                     MAX(p.trade_date) as last_date,
                     (JULIANDAY(MAX(p.trade_date)) - JULIANDAY(MIN(p.trade_date))) / 365.25 as duration_years
                 FROM vera_price_cache p
-                JOIN asset_symbol_map m ON p.symbol = m.symbol
-                GROUP BY m.canonical_id
-            ) stats ON u.asset_id = stats.canonical_id
+                LEFT JOIN asset_symbol_map m ON p.symbol = m.symbol
+                GROUP BY effective_id
+            ) stats ON u.asset_id = stats.effective_id
             LEFT JOIN (
                 SELECT 
                     asset_id,

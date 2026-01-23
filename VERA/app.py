@@ -726,6 +726,59 @@ def delete_snapshot(snapshot_id: str):
             f.write(f"{datetime.now()}: Error deleting {snapshot_id}: {str(e)}\n")
         return False, str(e)
 
+def get_snapshot_details(snapshot_id: str):
+    """获取单个快照的完整详情"""
+    try:
+        conn = get_connection()
+        
+        # 1. 基础信息
+        snapshot_query = """
+            SELECT s.*, a.name as symbol_name, a.market, a.asset_type as category
+            FROM analysis_snapshot s
+            JOIN assets a ON s.asset_id = a.asset_id
+            WHERE s.snapshot_id = ?
+        """
+        snapshot_df = pd.read_sql(snapshot_query, conn, params=(snapshot_id,))
+        
+        # 2. 指标详情
+        metrics_query = "SELECT * FROM metric_details WHERE snapshot_id = ?"
+        metrics_df = pd.read_sql(metrics_query, conn, params=(snapshot_id,))
+        
+        # 3. 风险卡片
+        risk_card_query = "SELECT * FROM risk_card_snapshot WHERE snapshot_id = ?"
+        risk_card_df = pd.read_sql(risk_card_query, conn, params=(snapshot_id,))
+        
+        # 4. 行为标志
+        behavior_query = "SELECT * FROM behavior_flags WHERE snapshot_id = ?"
+        behavior_df = pd.read_sql(behavior_query, conn, params=(snapshot_id,))
+        
+        # 5. 质量快照
+        quality_query = "SELECT * FROM quality_snapshot WHERE snapshot_id = ?"
+        quality_df = pd.read_sql(quality_query, conn, params=(snapshot_id,))
+        
+        # 6. 风险叠加
+        overlay_query = "SELECT * FROM risk_overlay_snapshot WHERE snapshot_id = ?"
+        overlay_df = pd.read_sql(overlay_query, conn, params=(snapshot_id,))
+        
+        # 7. 决策日志
+        decision_query = "SELECT * FROM decision_log WHERE snapshot_id = ?"
+        decision_df = pd.read_sql(decision_query, conn, params=(snapshot_id,))
+        
+        conn.close()
+        
+        return {
+            'snapshot': snapshot_df,
+            'metrics': metrics_df,
+            'risk_card': risk_card_df,
+            'behavior': behavior_df,
+            'quality': quality_df,
+            'overlay': overlay_df,
+            'decision': decision_df
+        }
+    except Exception as e:
+        st.error(f"获取快照详情失败: {str(e)}")
+        return None
+
 def extract_data_from_image(uploaded_file):
     """
     模拟 OCR 解析逻辑
@@ -2792,8 +2845,222 @@ def render_data_import_page():
             del st.session_state['import_result']
             st.rerun()
 
+
+def reconstruct_dashboard_data_from_snapshot(details):
+    """
+    Reconstruct DashboardData object from snapshot dictionary.
+    Maps database tables (snapshot, metrics, risk_card, etc.) back to the 
+    structure expected by render_page().
+    """
+    from analysis.dashboard import DashboardData
+    
+    if not details or details['snapshot'].empty:
+        return None
+        
+    s = details['snapshot'].iloc[0]
+    
+    # 1. Base Info
+    symbol = s['asset_id']
+    symbol_name = s['symbol_name']
+    
+    # 2. Risk Card (Convert single row DF to dict)
+    risk_card = {}
+    if not details['risk_card'].empty:
+        risk_card = details['risk_card'].iloc[0].to_dict()
+        
+    # 3. Metrics (Convert key-value rows to dict)
+    metrics = {}
+    if not details['metrics'].empty:
+        metrics = dict(zip(details['metrics']['metric_key'], details['metrics']['value']))
+    
+    # 4. Quality (Convert single row DF to dict)
+    quality = {}
+    if not details['quality'].empty:
+        quality = details['quality'].iloc[0].to_dict()
+        
+    # 5. Behavior Flags
+    behavior_flags = []
+    if not details['behavior'].empty:
+        behavior_flags = details['behavior'].to_dict(orient='records')
+        
+    # 6. Overlay (Reconstruct nested dict structure)
+    # The database stores overlay flat or partially normalized. 
+    # We need to map it back to {individual: {}, sector: {}, market: {}}
+    overlay = {
+        'individual': {},
+        'sector': {},
+        'market': {},
+        'asset_type': s.get('category') or s.get('asset_type'), # 'category' alias used in SQL fix
+        'index_role': s.get('index_role')
+    }
+    
+    if not details['overlay'].empty:
+        ov_row = details['overlay'].iloc[0]
+        # Mapping logic based on column prefixes in risk_overlay_snapshot table
+        # Assuming column names like: ind_*, sector_*, market_*
+        for col, val in ov_row.items():
+            if col.startswith('ind_'):
+                overlay['individual'][col] = val
+            elif col.startswith('sector_'):
+                overlay['sector'][col] = val
+            elif col.startswith('market_') or col in ['amplification_level', 'index_risk_state']:
+                overlay['market'][col] = val
+            # Map specific core fields if names match exactly or close
+            if col == 'stock_vs_sector_rs_3m': overlay['sector'][col] = val
+            
+    # 7. Value (Reconstruct from metrics/snapshot)
+    # The 'value' dict in DashboardData usually comes from ValuationAnalyzer
+    # We try to rebuild it from what we have
+    value = {
+        'current_pe': metrics.get('pe_ttm'),
+        'current_pe_static': metrics.get('pe_static'),
+        'current_pb': metrics.get('pb_ratio'),
+        'valuation_status': s.get('valuation_status'),
+        'pe_percentile': risk_card.get('pe_percentile') # risk_card often holds PE pct too? Check schema
+    }
+    # If valuation status details were stored in metrics or specific table, map them here.
+    # For now, simplistic mapping.
+    
+    # 8. Path (Reconstruct from risk_card)
+    path = {
+        'has_new_high': False # Default, unless stored
+    }
+    # Try to infer new high from recovery_progress
+    if risk_card.get('recovery_progress', 0) >= 1.0:
+        path['has_new_high'] = True
+        
+    # 9. Market Environment
+    # Often stored in overlay in flat structure or separate text
+    market_env = {
+        'regime_label': overlay['market'].get('market_regime_label')
+    }
+
+    # 10. Overall Conclusion
+    # Often stored in decision_log or constructed. 
+    # Snapshot table has 'logic_rationale' or similar? 
+    # Check `decision` table in details
+    conclusion = "无综合裁定记录"
+    if 'decision' in details and not details['decision'].empty:
+        # decision_log might have 'action_signal', 'rationale'
+        d_row = details['decision'].iloc[0]
+        conclusion = d_row.get('rationale', "无详细记录")
+
+    current_price = 0.0
+    if 'current_price' in metrics:
+        try: current_price = float(metrics['current_price'])
+        except: pass
+
+    data = DashboardData(
+        symbol=symbol,
+        symbol_name=symbol_name,
+        current_price=current_price,
+        report_date=s['as_of_date'],
+        overall_conclusion=conclusion,
+        path=path,
+        position={}, # risk_card has position_zone, stored in overlay['individual']
+        market_environment=market_env,
+        value=value,
+        overlay=overlay,
+        behavior_suggestion=s.get('action_signal', ''), # Snapshot might store signal in basic info? Or decision table.
+        cognitive_warning=s.get('risk_level', ''), # Using risk_level as proxy if warning not text
+        
+        quality=quality,
+        behavior_flags=behavior_flags,
+        risk_card=risk_card,
+        valuation_path=None # Might not be fully stored in snapshot yet
+    )
+    
+    # Refine specific text fields if available in other tables
+    if 'decision' in details and not details['decision'].empty:
+        d_row = details['decision'].iloc[0]
+        if 'behavior_suggestion' in d_row: data.behavior_suggestion = d_row['behavior_suggestion']
+        if 'cognitive_warning' in d_row: data.cognitive_warning = d_row['cognitive_warning']
+        
+    return data
+
+def render_snapshot_detail(snapshot_id: str):
+    """渲染快照详情页面 - 使用 Analysis 统一布局"""
+    details = get_snapshot_details(snapshot_id)
+    
+    if details is None or details['snapshot'].empty:
+        st.error("未找到快照信息")
+        if st.button("🔙 返回列表"):
+            if 'view_snapshot_id' in st.session_state:
+                del st.session_state['view_snapshot_id']
+            st.rerun()
+        return
+    
+    # 1. 顶部导航与印戳
+    st.markdown("""
+        <style>
+        .snapshot-banner {
+            background-color: #7c2d12;
+            color: #ffedd5;
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #fb923c;
+        }
+        .snapshot-tag {
+            font-weight: bold;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        </style>
+        <div class="snapshot-banner">
+            <div class="snapshot-tag">
+                <span>📸 历史快照模式 (Snapshot View)</span>
+                <span style="font-size:0.8em; opacity:0.8; font-weight:normal;"> | ID: """ + snapshot_id[:8] + """...</span>
+            </div>
+            <div style="font-size: 0.9em;">
+                不可交互 · 仅供留档参考
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
+
+    col_back, _ = st.columns([1, 5])
+    with col_back:
+        if st.button("🔙 退出快照 (Exit)", use_container_width=True):
+            if 'view_snapshot_id' in st.session_state:
+                del st.session_state['view_snapshot_id']
+            if "view_snapshot_id" in st.query_params:
+                st.query_params.pop("view_snapshot_id")
+            st.rerun()
+
+    # 2. 数据重构
+    try:
+        dash_data = reconstruct_dashboard_data_from_snapshot(details)
+        if not dash_data:
+            st.error("数据重构失败")
+            return
+            
+        # 3. 复用主渲染逻辑
+        # Pass report_date for chart filtering if needed
+        render_page(dash_data, profile=None, chart_end_date=dash_data.report_date)
+        
+    except Exception as e:
+        st.error(f"渲染快照时发生错误: {str(e)}")
+        st.exception(e)
+
 def render_history_dashboard(asset_id: str = None):
     """📊 Main Page Evaluation History / 主页面评估历史"""
+    # 检查URL参数是否需要显示详情页面
+    # 优先级: URL参数 > Session State
+    qp_snapshot_id = st.query_params.get("view_snapshot_id", None)
+    if qp_snapshot_id:
+        st.session_state['view_snapshot_id'] = qp_snapshot_id
+    
+    # 检查是否需要显示详情页面
+    if 'view_snapshot_id' in st.session_state:
+        render_snapshot_detail(st.session_state['view_snapshot_id'])
+        return
+    
+
     if asset_id:
         st.markdown(f"# 📊 {asset_id} 评估历史")
         st.markdown(f"### Historical Assessments for {asset_id}")
@@ -2804,13 +3071,11 @@ def render_history_dashboard(asset_id: str = None):
     else:
         st.markdown("# 📊 评估历史记录")
         st.markdown("### Evaluation History Dashboard")
-        show_all = st.checkbox("显示所有历史快照 / Show All Snapshots", value=st.session_state.get('history_show_all', False))
-        st.session_state.history_show_all = show_all
+        # UI Element Removed as per user request
+        show_all = st.session_state.get('history_show_all', False)
         history_df = get_evaluation_history(show_all=show_all)
 
-    st.info("点击左侧边栏输入代码并点击「运行分析」以生成新的评估报告。 / Enter a symbol in the sidebar and click 'Run' to generate a new report.")
-    
-    st.markdown("---")
+    # Removed st.info and st.markdown("---")
     
     if not history_df.empty:
         # Standardize for display
@@ -2821,29 +3086,45 @@ def render_history_dashboard(asset_id: str = None):
             
         status_map = {
             "Undervalued": "🟩 低估 (Undervalued)",
+            "Fairly Valued": "⬜ 合理估值 (Fairly Valued)",
             "Discount": "🟨 折价 (Discount)",
             "Fair": "⬜ 合理 (Fair)",
             "Premium": "🟧 溢价 (Premium)",
-            "Overvalued": "🟥 高估 (Overvalued)"
+            "Overvalued": "🟥 高估 (Overvalued)",
+            "Extremely Overvalued": "🟥🟥 极度高估 (Extremely Overvalued)"
         }
         
         display_df = history_df.copy()
         # Sort by creation time descending / 按创建时间降序排列
         display_df = display_df.sort_values('created_at', ascending=False).reset_index(drop=True)
-        display_df['代码'] = display_df['asset_id'].apply(simplify_symbol)
+        
+        # 构造跳转链接URL
+        # 格式: /?page=history&view_snapshot_id=ID&code=CODE
+        display_df['link_code'] = display_df.apply(
+            lambda x: f"/?page=history&view_snapshot_id={x['snapshot_id']}&code={simplify_symbol(x['asset_id'])}", 
+            axis=1
+        )
+        display_df['symbol_name_show'] = display_df['symbol_name']
+        
         display_df['状态'] = display_df['valuation_status'].map(status_map).fillna(display_df['valuation_status'])
         display_df['评估日期'] = pd.to_datetime(display_df['as_of_date']).dt.strftime('%Y-%m-%d')
         display_df['分析时间'] = pd.to_datetime(display_df['created_at']).dt.strftime('%H:%M:%S')
         
-        cols_to_show = ['代码', 'symbol_name', '状态', '评估日期', '分析时间']
-        
-        # --- Action Bar (Fixed & Clean) ---
+        # Action Bar
         ctrl_col1, ctrl_col2, ctrl_col3 = st.columns([3, 3, 4])
         with ctrl_col1:
-            # Placeholder for the dynamic "Delete Selected" button
             delete_placeholder = st.empty()
         with ctrl_col2:
             with st.popover("⚙️ 批量维护 (Maintenance)"):
+                st.markdown("### 👁️ 显示设置 (View Settings)")
+                current_show_all = st.session_state.get('history_show_all', False)
+                show_all_check = st.checkbox("显示所有历史快照 / Show All Snapshots", value=current_show_all, help="勾选显示所有历史记录，不勾选仅显示最新一条")
+                
+                if show_all_check != current_show_all:
+                    st.session_state.history_show_all = show_all_check
+                    st.rerun()
+                    
+                st.markdown("---")
                 st.markdown("### ⚠️ 危险操作 (Danger Zone)")
                 if st.button("🗑️ 清空所有历史 (Clear All)", type="primary", use_container_width=True):
                     st.session_state.show_clear_all_confirm = True
@@ -2858,7 +3139,6 @@ def render_history_dashboard(asset_id: str = None):
                 if ok:
                     st.success(msg)
                     st.session_state.show_clear_all_confirm = False
-                    # Clear editor state to avoid ghost selections
                     if "history_mgmt_editor_fixed" in st.session_state:
                         del st.session_state["history_mgmt_editor_fixed"]
                     st.rerun()
@@ -2868,19 +3148,32 @@ def render_history_dashboard(asset_id: str = None):
                 st.session_state.show_clear_all_confirm = False
                 st.rerun()
 
-        st.info("💡 勾选下方列表首列多选框进行批量操作。 / Check rows to enable actions.")
+        st.info("💡 点击蓝色代码查看详情。勾选左侧方框进行批量删除。 / Click blue code to view details. Check box to delete.")
 
         # Prepare for Data Editor
         display_df.insert(0, "选择 (Select)", False)
         
-        edit_cols = ["选择 (Select)"] + cols_to_show + ['snapshot_id']
+        # Note: We display 'link_code' column but configure it to show code text using regex
+        edit_cols = ["选择 (Select)", "link_code", "symbol_name_show", "状态", "评估日期", "分析时间", "snapshot_id"]
+        
         edited_df = st.data_editor(
             display_df[edit_cols],
             column_config={
-                "选择 (Select)": st.column_config.CheckboxColumn("选择", help="勾选以删除", default=False),
-                "snapshot_id": None # Hide the ID
+                "选择 (Select)": st.column_config.CheckboxColumn("删除", help="勾选以删除", default=False, width="small"),
+                "link_code": st.column_config.LinkColumn(
+                    "代码 (Code)", 
+                    help="点击查看详情", 
+                    display_text=r"code=(.*)$", 
+                    width="medium",
+                    validate=r"^/\?page=history.*"
+                ),
+                "symbol_name_show": st.column_config.TextColumn("名称 (Name)", width="medium"),
+                "状态": st.column_config.TextColumn("状态 (Status)", width="large"),
+                "评估日期": st.column_config.TextColumn("日期 (Date)", width="small"),
+                "分析时间": st.column_config.TextColumn("时间 (Time)", width="small"),
+                "snapshot_id": None # Hide
             },
-            disabled=cols_to_show,
+            disabled=["link_code", "symbol_name_show", "状态", "评估日期", "分析时间"],
             hide_index=True,
             use_container_width=True,
             height=500,
@@ -2944,7 +3237,15 @@ def main():
         else:
             url_key = v
 
-    if url_key in nav_keys:
+    # Special routing: history is a sub-page of analysis
+    if url_key == "history":
+        current_key = "analysis"
+        # Force sub-mode to history
+        st.session_state.analysis_sub_mode = "📜 历史记录"
+        # Clear radio key to force re-render with new index if needed
+        if "analysis_sub_mode_radio" in st.session_state:
+            del st.session_state.analysis_sub_mode_radio
+    elif url_key in nav_keys:
         current_key = url_key
     else:
         current_key = st.session_state.get("app_mode_key", DEFAULT_PAGE_KEY)
