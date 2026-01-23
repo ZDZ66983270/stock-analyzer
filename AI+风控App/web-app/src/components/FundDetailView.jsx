@@ -47,7 +47,7 @@ const FundDetailView = ({ asset, onBack }) => {
 
             // Save to backend
             try {
-                await fetch('http://localhost:8000/api/save-analysis', {
+                await fetch('/api/save-analysis', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({

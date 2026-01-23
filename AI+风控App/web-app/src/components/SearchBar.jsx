@@ -1,46 +1,69 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
-// Mock database for valid asset codes
-const ASSET_DB = {
-    '600519': '贵州茅台',
-    '000001': '平安银行',
-    '300750': '宁德时代',
-    '700': '腾讯控股',
-    'BABA': '阿里巴巴',
-    'AAPL': 'Apple Inc.',
-    'TSLA': 'Tesla',
-    'BTC': 'Bitcoin',
-    'ETH': 'Ethereum'
-};
-
-const SearchBar = ({ value, onChange }) => {
+const SearchBar = ({ value, onChange, onSelect, placeholder }) => {
     const [focus, setFocus] = useState(false);
-    const [match, setMatch] = useState('');
+    const [suggestions, setSuggestions] = useState([]);
+    const [showSuggestions, setShowSuggestions] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+    const timeoutRef = useRef(null);
+
+    const fetchSuggestions = async (q) => {
+        if (!q.trim()) {
+            setSuggestions([]);
+            return;
+        }
+        setLoading(true);
+        console.log(`[SearchBar] Fetching suggestions for: ${q}`);
+        try {
+            const res = await fetch(`/api/search?q=${encodeURIComponent(q)}&limit=5`);
+            const data = await res.json();
+            if (data.status === 'success') {
+                setSuggestions(data.data);
+            }
+        } catch (e) {
+            console.error("[SearchBar] Search failed:", e);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const handleChange = (e) => {
         const input = e.target.value;
         if (onChange) onChange(input);
+        setShowSuggestions(true);
 
-        // Simple exact match logic (case-insensitive for letters)
-        const upperInput = input.toUpperCase();
-        if (ASSET_DB[input]) {
-            setMatch(ASSET_DB[input]);
-        } else if (ASSET_DB[upperInput]) {
-            setMatch(ASSET_DB[upperInput]);
-        } else {
-            setMatch('');
-        }
+        if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        timeoutRef.current = setTimeout(() => {
+            fetchSuggestions(input);
+        }, 300);
     };
 
-    // Also clear match if value is empty/controlled from outside match
-    useEffect(() => {
-        if (!value) setMatch('');
-    }, [value]);
+    const handleSelectSuggestion = (item) => {
+        console.log(`[SearchBar] Selected:`, item);
+        if (onChange) onChange(item.symbol);
+        if (onSelect) onSelect(item);
+        setShowSuggestions(false);
+        setSuggestions([]);
+    };
+
+    const handleBlur = () => {
+        setTimeout(() => {
+            setFocus(false);
+            setShowSuggestions(false);
+        }, 200);
+    };
+
+    const handleClear = () => {
+        if (onChange) onChange('');
+        setSuggestions([]);
+        setShowSuggestions(false);
+    };
 
     return (
-        <div style={{ marginBottom: '2rem' }}>
+        <div style={{ marginBottom: '1rem', position: 'relative', zIndex: 1000 }}>
             <label style={{ display: 'block', color: 'var(--text-secondary)', marginBottom: '0.75rem', fontSize: '0.9rem', fontWeight: '500' }}>
-                搜索栏 (核心输入)
+                搜索标的 {loading && <span style={{ fontSize: '0.8rem', color: 'var(--accent-primary)' }}>(搜索中...)</span>}
             </label>
             <div
                 className="glass-panel"
@@ -52,7 +75,8 @@ const SearchBar = ({ value, onChange }) => {
                     borderColor: focus ? 'var(--accent-primary)' : 'rgba(255,255,255,0.08)',
                     boxShadow: focus ? `0 0 0 1px var(--accent-primary), 0 0 15px -3px var(--accent-glow)` : '',
                     transition: 'var(--transition)',
-                    position: 'relative'
+                    position: 'relative',
+                    background: 'rgba(0,0,0,0.3)'
                 }}
             >
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text-secondary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -63,39 +87,104 @@ const SearchBar = ({ value, onChange }) => {
                     type="text"
                     value={value}
                     onChange={handleChange}
-                    placeholder="请输入代码 / 名称 (如: 600519)"
+                    placeholder={placeholder || "代码(600519) / 名称(茅台)"}
                     style={{
                         flex: 1,
                         background: 'transparent',
                         border: 'none',
-                        color: 'var(--text-primary)',
+                        color: '#fff',
                         padding: '1rem 0.75rem',
                         fontSize: '1rem',
                         outline: 'none',
                         fontFamily: 'inherit'
                     }}
-                    onFocus={() => setFocus(true)}
-                    onBlur={() => setFocus(false)}
+                    onFocus={() => { setFocus(true); setShowSuggestions(true); }}
+                    onBlur={handleBlur}
                 />
-
-                {/* Auto-match Badge */}
-                {match && (
-                    <div style={{
-                        padding: '4px 12px',
-                        background: 'rgba(16, 185, 129, 0.2)', // Greenish tint
-                        color: '#34d399',
-                        borderRadius: '20px',
-                        fontSize: '0.85rem',
-                        fontWeight: '600',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '6px',
-                        animation: 'fadeIn 0.3s ease-out'
-                    }}>
-                        <span>✓</span> {match}
-                    </div>
+                {value && (
+                    <button
+                        onClick={handleClear}
+                        style={{
+                            background: 'none',
+                            border: 'none',
+                            color: 'var(--text-tertiary)',
+                            cursor: 'pointer',
+                            padding: '0.25rem',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            transition: 'color 0.2s',
+                            zIndex: 10
+                        }}
+                        onMouseEnter={(e) => e.target.style.color = 'var(--text-primary)'}
+                        onMouseLeave={(e) => e.target.style.color = 'var(--text-tertiary)'}
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
                 )}
             </div>
+
+            {/* Suggestions Dropdown */}
+            {showSuggestions && suggestions.length > 0 && (
+                <ul style={{
+                    position: 'absolute',
+                    top: '100%',
+                    left: 0,
+                    right: 0,
+                    marginTop: '0.5rem',
+                    background: '#27272a',
+                    border: '1px solid rgba(255,255,255,0.2)',
+                    borderRadius: 'var(--radius-md)',
+                    zIndex: 9999,
+                    boxShadow: '0 10px 25px rgba(0,0,0,0.5)',
+                    overflow: 'hidden',
+                    maxHeight: '300px',
+                    overflowY: 'auto',
+                    listStyle: 'none',
+                    padding: 0,
+                    margin: 0
+                }}>
+                    {suggestions.map((item, index) => (
+                        <li
+                            key={index}
+                            onClick={() => handleSelectSuggestion(item)}
+                            style={{
+                                padding: '0.75rem 1rem',
+                                borderBottom: index < suggestions.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none',
+                                cursor: 'pointer',
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                color: '#fff',
+                                transition: 'background 0.2s'
+                            }}
+                            className="search-item"
+                            onMouseEnter={(e) => e.currentTarget.style.background = '#3f3f46'}
+                            onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+                        >
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                <span style={{ fontWeight: '500' }}>{item.name}</span>
+                                <span style={{
+                                    fontSize: '0.8rem',
+                                    color: '#fff',
+                                    background: 'var(--accent-primary)',
+                                    padding: '2px 4px',
+                                    borderRadius: '4px',
+                                    opacity: 0.8
+                                }}>
+                                    {item.market}
+                                </span>
+                            </div>
+                            <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+                                {(item.symbol || '').replace(/\.OQ$|\.N$|\.QQ$/i, '')}
+                            </span>
+                        </li>
+                    ))}
+                </ul>
+            )}
         </div>
     );
 };

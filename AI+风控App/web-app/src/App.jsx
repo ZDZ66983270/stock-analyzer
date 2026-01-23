@@ -1,9 +1,29 @@
+/**
+ * VERA Frontend Root Component (App.jsx)
+ * ==============================================================================
+ * 
+ * 功能说明:
+ * 1. **根状态管理**: 维护全局 `currentView` (视图) 和 `activeTab` (主标签) 状态。
+ * 2. **轻量化路由**: 采用条件渲染实现的单页路由系统，支持从行情列表跳转至 Stock/Fund 详情页。
+ * 3. **响应式布局**: 
+ *    - Mobile-First 设计。
+ *    - 底部页签式导航 (Bottom Tab Bar)，仅在主视图显示。
+ *    - 针对移动端安全区域 (Safe Area) 的自动适配。
+ * 
+ * 技术栈: React (Hooks), Vanilla CSS.
+ * 
+ * 作者: Antigravity
+ * 日期: 2026-01-23
+ */
+
 import React, { useState } from 'react';
 import AppLayout from './components/AppLayout';
 import HomeView from './components/HomeView';
 import StockDetailView from './components/StockDetailView';
 import FundDetailView from './components/FundDetailView';
+import MarketView from './components/MarketView';
 import ConfigModal from './components/ConfigModal';
+
 import SettingsView from './components/SettingsView';
 
 const App = () => {
@@ -39,6 +59,8 @@ const App = () => {
         switch (activeTab) {
             case 'settings':
                 return <SettingsView />;
+            case 'market':
+                return <MarketView />;
             case 'watchlist':
             default:
                 return <HomeView onSelectAsset={handleSelectAsset} />;
@@ -71,36 +93,38 @@ const App = () => {
                     display: 'flex',
                     justifyContent: 'space-around',
                     alignItems: 'center',
-                    zIndex: 1000
+                    zIndex: 2000
                 }}>
                     <div
                         onClick={() => setActiveTab('watchlist')}
                         style={{
-                            flex: 1,
-                            height: '100%',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            cursor: 'pointer',
-                            color: activeTab === 'watchlist' ? 'var(--accent-primary)' : 'var(--text-secondary)'
+                            flex: 1, height: '100%', display: 'flex', flexDirection: 'column',
+                            justifyContent: 'center', alignItems: 'center', cursor: 'pointer',
+                            color: activeTab === 'watchlist' ? 'var(--accent-primary)' : '#888'
+                        }}
+                    >
+                        <span style={{ fontSize: '1.2rem', marginBottom: '2px' }}>★</span>
+                        <span style={{ fontSize: '0.75rem' }}>自选</span>
+                    </div>
+
+                    <div
+                        onClick={() => setActiveTab('market')}
+                        style={{
+                            flex: 1, height: '100%', display: 'flex', flexDirection: 'column',
+                            justifyContent: 'center', alignItems: 'center', cursor: 'pointer',
+                            color: activeTab === 'market' ? 'var(--accent-primary)' : '#888'
                         }}
                     >
                         <span style={{ fontSize: '1.2rem', marginBottom: '2px' }}>📊</span>
-                        <span style={{ fontSize: '0.75rem' }}>自选</span>
+                        <span style={{ fontSize: '0.75rem' }}>市场</span>
                     </div>
 
                     <div
                         onClick={() => setActiveTab('settings')}
                         style={{
-                            flex: 1,
-                            height: '100%',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            cursor: 'pointer',
-                            color: activeTab === 'settings' ? 'var(--accent-primary)' : 'var(--text-secondary)'
+                            flex: 1, height: '100%', display: 'flex', flexDirection: 'column',
+                            justifyContent: 'center', alignItems: 'center', cursor: 'pointer',
+                            color: activeTab === 'settings' ? 'var(--accent-primary)' : '#888'
                         }}
                     >
                         <span style={{ fontSize: '1.2rem', marginBottom: '2px' }}>⚙️</span>

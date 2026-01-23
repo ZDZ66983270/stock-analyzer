@@ -15,7 +15,7 @@ const AssetInputForm = () => {
         try {
             // New Robust Logic: Call Sync Fetch Endpoint
             // This endpoint adds to watchlist, fetches real data, saves to DB, and returns it.
-            const res = await fetch('http://localhost:8000/api/fetch-stock', {
+            const res = await fetch('/api/fetch-stock', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ symbol: searchValue })

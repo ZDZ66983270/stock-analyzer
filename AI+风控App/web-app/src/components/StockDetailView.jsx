@@ -1,9 +1,30 @@
+/**
+ * VERA Asset Detail View (StockDetailView.jsx)
+ * ==============================================================================
+ * 
+ * 功能说明:
+ * 1. **全维度分析**: 单个资产的详情页，集成了行情、历史指标、AI 风险评估和估值报告。
+ * 2. **异步状态机**:
+ *    - `fetchHistory`: 抓取 OHLCV 和 估值历史序列。
+ *    - `fetchLatestAnalysis`: 加载最近一次的人工智能/量化评估记录。
+ *    - `handleAnalyze`: 触发新的深度评估任务并持久化至后端。
+ * 3. **多维图表系统**: 
+ *    - 对接 `ChartSeriesViewer`，支持 走势 (C1)、估值 (C2)、股息 (C3) 等 6 种专业图表模式。
+ *    - 支持针对 PE/PB/PS 的二级子菜单切换。
+ * 4. **模块化报告**:
+ *    - 使用 `CollapsibleSection` 实现可折叠的价值评估、机会洞察、风险警告等专业报告段落。
+ * 
+ * 作者: Antigravity
+ * 日期: 2026-01-23
+ */
+
 import React, { useState, useEffect } from 'react';
 import ImageUploadArea from './ImageUploadArea';
 import CollapsibleSection from './CollapsibleSection';
 import StarRating from './StarRating';
 import { analyzeAsset } from '../utils/mockAI';
 import { getMockData, isOfflineMode } from '../utils/mockData';
+import ChartSeriesViewer from './ChartSeriesViewer';
 
 const StockDetailView = ({ asset, onBack }) => {
     const [history, setHistory] = useState([]);
@@ -12,8 +33,15 @@ const StockDetailView = ({ asset, onBack }) => {
     const [analysisResult, setAnalysisResult] = useState(null);
     const [analyzing, setAnalyzing] = useState(false);
 
+    // Chart State
+    const [chartType, setChartType] = useState('C1'); // C1, C2, C3, C4, C5, C6
+    const [chartSubType, setChartSubType] = useState('PE'); // For C2 (PE/PB/PS)
+
     // Fetch History on Mount
     useEffect(() => {
+        // Enforce top scroll position on entry
+        window.scrollTo(0, 0);
+
         if (asset && asset.symbol) {
             fetchHistory(asset.symbol);
             fetchLatestAnalysis(asset.symbol);
@@ -27,15 +55,17 @@ const StockDetailView = ({ asset, onBack }) => {
             setHistory([mockData]);
         }
 
+        if (!asset) return; // Added from instruction, assuming 'asset' is available in scope
         setLoadingHistory(true);
         try {
-            // Try real API
-            const res = await fetch(`http://localhost:8000/api/market-data/${symbol}`);
+            const res = await fetch(`/api/market-data/${asset.symbol}`);
             const data = await res.json();
+
             if (data.status === 'success') {
-                setHistory(data.data.reverse()); // Show newest first
+                setHistory(data.data); // API already returns newest first
             }
         } catch (e) {
+            console.error('Failed to fetch history:', e);
             console.log("API unavailable, using mock data");
             // Mock data already set above
         } finally {
@@ -51,7 +81,7 @@ const StockDetailView = ({ asset, onBack }) => {
         }
 
         try {
-            const res = await fetch(`http://localhost:8000/api/latest-analysis/${symbol}`);
+            const res = await fetch(`/api/latest-analysis/${symbol}`);
             const data = await res.json();
             if (data.status === 'success' && data.analysis) {
                 setAnalysisResult(data.analysis);
@@ -110,14 +140,21 @@ const StockDetailView = ({ asset, onBack }) => {
 
     // Mock data for UI preview when no real data
     // Use asset data directly if available, otherwise use latestData from history
+    // Fallback to 0 instead of random numbers
     const mockLatestData = latestData || asset || {
-        price: 1725.50,
-        prev_close: 1710.20,
-        volume: 32500,
-        pct_change: 0.89
+        price: 0,
+        prev_close: 0,
+        volume: 0,
+        pct_change: 0
     };
+
+    // Determine Reference Price for Change Calculation
+    // Priority: 1. History[1].close (Yesterday) -> 2. Asset.open (Intraday) -> 3. Current Price (0 Change)
+    // Avoid hardcoded 1710.20 which causes -72% error when no history exists.
+    const referencePrice = prevData?.close || prevData?.price || asset?.open || asset?.prev_close || mockLatestData.price || 0;
+
     const mockPrevData = prevData || {
-        price: mockLatestData.prev_close || 1710.20
+        price: referencePrice
     };
 
 
@@ -177,8 +214,9 @@ const StockDetailView = ({ asset, onBack }) => {
                 <div style={{ flex: 1 }}>
                     <h1 style={{ margin: 0, fontSize: '1.4rem' }}>{asset.name || asset.symbol}</h1>
                     <span style={{ color: 'var(--text-secondary)', fontSize: '0.8rem' }}>
-                        {asset.symbol} • {asset.market}
+                        {(asset.symbol || '').replace(/\.OQ$|\.N$|\.QQ$/i, '')} • {asset.market}
                     </span>
+
                 </div>
                 {/* <div style={{ textAlign: 'right' }}>
                      Removed large price here, moved to section 1
@@ -189,59 +227,126 @@ const StockDetailView = ({ asset, onBack }) => {
 
                 {/* SECTION 1: Basic Information (Top) */}
                 <div className="glass-panel" style={{ padding: '1rem', borderRadius: 'var(--radius-md)', background: '#1c1c20' }}>
-                    <h3 style={{ marginTop: 0, marginBottom: '0.8rem', fontSize: '1rem', color: 'var(--text-secondary)', borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '0.5rem' }}>
-                        基础行情
+                    <h3 style={{ marginTop: 0, marginBottom: '0.8rem', fontSize: '1rem', color: 'var(--text-secondary)', borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <span>基础行情</span>
+                        {mockLatestData && mockLatestData.timestamp && (
+                            <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 'normal' }}>
+                                {(() => {
+                                    // Format time
+                                    const formatTime = (timeStr) => {
+                                        if (!timeStr) return '--';
+
+                                        // Database stores timestamps as strings in their respective market timezone
+                                        // e.g., "2025-12-12 16:00:00" for US stocks is already in US Eastern time
+                                        // We should display it as-is without timezone conversion
+
+                                        let displayStr = String(timeStr);
+
+                                        // Remove any timezone suffix that might exist
+                                        displayStr = displayStr.replace('美东', '').replace('CN', '').replace('HK', '').trim();
+
+                                        // Parse the date string components directly (avoid new Date() timezone conversion)
+                                        const match = displayStr.match(/(\d{4})-(\d{2})-(\d{2})\s+(\d{2}):(\d{2})/);
+                                        if (match) {
+                                            const [_, year, month, day, hour, minute] = match;
+                                            // Add timezone label based on market
+                                            let tzLabel = '';
+                                            if (asset.market === 'US') tzLabel = ' 美东';
+                                            else if (asset.market === 'HK') tzLabel = ' 香港';
+                                            else if (asset.market === 'CN') tzLabel = ' 北京';
+                                            return `${month}/${day} ${hour}:${minute}${tzLabel}`;
+                                        }
+
+                                        // Fallback: try to extract date parts
+                                        const parts = displayStr.split(/[\s-:]+/);
+                                        if (parts.length >= 5) {
+                                            const [year, month, day, hour, minute] = parts;
+                                            let tzLabel = '';
+                                            if (asset.market === 'US') tzLabel = ' 美东';
+                                            else if (asset.market === 'HK') tzLabel = ' 香港';
+                                            else if (asset.market === 'CN') tzLabel = ' 北京';
+                                            return `${month}/${day} ${hour}:${minute}${tzLabel}`;
+                                        }
+
+                                        return displayStr;
+                                    };
+                                    try {
+                                        return formatTime(mockLatestData.timestamp);
+                                    } catch (e) {
+                                        return mockLatestData.timestamp;
+                                    }
+                                })()}
+                            </span>
+                        )}
                     </h3>
 
                     {/* Price and Volume/Turnover Layout */}
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                         {/* Left: Price Section */}
-                        <div>
-                            <div style={{ fontSize: '2.2rem', fontWeight: 'bold', color: mockLatestData && mockLatestData.pct_change >= 0 ? '#ef4444' : '#10b981', lineHeight: 1, marginBottom: '0.5rem' }}>
-                                {mockLatestData ? (mockLatestData.price || mockLatestData.close || 0).toFixed(2) : '--.--'}
-                            </div>
-                            <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem' }}>
-                                <span style={{ fontSize: '1rem', color: mockLatestData && mockLatestData.pct_change >= 0 ? '#ef4444' : '#10b981', fontWeight: '600' }}>
-                                    {mockLatestData ? `${mockLatestData.pct_change > 0 ? '+' : ''}${(mockLatestData.pct_change || 0).toFixed(2)}%` : '--'}
-                                </span>
-                                <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-                                    {mockLatestData && mockPrevData ? `${mockLatestData.pct_change > 0 ? '+' : ''}${((mockLatestData.price || mockLatestData.close || 0) - (mockPrevData.price || mockPrevData.close || 0)).toFixed(2)}` : ''}
-                                </span>
-                            </div>
-                        </div>
+                        {(() => {
+                            // Use API-provided change and pct_change instead of recalculating
+                            const price = mockLatestData ? (mockLatestData.price || mockLatestData.close || 0) : 0;
+                            const change = mockLatestData ? (mockLatestData.change || 0) : 0;
+                            const pct = mockLatestData ? (mockLatestData.pct_change || 0) : 0;
 
-                        {/* Right: Volume, Turnover & Volume Ratio (Side by Side) */}
-                        <div style={{ display: 'flex', gap: '1.2rem', alignItems: 'flex-start' }}>
+                            // Use threshold to handle floating point precision issues
+                            const threshold = 0.01; // Consider changes < 0.01% as zero
+                            const isPositive = Math.abs(pct) >= threshold && pct > 0;
+                            const isNegative = Math.abs(pct) >= threshold && pct < 0;
+                            const isZero = Math.abs(pct) < threshold;
+                            // Zero change should be white, positive red, negative green
+                            const color = isZero ? 'var(--text-primary)' : (isPositive ? '#ef4444' : '#10b981');
+
+                            return (
+                                <div>
+                                    <div style={{ fontSize: '2.2rem', fontWeight: 'bold', color: color, lineHeight: 1, marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                        {mockLatestData ? price.toFixed(2) : '--.--'}
+                                        {isPositive && <span style={{ fontSize: '1.2rem' }}>↑</span>}
+                                        {isNegative && <span style={{ fontSize: '1.2rem' }}>↓</span>}
+                                    </div>
+                                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem' }}>
+                                        <span style={{ fontSize: '1rem', color: color, fontWeight: '600' }}>
+                                            {mockLatestData ? (
+                                                <>
+                                                    {isPositive ? '+' : ''}{pct.toFixed(2)}%
+                                                </>
+                                            ) : '--'}
+                                        </span>
+                                        <span style={{ fontSize: '0.9rem', color: color }}>
+                                            {mockLatestData ? `${isPositive ? '+' : ''}${change.toFixed(2)}` : ''}
+                                        </span>
+                                    </div>
+                                </div>
+                            );
+                        })()}
+
+                        {/* Right: Volume & Volume Ratio (Side by Side) */}
+                        <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'flex-start' }}>
                             {/* Volume */}
                             <div style={{ textAlign: 'right' }}>
-                                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginBottom: '0.2rem' }}>成交量</div>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', justifyContent: 'flex-end' }}>
-                                    <span style={{ fontSize: '1rem', color: '#fff', fontWeight: '500' }}>
-                                        {mockLatestData ? (mockLatestData.volume / 10000).toFixed(2) : '--'}万
-                                    </span>
-                                    <span style={{ fontSize: '0.9rem', color: '#10b981' }}>↑</span>
+                                <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '0.2rem' }}>
+                                    成交量(股)
+                                </div>
+                                <div style={{ fontSize: '1rem', fontWeight: '500' }}>
+                                    {mockLatestData ? (() => {
+                                        let vol = mockLatestData.volume || 0;
+                                        // Display raw volume from source (User Request)
+
+                                        if (vol > 100000000) return (vol / 100000000).toFixed(2) + '亿';
+                                        if (vol > 10000) return (vol / 10000).toFixed(2) + '万';
+                                        return vol.toLocaleString();
+                                    })() : '--'}
                                 </div>
                             </div>
-
-                            {/* Turnover */}
-                            <div style={{ textAlign: 'right' }}>
-                                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginBottom: '0.2rem' }}>成交额</div>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', justifyContent: 'flex-end' }}>
-                                    <span style={{ fontSize: '1rem', color: '#fff', fontWeight: '500' }}>
-                                        {mockLatestData ? (mockLatestData.close * mockLatestData.volume / 100000000).toFixed(2) : '--'}亿
-                                    </span>
-                                    <span style={{ fontSize: '0.9rem', color: '#ef4444' }}>↓</span>
-                                </div>
-                            </div>
-
                             {/* Volume Ratio vs 5-day Average */}
                             <div style={{ textAlign: 'right' }}>
                                 <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginBottom: '0.2rem' }}>量比</div>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', justifyContent: 'flex-end' }}>
                                     <span style={{ fontSize: '1rem', color: '#10b981', fontWeight: '500' }}>
+                                        {/* TODO: Real Vol Ratio calculation */}
                                         1.35
                                     </span>
-                                    <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>vs 5日均</span>
+                                    <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>vs 5日</span>
                                 </div>
                             </div>
                         </div>
@@ -251,146 +356,100 @@ const StockDetailView = ({ asset, onBack }) => {
                 {/* SECTION 2: Extended Information (Middle) */}
                 <div className="glass-panel" style={{ padding: '1rem', borderRadius: 'var(--radius-md)', background: '#1c1c20' }}>
                     <h3 style={{ marginTop: 0, marginBottom: '0.8rem', fontSize: '1rem', color: 'var(--text-secondary)', borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '0.5rem' }}>
-                        扩展信息 (演示数据)
+                        扩展信息
                     </h3>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem 0.5rem', marginBottom: '1.5rem' }}>
                         <div>
                             <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>股息率 (TTM)</div>
-                            <div style={{ fontSize: '1rem', color: '#fff' }}>3.45%</div>
+                            <div style={{ fontSize: '1rem', color: '#fff' }}>
+                                {mockLatestData && mockLatestData.dividend_yield != null ? `${Number(mockLatestData.dividend_yield).toFixed(2)}%` : '--'}
+                            </div>
                         </div>
                         <div>
                             <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>近一年回购股份占比</div>
-                            <div style={{ fontSize: '1rem', color: '#fff' }}>1.20%</div>
+                            <div style={{ fontSize: '1rem', color: '#fff' }}>--%</div>
                         </div>
                         <div>
                             <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>连续派息</div>
-                            <div style={{ fontSize: '1rem', color: '#fff' }}>6年</div>
+                            <div style={{ fontSize: '1rem', color: '#fff' }}>--年</div>
                         </div>
                         <div>
                             <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>连续回购</div>
-                            <div style={{ fontSize: '1rem', color: '#fff' }}>3年</div>
+                            <div style={{ fontSize: '1rem', color: '#fff' }}>--年</div>
                         </div>
                         <div>
-                            <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>每股收益</div>
-                            <div style={{ fontSize: '1rem', color: '#fff' }}>1.02</div>
+                            <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>每股收益 (EPS)</div>
+                            <div style={{ fontSize: '1rem', color: '#fff' }}>
+                                {mockLatestData && mockLatestData.eps ? mockLatestData.eps : '--'}
+                            </div>
                         </div>
                     </div>
 
-                    {/* Stock Price & PE Ratio Trend Chart */}
+                    {/* INTERACTIVE CHART SECTION */}
                     <div style={{ paddingTop: '1rem', borderTop: '1px solid rgba(255,255,255,0.05)', marginBottom: '1.5rem' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '0.5rem' }}>
-                            <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>近一年股价与市盈率走势</div>
-                            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-                                <span style={{ color: '#ef4444' }}>━</span> 股价
-                                <span style={{ marginLeft: '0.5rem', color: 'var(--accent-primary)' }}>━</span> 市盈率
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '8px' }}>
+                            <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>核心指标分析</div>
+
+                            {/* Chart Type Tabs */}
+                            <div style={{ display: 'flex', gap: '0.5rem', background: 'rgba(255,255,255,0.05)', padding: '4px', borderRadius: '8px' }}>
+                                {[
+                                    { id: 'C1', label: '走势' },
+                                    { id: 'C2', label: '估值' },
+                                    { id: 'C3', label: '股息' },
+                                    { id: 'C4', label: '盈利' },
+                                    { id: 'C6', label: '量价' }
+                                ].map(tab => (
+                                    <button
+                                        key={tab.id}
+                                        onClick={() => setChartType(tab.id)}
+                                        style={{
+                                            padding: '4px 12px',
+                                            fontSize: '0.8rem',
+                                            border: 'none',
+                                            borderRadius: '6px',
+                                            background: chartType === tab.id ? 'var(--accent-primary)' : 'transparent',
+                                            color: chartType === tab.id ? '#fff' : 'var(--text-secondary)',
+                                            cursor: 'pointer',
+                                            transition: 'all 0.2s'
+                                        }}
+                                    >
+                                        {tab.label}
+                                    </button>
+                                ))}
                             </div>
                         </div>
 
-                        {/* Dual-axis SVG Line Chart */}
-                        <div style={{ height: '100px', width: '100%', position: 'relative' }}>
-                            {/* Mock Data: 12 months */}
-                            <svg width="100%" height="100%" viewBox="0 0 300 100" preserveAspectRatio="none">
-                                {/* Gradient Defs */}
-                                <defs>
-                                    <linearGradient id="priceGradient" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stopColor="#ef4444" stopOpacity="0.2" />
-                                        <stop offset="100%" stopColor="#ef4444" stopOpacity="0" />
-                                    </linearGradient>
-                                    <linearGradient id="peGradient" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stopColor="var(--accent-primary)" stopOpacity="0.15" />
-                                        <stop offset="100%" stopColor="var(--accent-primary)" stopOpacity="0" />
-                                    </linearGradient>
-                                </defs>
-
-                                {/* Stock Price Line (Red) - Values: 1500-1800 mapped to Y:20-60 */}
-                                <path
-                                    d="M0,50 L27,45 L54,40 L81,35 L109,42 L136,48 L163,45 L190,40 L218,38 L245,35 L272,32 L300,30"
-                                    fill="none"
-                                    stroke="#ef4444"
-                                    strokeWidth="2.5"
-                                />
-                                <path
-                                    d="M0,50 L27,45 L54,40 L81,35 L109,42 L136,48 L163,45 L190,40 L218,38 L245,35 L272,32 L300,30 V100 H0 Z"
-                                    fill="url(#priceGradient)"
-                                    stroke="none"
-                                />
-
-                                {/* PE Ratio Line (Blue) - Values: 8-12 mapped to Y:50-80 */}
-                                <path
-                                    d="M0,70 L27,72 L54,75 L81,78 L109,82 L136,85 L163,83 L190,80 L218,81 L245,82 L272,83 L300,82"
-                                    fill="none"
-                                    stroke="var(--accent-primary)"
-                                    strokeWidth="2"
-                                />
-                                <path
-                                    d="M0,70 L27,72 L54,75 L81,78 L109,82 L136,85 L163,83 L190,80 L218,81 L245,82 L272,83 L300,82 V100 H0 Z"
-                                    fill="url(#peGradient)"
-                                    stroke="none"
-                                />
-                            </svg>
-                            {/* Labels */}
-                            <div style={{ position: 'absolute', top: '5px', left: '0', fontSize: '0.7rem', color: '#ef4444' }}>股价: ¥1800</div>
-                            <div style={{ position: 'absolute', top: '5px', right: '0', fontSize: '0.7rem', color: 'var(--accent-primary)' }}>PE: 8.5x</div>
-                            <div style={{ position: 'absolute', bottom: '5px', left: '0', fontSize: '0.65rem', color: 'var(--text-muted)' }}>12个月前</div>
-                            <div style={{ position: 'absolute', bottom: '5px', right: '0', fontSize: '0.65rem', color: 'var(--text-muted)' }}>当前</div>
-                        </div>
-                    </div>
-
-                    {/* Dividend Yield vs Stock Price Chart (3 Years) */}
-                    <div style={{ paddingTop: '1rem', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '0.5rem' }}>
-                            <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>近三年派息率与股价对比</div>
-                            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-                                <span style={{ color: '#ef4444' }}>━</span> 股价
-                                <span style={{ marginLeft: '0.5rem', color: '#10b981' }}>━</span> 派息率
+                        {/* Sub-Tabs for Valuation (C2) */}
+                        {chartType === 'C2' && (
+                            <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem', justifyContent: 'flex-end' }}>
+                                {['PE', 'PB', 'PS'].map(type => (
+                                    <span
+                                        key={type}
+                                        onClick={() => setChartSubType(type)}
+                                        style={{
+                                            fontSize: '0.75rem',
+                                            padding: '2px 8px',
+                                            cursor: 'pointer',
+                                            borderRadius: '4px',
+                                            background: chartSubType === type ? 'rgba(255,255,255,0.2)' : 'transparent',
+                                            color: chartSubType === type ? '#fff' : 'var(--text-muted)'
+                                        }}
+                                    >
+                                        {type}
+                                    </span>
+                                ))}
                             </div>
-                        </div>
+                        )}
 
-                        {/* Dual Axis Chart */}
-                        <div style={{ height: '100px', width: '100%', position: 'relative' }}>
-                            <svg width="100%" height="100%" viewBox="0 0 300 100" preserveAspectRatio="none">
-                                <defs>
-                                    <linearGradient id="priceGradient" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stopColor="#ef4444" stopOpacity="0.2" />
-                                        <stop offset="100%" stopColor="#ef4444" stopOpacity="0" />
-                                    </linearGradient>
-                                </defs>
+                        {/* CHART COMPONENT */}
+                        <ChartSeriesViewer
+                            data={history}
+                            seriesType={chartType}
+                            subType={chartSubType}
+                        />
 
-                                {/* Stock Price Line (Red) - Mock trend: rising then falling */}
-                                {/* Simulating: 1500 -> 1650 -> 1800 -> 1900 -> 1850 -> 1750 -> 1725 */}
-                                <path
-                                    d="M0,60 L50,45 L100,30 L150,20 L200,25 L250,40 L300,42"
-                                    fill="none"
-                                    stroke="#ef4444"
-                                    strokeWidth="2"
-                                />
-                                <path
-                                    d="M0,60 L50,45 L100,30 L150,20 L200,25 L250,40 L300,42 V100 H0 Z"
-                                    fill="url(#priceGradient)"
-                                    stroke="none"
-                                />
-
-                                {/* Dividend Yield Line (Green) - Mock trend: stable to rising */}
-                                {/* Simulating: 2.8% -> 2.9% -> 3.0% -> 3.2% -> 3.4% -> 3.5% -> 3.45% */}
-                                <path
-                                    d="M0,72 L50,70 L100,68 L150,64 L200,60 L250,58 L300,59"
-                                    fill="none"
-                                    stroke="#10b981"
-                                    strokeWidth="2.5"
-                                    strokeDasharray="4,2"
-                                />
-                            </svg>
-
-                            {/* Y-axis Labels */}
-                            <div style={{ position: 'absolute', top: '5px', left: '2px', fontSize: '0.65rem', color: '#ef4444' }}>1900</div>
-                            <div style={{ position: 'absolute', bottom: '5px', left: '2px', fontSize: '0.65rem', color: '#ef4444' }}>1500</div>
-                            <div style={{ position: 'absolute', top: '5px', right: '2px', fontSize: '0.65rem', color: '#10b981' }}>3.5%</div>
-                            <div style={{ position: 'absolute', bottom: '5px', right: '2px', fontSize: '0.65rem', color: '#10b981' }}>2.8%</div>
-
-                            {/* X-axis Labels */}
-                            <div style={{ position: 'absolute', bottom: '-18px', left: '0', fontSize: '0.65rem', color: 'var(--text-muted)' }}>2022</div>
-                            <div style={{ position: 'absolute', bottom: '-18px', left: '50%', transform: 'translateX(-50%)', fontSize: '0.65rem', color: 'var(--text-muted)' }}>2023</div>
-                            <div style={{ position: 'absolute', bottom: '-18px', right: '0', fontSize: '0.65rem', color: 'var(--text-muted)' }}>2024</div>
+                        <div style={{ marginTop: '0.5rem', fontSize: '0.7rem', color: 'var(--text-muted)', textAlign: 'right' }}>
+                            数据来源: AkShare & 实时行情
                         </div>
                     </div>
                 </div>
@@ -449,6 +508,9 @@ const StockDetailView = ({ asset, onBack }) => {
                             </div>
 
                             {/* 价值分析 */}
+
+
+                            {/* 价值分析 */}
                             <CollapsibleSection title="价值分析" icon="💎" defaultExpanded={true}>
                                 <div style={{ marginBottom: '1rem' }}>
                                     <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>
@@ -486,6 +548,8 @@ const StockDetailView = ({ asset, onBack }) => {
                                     </div>
                                 </div>
                             </CollapsibleSection>
+
+
 
                             {/* 机会洞察 */}
                             <CollapsibleSection title="机会洞察" icon="⚡" defaultExpanded={true}>

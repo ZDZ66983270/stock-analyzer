@@ -259,7 +259,7 @@ const AnalysisResult = ({ data: initialData, onReset }) => {
                             <tbody>
                                 {[...data.realHistory].reverse().map((row, idx) => (
                                     <tr key={idx} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                                        <td style={{ padding: '8px', textAlign: 'left', color: 'var(--text-primary)' }}>{row.date.split(' ')[0]}</td>
+                                        <td style={{ padding: '8px', textAlign: 'left', color: 'var(--text-primary)' }}>{row.timestamp.split(' ')[0]}</td>
                                         <td style={{ padding: '8px' }}>{row.open}</td>
                                         <td style={{ padding: '8px', fontWeight: 'bold' }}>{row.close}</td>
                                         <td style={{ padding: '8px' }}>{row.high}</td>

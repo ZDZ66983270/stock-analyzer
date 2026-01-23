@@ -6,11 +6,45 @@ const SettingsView = () => {
     const [dividend, setDividend] = useState('2.5');
     const [colorConvention, setColorConventionState] = useState('chinese');
 
+    // System Logs State
+    const [logs, setLogs] = useState([]);
+    const [logLevel, setLogLevel] = useState('');
+    const [logSearch, setLogSearch] = useState('');
+    const [isLoadingLogs, setIsLoadingLogs] = useState(false);
+
     // Load color convention from localStorage on mount
     useEffect(() => {
         const savedConvention = getColorConvention();
         setColorConventionState(savedConvention);
     }, []);
+
+    // Load logs when logs tab is active
+    useEffect(() => {
+        if (activeTab === 'logs') {
+            loadLogs();
+        }
+    }, [activeTab, logLevel, logSearch]);
+
+    const loadLogs = async () => {
+        setIsLoadingLogs(true);
+        try {
+            const params = new URLSearchParams({
+                limit: '100',
+                ...(logLevel && { level: logLevel }),
+                ...(logSearch && { search: logSearch })
+            });
+
+            const res = await fetch(`/api/admin/logs?${params}`);
+            const data = await res.json();
+            if (data.status === 'success') {
+                setLogs(data.logs);
+            }
+        } catch (err) {
+            console.error('Failed to load logs:', err);
+        } finally {
+            setIsLoadingLogs(false);
+        }
+    };
 
     const handleColorConventionChange = (convention) => {
         setColorConventionState(convention);
@@ -37,7 +71,7 @@ const SettingsView = () => {
     const handleSync = async () => {
         setIsSyncing(true);
         try {
-            const res = await fetch('http://localhost:8000/api/sync-market', {
+            const res = await fetch('/api/sync-market', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ markets: ['CN', 'HK', 'US'] })
@@ -55,13 +89,27 @@ const SettingsView = () => {
         }
     };
 
+    const getLevelColor = (level) => {
+        switch (level) {
+            case 'ERROR': return '#ef4444';
+            case 'WARNING': return '#f59e0b';
+            case 'INFO': return '#3b82f6';
+            case 'DEBUG': return '#8b5cf6';
+            default: return '#fff';
+        }
+    };
+
     return (
         <div style={{ paddingLeft: '0', paddingRight: '0', paddingTop: 'max(1rem, env(safe-area-inset-top))', paddingBottom: '6rem' }}>
             <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1.5rem' }}>设置</h2>
 
             {/* Tabs */}
             <div style={{ display: 'flex', gap: '2rem', marginBottom: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-                {[{ id: 'params', label: '个性化参数' }, { id: 'macro', label: '宏观数据' }].map(tab => (
+                {[
+                    { id: 'params', label: '个性化参数' },
+                    { id: 'macro', label: '宏观数据' },
+                    { id: 'logs', label: '系统日志' }
+                ].map(tab => (
                     <div
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id)}
@@ -266,6 +314,119 @@ const SettingsView = () => {
                         >
                             {isSyncing ? '正在同步...' : '🔄 手动同步行情'}
                         </button>
+                    </div>
+                </div>
+            )}
+
+            {/* --- Tab 3: System Logs --- */}
+            {activeTab === 'logs' && (
+                <div style={{ animation: 'fadeIn 0.3s ease-out' }}>
+                    {/* Filters */}
+                    <div style={{ marginBottom: '1rem', display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+                        <select
+                            value={logLevel}
+                            onChange={(e) => setLogLevel(e.target.value)}
+                            style={{
+                                padding: '0.6rem',
+                                background: 'rgba(255,255,255,0.05)',
+                                border: '1px solid rgba(255,255,255,0.1)',
+                                borderRadius: 'var(--radius-sm)',
+                                color: '#fff',
+                                fontSize: '0.85rem',
+                                cursor: 'pointer'
+                            }}
+                        >
+                            <option value="">所有级别</option>
+                            <option value="DEBUG">DEBUG</option>
+                            <option value="INFO">INFO</option>
+                            <option value="WARNING">WARNING</option>
+                            <option value="ERROR">ERROR</option>
+                        </select>
+
+                        <input
+                            type="text"
+                            value={logSearch}
+                            onChange={(e) => setLogSearch(e.target.value)}
+                            placeholder="搜索日志..."
+                            style={{
+                                flex: 1,
+                                minWidth: '200px',
+                                padding: '0.6rem',
+                                background: 'rgba(255,255,255,0.05)',
+                                border: '1px solid rgba(255,255,255,0.1)',
+                                borderRadius: 'var(--radius-sm)',
+                                color: '#fff',
+                                fontSize: '0.85rem'
+                            }}
+                        />
+
+                        <button
+                            onClick={loadLogs}
+                            disabled={isLoadingLogs}
+                            style={{
+                                padding: '0.6rem 1.2rem',
+                                background: 'rgba(59, 130, 246, 0.1)',
+                                border: '1px solid rgba(59, 130, 246, 0.2)',
+                                borderRadius: 'var(--radius-sm)',
+                                color: '#60a5fa',
+                                cursor: isLoadingLogs ? 'not-allowed' : 'pointer',
+                                fontSize: '0.85rem'
+                            }}
+                        >
+                            {isLoadingLogs ? '⏳' : '🔄'}
+                        </button>
+                    </div>
+
+                    {/* Logs Display */}
+                    <div style={{
+                        background: 'rgba(0,0,0,0.3)',
+                        border: '1px solid rgba(255,255,255,0.1)',
+                        borderRadius: 'var(--radius-sm)',
+                        padding: '1rem',
+                        maxHeight: '500px',
+                        overflowY: 'auto',
+                        fontFamily: 'SF Mono, Monaco, monospace'
+                    }}>
+                        {logs.length === 0 ? (
+                            <div style={{ textAlign: 'center', color: 'var(--text-muted)', padding: '2rem' }}>
+                                {isLoadingLogs ? '加载中...' : '暂无日志'}
+                            </div>
+                        ) : (
+                            logs.map((log, index) => (
+                                <div
+                                    key={index}
+                                    style={{
+                                        padding: '0.5rem',
+                                        marginBottom: '0.5rem',
+                                        borderLeft: `3px solid ${getLevelColor(log.level)}`,
+                                        background: 'rgba(255,255,255,0.02)',
+                                        borderRadius: '4px',
+                                        fontSize: '0.75rem'
+                                    }}
+                                >
+                                    <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '0.25rem' }}>
+                                        <span style={{ color: 'var(--text-muted)' }}>{log.timestamp}</span>
+                                        <span
+                                            style={{
+                                                color: getLevelColor(log.level),
+                                                fontWeight: 'bold',
+                                                minWidth: '60px'
+                                            }}
+                                        >
+                                            {log.level}
+                                        </span>
+                                        <span style={{ color: 'var(--text-secondary)' }}>[{log.module}]</span>
+                                    </div>
+                                    <div style={{ color: '#fff', marginLeft: '1rem', wordBreak: 'break-word' }}>
+                                        {log.message}
+                                    </div>
+                                </div>
+                            ))
+                        )}
+                    </div>
+
+                    <div style={{ marginTop: '1rem', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                        显示最近 {logs.length} 条日志
                     </div>
                 </div>
             )}

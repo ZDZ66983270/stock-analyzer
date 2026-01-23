@@ -15,7 +15,7 @@ const ConfigModal = ({ isOpen, onClose }) => {
 
     const fetchWatchlist = async () => {
         try {
-            const res = await fetch('http://localhost:8000/api/watchlist');
+            const res = await fetch('/api/watchlist');
             const data = await res.json();
             if (Array.isArray(data)) {
                 setWatchlist(data);
@@ -28,7 +28,7 @@ const ConfigModal = ({ isOpen, onClose }) => {
     const handleDeleteWatchlist = async (symbol) => {
         if (!confirm(`确定要移除 ${symbol} 吗?`)) return;
         try {
-            const res = await fetch(`http://localhost:8000/api/watchlist/${symbol}`, { method: 'DELETE' });
+            const res = await fetch(`/api/watchlist/${symbol}`, { method: 'DELETE' });
             if (res.ok) {
                 setWatchlist(prev => prev.filter(item => item.symbol !== symbol));
             } else {
@@ -58,7 +58,7 @@ const ConfigModal = ({ isOpen, onClose }) => {
     const handleSync = async () => {
         setIsSyncing(true);
         try {
-            const res = await fetch('http://localhost:8000/api/sync-market', {
+            const res = await fetch('/api/sync-market', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ markets: ['CN', 'HK', 'US'] })
