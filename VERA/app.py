@@ -574,7 +574,25 @@ def get_cached_symbols():
 def get_asset_evaluation_history(asset_id: str):
     """获取指定资产的所有历史评估记录"""
     try:
+        from utils.canonical_resolver import resolve_canonical_symbol
+        
         conn = get_connection()
+        
+        # Convert simplified code to Canonical ID if needed
+        # If asset_id doesn't contain ':', it's likely a simplified code
+        if ':' not in asset_id:
+            try:
+                canonical_id = resolve_canonical_symbol(
+                    conn, 
+                    asset_id,
+                    strict_unknown=False  # Don't raise error if not found
+                )
+            except Exception:
+                # If resolution fails, use the original asset_id
+                canonical_id = asset_id
+        else:
+            canonical_id = asset_id
+        
         query = """
         SELECT 
             s.snapshot_id,
@@ -589,7 +607,7 @@ def get_asset_evaluation_history(asset_id: str):
         WHERE s.asset_id = ?
         ORDER BY s.created_at DESC
         """
-        df = pd.read_sql_query(query, conn, params=(asset_id,))
+        df = pd.read_sql_query(query, conn, params=(canonical_id,))
         conn.close()
         return df
     except Exception as e:
@@ -1583,16 +1601,15 @@ def render_deep_dive(data: DashboardData):
 def render_valuation(data: DashboardData, chart_start_date=None, chart_end_date=None):
     section_title("3. 价值评估 (Valuation)")
     v = data.value or {}
-    c1, c2, c3 = st.columns(3)
     
-    # Column 1: Valuation Status (主结论)
-    with c1:
-        # 1. Get Rule Engine Outputs
+    # --- 1. Header Row: Status & Quality ---
+    hc1, hc2, hc3 = st.columns(3)
+    
+    with hc1:
+        # Valuation Status
         status_key = v.get("valuation_status_key")
         status_label = v.get("valuation_status_label_zh")
         val_color = v.get("valuation_color") or "#ffffff"
-
-        # 2. Legacy Fallback
         val_status_map = {
             "Undervalued": "低估 (Undervalued)",
             "Fair": "合理 (Fair)",
@@ -1602,242 +1619,172 @@ def render_valuation(data: DashboardData, chart_start_date=None, chart_end_date=
         }
         raw_status = v.get("valuation_status", "Unknown")
         status_cn = status_label if status_label else val_status_map.get(raw_status, raw_status)
-
-        # 3. Handle Special States (Overrides)
+        
         help_text = "评估规则: 比较当前PE与过去10年历史分布。分位点<20%为低估，>80%为高估，中间区域视为合理。"
         if status_key == "NO_PE":
              help_text = "当前缺少有效 PE 数据，无法评估估值状态。"
-             val_color = "#9ca3af" # Neutral Gray
+             val_color = "#9ca3af"
         elif status_key == "INSUFFICIENT_HISTORY":
              help_text = "仅有少量历史估值数据，样本不足，无法准确判断高低估状态。"
-             val_color = "#9ca3af" # Neutral Gray
+             val_color = "#9ca3af"
 
-        # 4. Render with Color
         colored_status = f'<span style="color: {val_color}">{status_cn}</span>'
         render_inline_metric("估值状态 (Valuation Status)", colored_status, help_text=help_text)
+
+    with hc2:
+        # Quality Detection
+        is_trap = v.get("is_value_trap", False)
+        quality_help = "基于财务健康度、现金流质量及业务稳定性等核心指标，自动识别是否存在盈利虚高或价值陷阱。"
+        if is_trap:
+            trap_reason = v.get("value_trap_reason", "已触发价值陷阱阈值")
+            render_inline_metric("质量检测 (Quality Detection)", "⚠️ 风险", details="疑似陷阱", help_text=quality_help + f" <br>判定: {trap_reason}")
+        else:
+            render_inline_metric("质量检测 (Quality Detection)", "无异常", details="✓ 通过", help_text=quality_help)
+
+    with hc3:
+        # Placeholder or extra context if needed in future
+        st.write("") 
+
+    st.markdown("---")
+
+    # --- 2. Main Metrics Row: PE, PB, PS ---
+    mc1, mc2, mc3 = st.columns(3)
     
-    # Column 2: 估值锚 (Metrics)
-    with c2:
-        raw_pe = v.get('current_pe')
-        raw_pe_static = v.get('current_pe_static')
-        raw_pb = v.get('current_pb')
-        pe_pct = v.get('pe_percentile') # int or None
-        
-        # Format PE (Dual Display with Styling)
+    anchor = v.get('anchor', 'PE')
+    raw_pe = v.get('current_pe')
+    raw_pe_static = v.get('current_pe_static')
+    raw_pb = v.get('current_pb')
+    raw_ps = v.get('current_ps') or v.get('ps_ttm')
+    if raw_ps is None and anchor == 'PS':
+        raw_ps = v.get('current_val')
+
+    # Column 1: PE & Chart
+    with mc1:
         pe_display = "-"
         if raw_pe is not None:
              pe_display = f"{float(raw_pe):.1f}"
              if raw_pe_static is not None:
-                  # Hide Static if identical to TTM (avoid "5.2 (5.2)")
                   try:
-                      val_ttm = float(raw_pe)
-                      val_static = float(raw_pe_static)
-                      if abs(val_ttm - val_static) > 0.05:
-                          pe_display += f' <span style="color: #6b7280; font-size: 0.85em; font-weight: 400;">({val_static:.1f})</span>'
-                  except Exception:
-                      pass
+                      val_ttm_rnd = round(float(raw_pe), 1)
+                      val_static_rnd = round(float(raw_pe_static), 1)
+                      if val_ttm_rnd != val_static_rnd:
+                          pe_display += f' <span style="color: #6b7280; font-size: 0.85em; font-weight: 400;">({val_static_rnd:.1f})</span>'
+                  except Exception: pass
         elif raw_pe_static is not None:
              pe_display = f"{float(raw_pe_static):.1f} (Static)"
-             
-        # Format PB
-        pb_display = "-"
-        if raw_pb is not None:
-             pb_display = f"{float(raw_pb):.2f}"
-             
-        # Combined Details (Hide percentile if None/NA)
-        details_parts = []
-        hist_pct_help = ""
-        if pe_pct is not None:
-             details_parts.append(f"分位: {pe_pct}%")
-             hist_pct_help = f", 历史分位: {pe_pct}%"
-        
-        if pb_display != "-":
-             details_parts.append(f"PB: {pb_display}")
-             
-        details_txt = " | ".join(details_parts) if details_parts else ""
-        
-        render_inline_metric("估值锚 (PE TTM / PE)", pe_display, details=details_txt, help_text="PE TTM: 动态市盈率 (主视图)。括号内为静态市盈率。分位: 基于 TTM 数据计算的历史位置。")
 
-        # New: Explicit PE Calculation Display
+        pe_label = "市盈率 (PE TTM/PE)"
+        if anchor == 'PE': pe_label += " ⚓"
+        pe_help = "企业估值核心指标，代表以当前盈利能力回收成本所需天数。TTM反映最近12个月真实盈利，静态指标基于最新年报。"
+        render_inline_metric(pe_label, pe_display, help_text=pe_help)
+        
+        # Calculation Calculation
         raw_eps = v.get('eps_ttm')
         if raw_pe is not None and raw_eps is not None and raw_eps != 0:
-             st.markdown("---")
-             st.caption("PE 计算公式 (Calculation)")
-             st.code(f"{data.current_price:.2f} (P) / {raw_eps:.2f} (EPS) = {pe_display}")
+             st.caption(f"计算: {data.current_price:.2f} / {raw_eps:.2f} = {float(raw_pe):.1f}")
              
-        # New: Valuation Path Display
+        # Path Analysis
         if data.valuation_path and data.valuation_path.get("path_type") != "Normal":
-            path_type = data.valuation_path.get("path_type")
-            path_map = {
-                "Valuation Kill": "杀估值 (Valuation Kill)",
-                "Earnings Kill": "杀业绩 (Earnings Kill)", 
-                "Mixed": "混合驱动 (Mixed)"
-            }
-            pt_cn = path_map.get(path_type, path_type)
-            dd_pct = data.valuation_path.get("drawdown_pct", 0)
-            st.caption(f"📉 路径分析: {pt_cn}")
-            st.caption(f"距前高回撤 {dd_pct*100:.1f}%")
+             pt = data.valuation_path.get("path_type")
+             dd = data.valuation_path.get("drawdown_pct", 0)
+             st.caption(f"📉 {pt} (回撤 {dd*100:.1f}%)")
 
-        # --- 股价 vs PE 历史走势 ---
-        with st.expander("📈 点击查看 股价 vs PE 历史走势"):
+        # Historical Chart Expander
+        with st.expander("📈 股价 vs PE 走势"):
             try:
                 from analysis.valuation import get_valuation_history
-                # Use passed chart dates if available, otherwise default to 10 years
-                hist_df = get_valuation_history(
-                    data.asset_id, 
-                    years=10, 
-                    start_date=chart_start_date, 
-                    end_date=chart_end_date
-                )
-                
-                # Filter data based on snapshot date (for backtesting/historical view)
+                hist_df = get_valuation_history(data.asset_id, years=10, start_date=chart_start_date, end_date=chart_end_date)
                 if data.report_date:
                     try:
                         cutoff_date = pd.to_datetime(data.report_date)
-                        # Ensure trade_date is datetime
                         if 'trade_date' in hist_df.columns:
                             hist_df['trade_date'] = pd.to_datetime(hist_df['trade_date'])
                             hist_df = hist_df[hist_df['trade_date'] <= cutoff_date]
-                    except Exception:
-                        pass
+                    except: pass
 
                 if not hist_df.empty and 'price' in hist_df.columns and 'pe' in hist_df.columns:
-                    # 使用 Altair 绘制双轴图
                     import altair as alt
-                    
-                    # Pre-process: Clip PE to reasonable range for visualization
-                    # Keep raw PE for tooltip
                     plot_df = hist_df.copy()
                     plot_df['raw_pe'] = plot_df['pe']
                     plot_df['pe'] = plot_df['pe'].clip(lower=-50, upper=200)
                     
-                    base = alt.Chart(plot_df).encode(
-                        x=alt.X('trade_date:T', axis=alt.Axis(title='日期', format='%Y-%m'))
-                    )
-
-                    # Interaction: Nearest point selection
-                    # This allows the user to hover anywhere on the x-axis to see the data
-                    hover = alt.selection_point(
-                        fields=['trade_date'],
-                        nearest=True,
-                        on='mouseover',
-                        empty=False,
-                        clear='mouseout'
-                    )
-
-                    # 1. PE Line (Base, dashed orange)
-                    line_pe = base.mark_line(color='#E67E22', strokeDash=[5, 5], opacity=0.5).encode(
-                        y=alt.Y('pe:Q', axis=alt.Axis(title='市盈率 (PE) [Clipped -50~200]', titleColor='#E67E22'))
-                    )
-
-                    # 2. Price Line (Base Grey)
-                    line_price_base = base.mark_line(color='#BDC3C7', size=1.5).encode(
-                        y=alt.Y('price:Q', axis=alt.Axis(title='股价 (Price)', titleColor='#2E86C1'))
-                    )
-                    
-                    # 3. Colored Segments (Overheated vs Healthy)
-                    domain = ['Healthy', 'Overheated', 'Neutral']
-                    range_ = ['#2ECC71', '#E74C3C', '#BDC3C7']
-                    
-                    line_price_colored = base.mark_circle(size=30, opacity=0.8).encode(
-                        y='price:Q',
-                        color=alt.Color('driver_phase:N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(title="驱动力阶段 (Phase)")),
-                        size=alt.condition(hover, alt.value(60), alt.value(30)) # Enlarge on hover
-                    ).transform_filter(
-                        alt.datum.driver_phase != 'Neutral'
-                    )
-                    
-                    # 4. Invisible Selectors (Capture hover events for ALL points)
-                    selectors = base.mark_point().encode(
-                        x='trade_date:T',
-                        opacity=alt.value(0),
-                        tooltip=[
-                            alt.Tooltip('trade_date', title='日期', format='%Y-%m-%d'),
-                            alt.Tooltip('price', title='股价', format='.2f'),
-                            alt.Tooltip('raw_pe', title='市盈率 (Raw)', format='.2f'),
-                            alt.Tooltip('driver_phase', title='阶段')
-                        ]
-                    ).add_params(
-                        hover
-                    )
-                    
-                    # 5. Median Lines
+                    # Pre-calculate medians
                     pe_median = float(plot_df['pe'].median())
                     price_median = float(plot_df['price'].median())
-                    
-                    # Fix: Do not use 'base' here because it has 'x' encoded.
-                    # explicit chart without x encoding makes mark_rule horizontal spanning the whole width.
-                    line_pe_median = alt.Chart(plot_df).mark_rule(color='#E67E22', strokeDash=[2, 2], opacity=0.6).encode(
-                        y=alt.datum(pe_median)
-                    )
-                    
-                    text_pe_median = alt.Chart(plot_df).mark_text(
-                        align='left', baseline='bottom', dx=5, color='#E67E22', opacity=0.8
-                    ).encode(
-                        y=alt.datum(pe_median),
-                        x=alt.value(0), # Position at far left
-                        text=alt.value(f"Med: {pe_median:.1f}")
-                    )
-                    
-                    # Calculate Percentile for context
-                    curr_price = plot_df['price'].iloc[-1]
-                    price_rank = (plot_df['price'] < curr_price).sum()
-                    price_pct = (price_rank / len(plot_df)) * 100
-                    
-                    line_price_median = alt.Chart(plot_df).mark_rule(color='#BDC3C7', strokeDash=[2, 2], opacity=0.6).encode(
-                        y=alt.datum(price_median)
-                    )
+                    plot_df['pe_median'] = pe_median
+                    plot_df['price_median'] = price_median
 
-                    text_price_median = alt.Chart(plot_df).mark_text(
-                        align='right', baseline='bottom', dx=-5, color='#BDC3C7', opacity=0.8
-                    ).encode(
-                        y=alt.datum(price_median),
-                        x=alt.datum(plot_df['trade_date'].max()), 
-                        # Show Median AND Current Percentile to explain the deviation
-                        text=alt.value(f"Med: {price_median:.1f} (Now: {price_pct:.0f}%)")
+                    # Translation Mapping
+                    phase_map = {
+                        "Healthy": "业绩驱动 (Healthy)", 
+                        "Overheated": "估值驱动 (Overheated)", 
+                        "Neutral": "其他 (Neutral)"
+                    }
+                    plot_df['driver_phase_cn'] = plot_df['driver_phase'].map(phase_map)
+                    domain = ["业绩驱动 (Healthy)", "估值驱动 (Overheated)", "其他 (Neutral)"]
+                    range_ = ['#2ECC71', '#E74C3C', '#BDC3C7']
+
+                    base = alt.Chart(plot_df).encode(x=alt.X('trade_date:T', axis=alt.Axis(title='日期', format='%Y-%m')))
+                    hover = alt.selection_point(fields=['trade_date'], nearest=True, on='mouseover', empty=False, clear='mouseout')
+                    
+                    # 1. PE Layer (Left Axis - Hidden Grid)
+                    pe_line = base.mark_line(color='#E67E22', strokeDash=[5, 5], opacity=0.5).encode(
+                        y=alt.Y('pe:Q', axis=alt.Axis(title='PE', titleColor='#E67E22', grid=False))
                     )
-
-                    # 6. Rule (Vertical line at selected date)
-                    rule_hover = base.mark_rule(color='#AAB7B8', strokeWidth=1).encode(
-                        x='trade_date:T',
-                        opacity=alt.condition(hover, alt.value(1), alt.value(0))
+                    pe_median_rule = alt.Chart(plot_df.head(1)).mark_rule(color='#E67E22', strokeDash=[2, 2], opacity=0.8).encode(
+                        y=alt.Y('pe_median:Q')
                     )
+                    pe_layer = alt.layer(pe_line, pe_median_rule)
 
-                    # Layering strategy for Dual Axis
-                    # Group PE layers together and Price layers together so they share scales respectively
-                    pe_layer = alt.layer(line_pe, line_pe_median, text_pe_median)
-                    price_layer = alt.layer(line_price_base, line_price_colored, line_price_median, text_price_median)
-                    interaction_layer = alt.layer(selectors, rule_hover)
-
+                    # 2. Price Layer (Right Axis - Primary Grid)
+                    price_line = base.mark_line(color='#BDC3C7', size=1.5).encode(
+                        y=alt.Y('price:Q', axis=alt.Axis(title='股价 (Price)', titleColor='#2E86C1'))
+                    )
+                    price_median_rule = alt.Chart(plot_df.head(1)).mark_rule(color='#2E86C1', strokeDash=[2, 2], opacity=0.6).encode(
+                        y=alt.Y('price_median:Q')
+                    )
+                    # Phase Dots on Price Axis
+                    price_dots = base.mark_circle(size=30, opacity=0.8).encode(
+                        y='price:Q', 
+                        color=alt.Color('driver_phase_cn:N', 
+                                      scale=alt.Scale(domain=domain, range=range_),
+                                      legend=alt.Legend(orient='bottom', title='行情驱动分类'))
+                    ).transform_filter(alt.datum.driver_phase_cn != '其他 (Neutral)')
+                    
+                    price_layer = alt.layer(price_line, price_median_rule, price_dots)
+                    
+                    # 3. Combine with Selectors
+                    selectors = base.mark_point().encode(
+                        x='trade_date:T', 
+                        opacity=alt.value(0), 
+                        tooltip=['trade_date:T', 'price:Q', 'raw_pe:Q']
+                    ).add_params(hover)
+                    
                     chart = alt.layer(
                         pe_layer, 
                         price_layer, 
-                        interaction_layer
-                    ).resolve_scale(
-                        y='independent'
-                    ).properties(
-                        height=350
-                    ).configure_legend(
-                        orient='bottom'
-                    )
+                        selectors
+                    ).resolve_scale(y='independent').properties(height=280)
                     
                     st.altair_chart(chart, use_container_width=True)
-                    st.caption("🟢 绿色点 (Healthy): 业绩兑现期 (EPS驱动) | 🔴 红色点 (Overheated): 拔估值行情 (PE扩张驱动)")
-                else:
-                    st.caption("暂无足够的历史估值数据")
-            except Exception as e:
-                st.error(f"图表加载失败: {str(e)}")
-    
-    # Column 3: Value Trap / Quality 提示
-    with c3:
-        is_trap = v.get("is_value_trap", False)
-        if is_trap:
-            trap_reason = v.get("value_trap_reason", "已出发价值陷阱阈值")
-            # Render as ALERT card
-            render_inline_metric("价值警示 (Value Flags)", "⚠️ 风险", details="疑似价值陷阱", help_text=f"价值陷阱判定: 检测到 {trap_reason}，表明该资产虽然便宜但存在基本面恶化风险。")
-        else:
-            # Render as PASS card
-            render_inline_metric("质量预警 (Quality Flags)", "无异常", details="✓ 基础检测通过", help_text="质量扫描: 自动检测财务(Financial)、治理(Governance)、业务(Business)维度的潜在风险。'无异常'表示关键指标均通过检测。")
+                else: st.caption("数据不足")
+            except Exception as e: st.error(f"图表异常: {e}")
+
+    # Column 2: PB
+    with mc2:
+        pb_label = "市净率 (PB Ratio)"
+        if anchor == 'PB': pb_label += " ⚓"
+        pb_display = f"{float(raw_pb):.2f}" if raw_pb is not None else "-"
+        pb_help = "股价与每股净资产的比率。评估资产安全边际的重要指标，常用于金融、地产或资产密集型行业。"
+        render_inline_metric(pb_label, pb_display, help_text=pb_help)
+
+    # Column 3: PS
+    with mc3:
+        ps_label = "市销率 (PS Ratio)"
+        if anchor == 'PS': ps_label += " ⚓"
+        ps_display = f"{float(raw_ps):.2f}" if raw_ps is not None else "-"
+        ps_help = "股价与每股营收的比率。适用于高增长、尚未盈利或利润大幅波动的企业，反映市场对收入规模的定价。"
+        render_inline_metric(ps_label, ps_display, help_text=ps_help)
 
 
 
@@ -2403,24 +2350,25 @@ def render_welcome():
     }}
     
     /* Red Button Style (Visual Link) */
-    .hero-btn {{
+    /* Red Button Style (Visual Link) */
+    .hero-btn, .hero-btn:visited, .hero-btn:active {{
         display: inline-flex;
         align-items: center;
         justify-content: center;
         background-color: #ff4b4b; /* Red */
-        color: #fefefe;
+        color: #ffffff !important;
         font-weight: 600;
         padding: 10px 24px;
         border-radius: 6px;
-        text-decoration: none;
-        transition: background-color 0.2s;
+        text-decoration: none !important;
+        transition: background-color 0.2s, color 0.2s;
         width: fit-content;
         font-size: 14px;
     }}
     .hero-btn:hover {{
         background-color: #ff3333;
-        color: #ffffff;
-        text-decoration: none;
+        color: #ffff00 !important; /* Yellow on hover */
+        text-decoration: none !important;
     }}
 
     /* Get Started Steps & CTA */
@@ -2946,8 +2894,12 @@ def reconstruct_dashboard_data_from_snapshot(details):
         conclusion = d_row.get('rationale', "无详细记录")
 
     current_price = 0.0
+    # Prioritize metrics, then fallback to snapshot table
     if 'current_price' in metrics:
         try: current_price = float(metrics['current_price'])
+        except: pass
+    elif 'current_price' in s and pd.notna(s['current_price']):
+        try: current_price = float(s['current_price'])
         except: pass
 
     data = DashboardData(
@@ -3060,11 +3012,26 @@ def render_history_dashboard(asset_id: str = None):
         render_snapshot_detail(st.session_state['view_snapshot_id'])
         return
     
+    # 检查URL参数是否指定了资产 (for persistency)
+    display_code = None  # 用于显示的简化代码
+    if not asset_id:
+        asset_id = st.query_params.get("code")
+        display_code = asset_id  # 保存原始代码用于显示
+    else:
+        display_code = asset_id
+    
 
     if asset_id:
-        st.markdown(f"# 📊 {asset_id} 评估历史")
-        st.markdown(f"### Historical Assessments for {asset_id}")
+        # 如果 display_code 是完整的 Canonical ID，简化它用于显示
+        if display_code and ':' in display_code:
+            display_code = display_code.split(':')[-1]
+        
+        st.markdown(f"# 📊 {display_code} 评估历史")
+        st.markdown(f"### Historical Assessments for {display_code}")
         if st.button("🌐 显示全部资产记录 (Show All Assets)"):
+            # 清除 URL 参数中的 code
+            if "code" in st.query_params:
+                st.query_params.pop("code")
             st.session_state.history_filter = None
             st.rerun()
         history_df = get_asset_evaluation_history(asset_id)
@@ -3085,6 +3052,7 @@ def render_history_dashboard(asset_id: str = None):
             return s
             
         status_map = {
+            "Deeply Undervalued": "🟩🟩 深度低估 (Deeply Undervalued)",
             "Undervalued": "🟩 低估 (Undervalued)",
             "Fairly Valued": "⬜ 合理估值 (Fairly Valued)",
             "Discount": "🟨 折价 (Discount)",
@@ -3315,13 +3283,27 @@ def main():
         if "analysis_sub_mode" not in st.session_state:
             st.session_state.analysis_sub_mode = "📈 资产评估"
         
+        def on_sub_mode_change():
+            """Callback to sync URL params when sub-mode changes"""
+            if st.session_state.analysis_sub_mode_radio == "📜 历史记录":
+                st.query_params["page"] = "history"
+                # If we have a code, keep it in URL so history shows that asset
+            else:
+                st.query_params["page"] = "analysis"
+                # Optional: Clear code if returning to main analysis, or keep it?
+                # User might want to analyze the same asset. keeping it seems fine.
+                
+            # Sync the persistent state variable immediately
+            st.session_state.analysis_sub_mode = st.session_state.analysis_sub_mode_radio
+
         # 显示子菜单
         analysis_sub_mode = st.sidebar.radio(
             "分析模式",
             ["📈 资产评估", "📜 历史记录"],
             index=0 if st.session_state.analysis_sub_mode == "📈 资产评估" else 1,
             key="analysis_sub_mode_radio",
-            label_visibility="collapsed"
+            label_visibility="collapsed",
+            on_change=on_sub_mode_change
         )
         st.sidebar.markdown("---")
         
@@ -3668,6 +3650,7 @@ def main():
     if run_btn:
         st.session_state.analysis_active = True
         st.session_state.symbol_input = symbol
+        st.query_params["code"] = symbol
 
     if not st.session_state.analysis_active:
         # 显示提示信息 (Only when not analyzing)
@@ -3695,6 +3678,8 @@ def main():
                 if st.button("⬅️ 返回列表"):
                     st.session_state.analysis_active = False
                     st.session_state.history_filter = data.asset.asset_id
+                    st.session_state.analysis_sub_mode = "📜 历史记录"
+                    st.query_params["code"] = data.asset.asset_id
                     st.rerun()
             with col_b2:
                 if st.button("💾 保存记录", type="primary"):

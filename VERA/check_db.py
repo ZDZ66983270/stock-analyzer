@@ -1,15 +1,20 @@
+#!/usr/bin/env python3
 import sqlite3
-import pandas as pd
 
-db_path = "vera.db"
-conn = sqlite3.connect(db_path)
-query = "SELECT valuation_status, COUNT(*) as count FROM analysis_snapshot GROUP BY valuation_status;"
-df = pd.read_sql_query(query, conn)
-print("Valuation Status Distribution:")
-print(df)
+conn = sqlite3.connect('/Users/zhangzy/My Docs/Privates/22-AI编程/VERA/stock_analysis.db')
+cursor = conn.cursor()
 
-query2 = "SELECT asset_id, valuation_status, created_at FROM analysis_snapshot ORDER BY created_at DESC LIMIT 10;"
-df2 = pd.read_sql_query(query2, conn)
-print("\nLatest 10 records:")
-print(df2.to_string())
+print("=== Checking analysis_snapshot table ===")
+try:
+    total = cursor.execute("SELECT COUNT(*) FROM analysis_snapshot").fetchone()[0]
+    print(f"Total snapshots: {total}")
+    
+    if total > 0:
+        print("\nSample asset_ids:")
+        samples = cursor.execute("SELECT DISTINCT asset_id FROM analysis_snapshot LIMIT 10").fetchall()
+        for row in samples:
+            print(f"  - {row[0]}")
+except Exception as e:
+    print(f"Error: {e}")
+
 conn.close()

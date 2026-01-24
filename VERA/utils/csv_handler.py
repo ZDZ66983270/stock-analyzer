@@ -275,7 +275,9 @@ def parse_and_import_financials_csv(uploaded_file, unit_scale=100_000_000, mode=
                 'date': ['as_of_date', 'date', 'report_date', '日期', '截止日期'],
                 'revenue': ['revenue', 'revenue_ttm', '营收', '营业收入'],
                 'net_income': ['net_income', 'net_profit', 'net_income_ttm', 'net_profit_ttm', '净利润'],
-                'currency': ['currency', '货币', '币种']
+                'currency': ['currency', '货币', '币种'],
+                'eps': ['eps', 'eps_ttm', '每股收益', '每股盈利'],
+                'div_amt': ['dividend_amount', 'div_amt', '分红金额', '现金分红']
             }
             
             # Simple column resolver
@@ -289,6 +291,8 @@ def parse_and_import_financials_csv(uploaded_file, unit_scale=100_000_000, mode=
             rev_col = find_col(mapping['revenue'])
             ni_col = find_col(mapping['net_income'])
             cur_col = find_col(mapping['currency'])
+            eps_col = find_col(mapping['eps'])
+            div_amt_col = find_col(mapping['div_amt'])
             
             if not sym_col or not date_col:
                 return False, f"CSV 缺少必需列 (需包含代码和日期)。已发现列: {list(df.columns)}"
@@ -322,8 +326,11 @@ def parse_and_import_financials_csv(uploaded_file, unit_scale=100_000_000, mode=
                     return None
             
             def get_raw(val):
-                if pd.isna(val) or val == '': return None
-                return val
+                if pd.isna(val) or val == '' or val == 'nan': return None
+                try:
+                    return float(val)
+                except:
+                    return None
 
             inserted = 0
             updated = 0
@@ -361,6 +368,8 @@ def parse_and_import_financials_csv(uploaded_file, unit_scale=100_000_000, mode=
                     
                     revenue = scale_it(row.get(rev_col)) if rev_col else None
                     net_profit = scale_it(row.get(ni_col)) if ni_col else None
+                    eps_val = get_raw(row.get(eps_col)) if eps_col else None
+                    div_amt_val = get_raw(row.get(div_amt_col)) if div_amt_col else None
                     currency = str(row.get(cur_col)).strip() if cur_col and not pd.isna(row.get(cur_col)) else 'CNY'
                     
                     # Optional Fundamental metrics (Using scale_it/get_raw with find_ext_val)
@@ -386,6 +395,8 @@ def parse_and_import_financials_csv(uploaded_file, unit_scale=100_000_000, mode=
                         "revenue_ttm": revenue,
                         "net_profit_ttm": net_profit,  # 原有标准
                         "net_income_ttm": net_profit,  # 新增兼容
+                        "eps_ttm": eps_val,
+                        "dividend_amount": div_amt_val,
                         "currency": currency,
                         "operating_cashflow_ttm": op_cf,
                         "free_cashflow_ttm": free_cf,
@@ -465,10 +476,11 @@ def parse_and_import_financials_csv(uploaded_file, unit_scale=100_000_000, mode=
                                 VALUES ({ff_placeholders})
                             """
                         else:
+                            # Corrected: financial_fundamentals ONLY has asset_id as PK
                             sql_ff = f"""
                                 INSERT INTO financial_fundamentals ({', '.join(ff_cols)})
                                 VALUES ({ff_placeholders})
-                                ON CONFLICT(asset_id, as_of_date) DO UPDATE SET {ff_update}
+                                ON CONFLICT(asset_id) DO UPDATE SET {ff_update}
                             """
                         
                         cursor.execute(sql_ff, ff_vals)

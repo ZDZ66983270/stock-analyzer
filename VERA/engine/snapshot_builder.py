@@ -654,7 +654,9 @@ def run_snapshot(symbol: str, as_of_date=None, save_to_db: bool = False):
     
     save_full_snapshot(snapshot_id, asset.asset_id, data_date.strftime("%Y-%m-%d"), 
                        risk_metrics, fundamentals, conclusion, 
-                       anchor, is_trap, 0, bank_score, save_to_db=save_to_db)
+                       anchor, is_trap, 0, bank_score, 
+                       current_price=prices["close"].iloc[-1], # Pass current price
+                       save_to_db=save_to_db)
                        
     # persist market context into risk_card_snapshot (best-effort)
     if save_to_db:
@@ -671,7 +673,8 @@ def run_snapshot(symbol: str, as_of_date=None, save_to_db: bool = False):
     return dashboard_data
 
 def save_full_snapshot(snapshot_id, symbol, as_of_date, risk_metrics, 
-                       fundamentals, conclusion, anchor, is_trap, payout_score, bank_score, save_to_db=False):
+                       fundamentals, conclusion, anchor, is_trap, payout_score, bank_score, 
+                       current_price=None, save_to_db=False):
     """保存到 analysis_snapshot 和 metric_details 表"""
     conn = get_connection()
     cursor = conn.cursor()
@@ -733,6 +736,13 @@ def save_full_snapshot(snapshot_id, symbol, as_of_date, risk_metrics,
             INSERT INTO metric_details (snapshot_id, metric_key, value)
             VALUES (?, ?, ?)
         """, (snapshot_id, "pb_ratio", safe_val(fundamentals.pb_ratio)))
+
+        # 5. Current Price (Critical for Snapshot View)
+        if current_price is not None:
+             cursor.execute("""
+                INSERT INTO metric_details (snapshot_id, metric_key, value)
+                VALUES (?, ?, ?)
+            """, (snapshot_id, "current_price", safe_val(current_price)))
             
         conn.commit()
     
